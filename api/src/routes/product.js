@@ -41,4 +41,17 @@ server.get('/search',(req,res) => {
 	}))
 })
 
+server.post('/create',(req,res) => {
+	let data = req.body
+	Product.create(data)
+	.then(newProduct => res.status(201).json({
+		message: 'Producto creado exitosamente!',
+		newProduct
+	}))
+	.catch(error => res.status(400).json({
+		message: 'El producto ya existe',
+		error: error
+	}))
+})
+
 module.exports = server;
