@@ -1,28 +1,13 @@
 const server = require('express').Router();
-const { Product } = require('../db.js');
+const { Product, Category } = require('../db.js');
 const {Sequelize:{Op}} = require('sequelize')
 
 server.get('/', (req, res, next) => {
-	Product.findAll()
+	Product.findAll({include: Category})
 		.then(products => {
 			res.send(products);
 		})
 		.catch(next);
-});
-
-server.post('/:idProduct/category/:idCategory', (req, res) => {
-	const {idProduct, idCategory} = req.params;
-
-	Product.findByPk(idProduct)
-		.then((product) => {
-			product.setCategories(idCategory)
-			.then((newCategory) => {
-				res.status(201).json({message: 'Se agregó categoría', newCategory})
-			})			
-		})
-		.catch((err) => {
-			throw new Error(err)
-		})
 });
 
 server.get('/category/:categoryId',(req,res) => {
@@ -32,8 +17,8 @@ server.get('/category/:categoryId',(req,res) => {
 	.catch(error => res.status(404).json({
 		message: 'No se encontraron productos',
 		error: error
-	}))
-})
+	}));
+});
 
 server.get('/search',(req,res) => {
 	let {text} = req.query
@@ -53,8 +38,8 @@ server.get('/search',(req,res) => {
 	.catch(error => res.status(404).json({
 		message: 'No se encontraron productos',
 		error: error
-	}))
-})
+	}));
+});
 
 server.post('/create',(req,res) => {
 	let data = req.body
@@ -66,8 +51,38 @@ server.post('/create',(req,res) => {
 	.catch(error => res.status(400).json({
 		message: 'El producto ya existe',
 		error: error
-	}))
-})
+	}));
+});
+
+server.post('/:idProduct/category/:idCategory', (req, res) => {
+	const {idProduct, idCategory} = req.params;
+
+	Product.findByPk(idProduct)
+		.then((product) => {	
+			product.addCategories(idCategory)
+			.then((newCategory) => {							
+				res.status(201).json({message: 'Se agregó categoría', newCategory})
+			})			
+		})
+		.catch((err) => {
+			throw new Error(err)
+		});
+});
+
+server.delete('/:idProduct/category/:idCategory', (req, res) => {
+	const {idProduct, idCategory} = req.params;
+
+	Product.findByPk(idProduct)
+		.then((product) => {
+			product.removeCategories(idCategory)
+			.then(() => {
+				res.status(200).json({message: 'Se eliminó categoría'})
+			})			
+		})
+		.catch((err) => {
+			throw new Error(err)
+		});
+});
 
 
 // GET /products/:id
