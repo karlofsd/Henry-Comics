@@ -10,6 +10,21 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+server.post('/:idProduct/category/:idCategory', (req, res) => {
+	const {idProduct, idCategory} = req.params;
+
+	Product.findByPk(idProduct)
+		.then((product) => {
+			product.setCategories(idCategory)
+			.then((newCategory) => {
+				res.status(201).json({message: 'Se agregó categoría', newCategory})
+			})			
+		})
+		.catch((err) => {
+			throw new Error(err)
+		})
+});
+
 server.get('/category/:categoryId',(req,res) => {
 	let {categoryId} = req.params
 	Product.findAll({where: categoryId})
