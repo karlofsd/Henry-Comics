@@ -9,4 +9,14 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+server.get('/category/:categoryId',(req,res) => {
+	let {categoryId} = req.params
+	Product.findAll({where: categoryId})
+	.then(products => res.status(200).json(products))
+	.catch(error => res.status(404).json({
+		message: 'No se encontraron productos',
+		error: error
+	}))
+})
+
 module.exports = server;
