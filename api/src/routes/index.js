@@ -10,4 +10,5 @@ const router = Router();
 // router.use('/auth', authRouter);
 router.use('/products', productRouter);
 
+
 module.exports = router;

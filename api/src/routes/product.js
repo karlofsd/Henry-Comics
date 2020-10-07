@@ -9,4 +9,14 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+server.post('/:idProduct/category/:idCategory', (req, res) => {
+	const {idProduct, idCategory} = req.params;
+
+	Product.findByPk(idProduct)
+		.then((res) => {
+			const product =	res;
+			product.setCategories(idCategory)
+		})
+});
+
 module.exports = server;
