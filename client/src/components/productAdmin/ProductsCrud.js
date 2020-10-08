@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalFooter, ModalHeader }from 'reactstrap';
 
-const ProductsCrud = () =>{
+const ProductsCrud = ({newProd}) =>{
     //estado:
     const [insertarProducto, setInsertarProducto] = useState(false)
     const [eliminarProducto, setEliminarProducto] = useState(false)
@@ -38,7 +38,6 @@ const ProductsCrud = () =>{
     return (
         <div>
             <button className="btn btn-success" onClick={()=>handleChange()} >Agrgar producto</button> {/* Abre una  ventana con el formulario para agregar prductos */}
-
             <div>
                 <table className='table '>
                     <thead>
@@ -96,7 +95,7 @@ const ProductsCrud = () =>{
                         </ModalBody>
                         <ModalFooter>
                             {tipoAccion === 'agregar'?
-                                <button className="btn btn-success" type='submit'>Agregar</button>:
+                                <button className="btn btn-success" type='submit' onClick={()=>newProd(producto)}>Agregar</button>:
                                 <button className="btn btn-primary" type='submit'>Editar</button>   
                                 }
                             <button type='button' className="btn btn-secundary" onClick={()=>{setInsertarProducto(false)}}>Cancelar</button>

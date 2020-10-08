@@ -2,11 +2,11 @@ import React from 'react'
 import AgregarCategorias from '../categoryAdmin/AgregarCategorias'
 import ProductsCrud from '../productAdmin/ProductsCrud'
 
-const Admin = () => {
+const Admin = ({newProd,newCat}) => {
     return(
         <div>
-            <AgregarCategorias/>
-            <ProductsCrud/>
+            <AgregarCategorias newCat={newCat}/>
+            <ProductsCrud newProd={newProd}/>
         </div>
     )
 }
