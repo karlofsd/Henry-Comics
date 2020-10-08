@@ -54,6 +54,8 @@ server.post('/create',(req,res) => {
 	}));
 });
 
+//S17 - POST /products/:idProducto/category/:idCategoria
+//Agrega la categoria al producto.
 server.post('/:idProduct/category/:idCategory', (req, res) => {
 	const {idProduct, idCategory} = req.params;
 
@@ -69,6 +71,8 @@ server.post('/:idProduct/category/:idCategory', (req, res) => {
 		});
 });
 
+// S17 - DELETE /products/:idProducto/category/:idCategoria
+// Elimina la categoria al producto.
 server.delete('/:idProduct/category/:idCategory', (req, res) => {
 	const {idProduct, idCategory} = req.params;
 
