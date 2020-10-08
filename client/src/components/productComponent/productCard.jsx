@@ -1,14 +1,17 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 
-export default function ProductCard(props) {
+export default function ProductCard({product}) {
     return (
-    <div>
+    <div className='card shadow'>
         <div>
-        <img src={props.image} alt="ImagenProducto"/>
+            <Link to={`/product/${product.id}`}>
+                <img src={product.image} alt="ImagenProducto"/>
+            </Link>
         </div>
         <div>
-            <h3>Nombre Producto</h3>
-            <h5>$1500</h5>
-            </div>
+            <h3>{product.name}</h3>
+            <h5>{product.price}</h5>
+        </div>
     </div>);
 }

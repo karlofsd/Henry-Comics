@@ -8,7 +8,7 @@ import {
   } from 'reactstrap'
 import {Link} from 'react-router-dom'
 
-const NavBar = () => {
+const NavBar = ({categories,click}) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -34,16 +34,9 @@ const NavBar = () => {
                             Categories
                         </DropdownToggle>
                         <DropdownMenu left>
-                            <DropdownItem>
-                            <Link to='/catalogo/category/1'>Category 1</Link>
-                            </DropdownItem>
-                            <DropdownItem>
-                            Category 2
-                            </DropdownItem>
-                            <DropdownItem divider />
-                            <DropdownItem>
-                            Todos
-                            </DropdownItem>
+                            {categories && categories.map(c =><DropdownItem>
+                            <Link to={`/catalogo/category/${c.id}`}>{c.name}</Link>
+                            </DropdownItem>)}
                         </DropdownMenu>
                     </UncontrolledDropdown>
                     <li className="nav-item">
@@ -53,7 +46,7 @@ const NavBar = () => {
                         <Link className="nav-link" to="/admin">Admin Panel</Link>
                     </li>
                 </ul>
-                <Buscar/>
+                <Buscar click={click}/>
             </div>
         </nav>
     )
