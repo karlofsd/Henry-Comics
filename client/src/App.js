@@ -1,16 +1,15 @@
-import React from 'react';
-import './App.css';
-import Product from './components/productComponent/product.jsx';
-import ProductCard from './components/productComponent/productCard.jsx';
-import Catalog from './components/productComponent/catalog.jsx'
 
+import React from "react";
+import { Buscar } from "./components/searchBar";
+import "./App.css";
 
 function App() {
-  return (
-    <div>
-      
-    </div>
-  );
+    return (
+        <div className="App">
+            <Buscar />
+        </div>
+    );
+
 }
 
 export default App;
