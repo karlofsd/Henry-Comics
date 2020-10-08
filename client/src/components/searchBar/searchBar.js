@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 
-export function Buscar(props) {
+export default function Buscar(props) {
     const onSearch = props;
     const [products, setProducts] = useState([]);
     const [searchText, setSearchText] = useState("");
