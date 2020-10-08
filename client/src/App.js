@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Buscar } from "./components/searchBar";
 import "./App.css";
@@ -8,6 +9,7 @@ function App() {
             <Buscar />
         </div>
     );
+
 }
 
 export default App;
