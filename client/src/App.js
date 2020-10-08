@@ -1,6 +1,6 @@
 
 import React from "react";
-import Buscar from "./components/searchBar/searchBar";
+import NavBar from './components/navBar/navBar';
 import "./App.css";
 import {Route, BrowserRouter as Router} from 'react-router-dom'
 import Catalog from "./components/catalogo/catalog";
@@ -10,7 +10,7 @@ import Admin from "./components/admin/admin"
 function App() {
     return (
         <Router>
-            <Buscar />
+            <NavBar />
             <Route
                 exact path='/catalogo'
                 render={() => <Catalog/>}
