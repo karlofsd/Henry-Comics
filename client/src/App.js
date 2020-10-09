@@ -67,7 +67,11 @@ function App() {
         path="/product/:id"
         render={({ match }) => <Product id={Number(match.params.id)} />}
       />
-      <Route exact path="/admin" render={() => <Admin newProd={createProduct} newCat={createCategory}/>} />
+      <Route 
+        exact path="/admin" 
+        render={() => 
+        <Admin newProd={createProduct} newCat={createCategory}/>} 
+      />
     </Router>
   );
 }
