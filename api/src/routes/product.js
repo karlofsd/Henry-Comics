@@ -115,6 +115,9 @@ server.put("/:id", (req, res, next) => {
 	Product.update(
 	  {
 		name: req.body.name,
+		author:req.body.author,
+		editorial:req.body.editorial,
+		year:req.body.year,
 		description: req.body.description,
 		category: req.body.category,
 		stock: req.body.stock,
@@ -123,7 +126,7 @@ server.put("/:id", (req, res, next) => {
 	  },
 	  {
 		where: {
-		  idProduct: id,
+		  id: id,
 		},
 		returning: true,
 	  }
