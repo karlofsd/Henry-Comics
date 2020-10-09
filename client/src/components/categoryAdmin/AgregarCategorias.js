@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const url ='http://localhost:3001/category/';
 
-const AgregarCategorias = ({newCat}) =>{
+const AgregarCategorias = () =>{
 
     const [visible, setVisible] = useState(false);
     const [categorie,setCategorie] = useState({
@@ -16,9 +16,10 @@ const AgregarCategorias = ({newCat}) =>{
     });
 
     const postCategorie = async() =>{
-            newCat(categorie)
+        await axios.post(url, categorie)
+        .then(res=>{
             setVisible(true);
-    
+        })
     }
 
     const handleInputChange =(e)=>{//toma el value del input
@@ -30,10 +31,10 @@ const AgregarCategorias = ({newCat}) =>{
 
     const onSubmit = (e)=>{ //las acciones para agregar producto o actualizar.
         e.preventDefault();
-        /* setCategorie({
+        setCategorie({
             name:'',
             description:''
-        }) */
+        })
         postCategorie();
     }
 
@@ -44,7 +45,7 @@ const AgregarCategorias = ({newCat}) =>{
 
     return(
         <div>
-            <Alert color="success" isOpen={visible} toggle={onDismiss}>
+            <Alert color="success" isOpen={visible} toggle={onDismiss} >
                 Categoría agregada!!
             </Alert>
             <form onSubmit={onSubmit}>
