@@ -7,7 +7,7 @@ import {Modal, ModalBody, ModalFooter, ModalHeader }from 'reactstrap';
 const url = 'http://localhost:3001/products';
 const urlCategori ='http://localhost:3001/category/';
 
-const ProductsCrud = () =>{
+const ProductsCrud = ({newProd}) =>{
 
     let opcion =[];
     const [categoria,setCategoria] = useState([])
