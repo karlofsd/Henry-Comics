@@ -1,0 +1,14 @@
+.catalogo{
+    display: flex;
+    width: 100vw;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.filter{
+    width: 20%
+}
+
+.products{
+    width: 70%;
+}
