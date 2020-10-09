@@ -12,7 +12,10 @@ server.get('/', (req, res, next) => {
 
 server.get('/category/:categoryId',(req,res) => {
 	let {categoryId} = req.params
-	Product.findAll({where: categoryId})
+	Product.findAll({include:[{
+		model: Category,
+		where: {id:categoryId}
+	}]})
 	.then(products => res.status(200).json(products))
 	.catch(error => res.status(404).json({
 		message: 'No se encontraron productos',

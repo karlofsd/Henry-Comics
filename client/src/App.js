@@ -59,13 +59,13 @@ function App() {
         exact
         path="/catalogo/category/:id"
         render={({ match }) => (
-          <Catalog id={match.params.id} products={products} />
+          <Catalog id={Number(match.params.id)} />
         )}
       />
       <Route
         exact
         path="/product/:id"
-        render={({ match }) => <Product id={match.params.id} />}
+        render={({ match }) => <Product id={Number(match.params.id)} />}
       />
       <Route exact path="/admin" render={() => <Admin newProd={createProduct} newCat={createCategory}/>} />
     </Router>
