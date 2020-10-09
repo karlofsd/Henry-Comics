@@ -13,7 +13,7 @@ export default function Catalog({products,id}) {
         }else{
             setFilterProducts(products)
         }
-    },[])
+    },[products,id])
     
     const newFilter = async() => {
         const {data} = await axios.get(`http://localhost:3001/products/category/${id}`)
