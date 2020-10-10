@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const Filter = ({products,filter,clean}) => {
-    // console.log("estoy en filtros")
-    // console.log(products)
+const Filter = ({products,filter,clean}) => {  
     const [filtros,setFiltros] = useState({
         autor: [],
         editorial: [],
@@ -20,10 +18,8 @@ const Filter = ({products,filter,clean}) => {
             año: [...new Set(newAño)]
         })
     }
-    // console.log("desp de filtrar")
-    // console.log(products)
-    useEffect(() => {
-        console.log(filtros)
+  
+    useEffect(() => {        
         getFilterList()
     },[products])
 
