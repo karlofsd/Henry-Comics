@@ -105,8 +105,7 @@ const ProductsCrud = ({get}) =>{
                 productGet={productGet}
                 setInsertarProducto={setInsertarProducto}
                 setEliminarProducto={setEliminarProducto}
-                setCategoria={setCategoria}
-                uploadImage={uploadImage}
+                setCategoria={setCategoria}             
             />
         </div>
     )

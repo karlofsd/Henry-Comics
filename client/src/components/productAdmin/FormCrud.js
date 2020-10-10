@@ -8,7 +8,7 @@ const url = 'http://localhost:3001/products';
 
 
                 
-const FormCrud=({get,uploadImage,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, setProducto,categoria, idProduct,setProductGet, productGet,setInsertarProducto,setEliminarProducto})=>{
+const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, setProducto,categoria, idProduct,setProductGet, productGet,setInsertarProducto,setEliminarProducto})=>{
     
     let opcion =[];
 
