@@ -63,6 +63,33 @@ const FormCrud=({get,uploadImage,editIsOpen,deleteIsOpen,tipoAccion, productGetA
         categoria.forEach(e=>{opcion.push({ value: e.name, label: e.name, id:e.id })})
     }
 
+    const uploadImage = async (e) => {
+
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        console.log(base64)
+        setProducto({
+            ...product,
+            image:base64});
+        e.preventDefault();
+    };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result)
+            }
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            }
+        })
+    };
+
+
 
 
 
