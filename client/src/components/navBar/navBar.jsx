@@ -7,6 +7,7 @@ import {
     DropdownItem,
   } from 'reactstrap'
 import {Link} from 'react-router-dom'
+import logo from './img/logo.png'
 
 const NavBar = ({categories,click}) => {
 
@@ -15,8 +16,8 @@ const NavBar = ({categories,click}) => {
     const toggle = () => setIsOpen(!isOpen);
 
     return(
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link className="navbar-brand" to="/">LOGO</Link>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top fixed">
+            <div className="divlogo"><Link className="navbar-brand" to="/"><img src={logo} className="logo" /></Link></div>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
@@ -24,7 +25,7 @@ const NavBar = ({categories,click}) => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item active">
-                        <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+                        <Link id="redtext" className="nav-link" to="/"> Home <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/catalogo">Catalogo</Link>
