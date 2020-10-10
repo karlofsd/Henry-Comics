@@ -96,7 +96,7 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
     const handleInputChange =(e)=>{//toma el value del input
         setProducto({
             ...product,
-            [e.target.name] : e.target.value
+            [e.target.name] : e.target.value.toLowerCase()
         })
     }
 
