@@ -129,6 +129,33 @@ const ProductsCrud = ({newProd}) =>{
         getCategories();
         setProducto(ele);
     }
+
+    const uploadImage = async (e) => {
+
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        console.log(base64)
+        setProducto({
+            ...producto,
+            image:base64});
+        e.preventDefault();
+    };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result)
+            }
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            }
+        })
+    };
+
     return (
         <div>
             <button className="btn btn-success" onClick={()=>handleChange()} >Agrgar producto</button> {/* Abre una  ventana con el formulario para agregar prductos */}
@@ -186,7 +213,7 @@ const ProductsCrud = ({newProd}) =>{
                             <textarea name='description' onChange={handleInputChange} value={producto && producto.description}/>
                             <br />
                             <label>Imagen:</label>
-                            <input type='file' accept='image/*' name='image' onChange={handleInputChange} />
+                            <input type='file' /* accept='image/*' */ name='image' onChange={uploadImage} />
                             <label>Categoria</label>
                             <Select
                                 isMulti

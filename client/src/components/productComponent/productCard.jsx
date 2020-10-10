@@ -1,34 +1,33 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import {Link} from 'react-router-dom'
 import './productCard.css'
+import Product from './product'
+
 export default function ProductCard({product}) {
     
-    
+    /* const [detail,setDetail] = useState(false) */
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+
     return (
+        <Fragment>
         <div className='shadow wrapper'>
             <div className="container">
                 <div className="top">
-                    <img src={product.image} className='reloj-img' alt="reloj" />
+                    <img src={product.image} className='img' alt="reloj" />
                 </div>
                 <div className="bottom">
-                <div className="left">
-                    <div className="details">
                     <h4>{product.name = product.name.substring(0, 1).toUpperCase() + product.name.substring(1)}</h4>
-                    <p className='priceproductcard' >${product.price}</p>
+                    <div className="left">
+                        <div className="details">
+                        <p className='priceproductcard' >${product.price}</p>
+                        </div>
+                        <button onClick={toggle} className="btn btn-light pill-rounded" >Ver más</button>
                     </div>
-                    <button /* onClick={() => handleClick()} */ className="buy" ><i className="fas fa-shopping-cart"></i></button>
-                </div>
-                </div>
-            </div>
-            <div className="container-hover">
-                <div className="top">
-                    <h3>{product.name}</h3>
-                    <p>{product.description}</p>
-                </div>
-                <div className="bottom">
-                <button /* onClick={() => handleClick()} */ className="buy" ><i className="fas fa-shopping-cart"></i></button>
                 </div>
             </div>
         </div>
+        <Product modal={modal} toggle={toggle} p={product} />
+        </Fragment>
     );
 }

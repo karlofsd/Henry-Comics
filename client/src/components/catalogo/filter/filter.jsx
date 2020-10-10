@@ -41,7 +41,7 @@ const Filter = ({products,filter,clean}) => {
             <ul>
                 {filtros.año[0] && filtros.año.map(a => <li><a name={a} type='button' onClick={()=>filter(a,'year')}>{a}</a></li>)}
             </ul>
-            <button type='button' onClick={() => clean()}>Limpiar filtros</button>
+            <button type='button' className='btn btn-dark' onClick={() => clean()}>Limpiar filtros</button>
         </div>
     )
 }
