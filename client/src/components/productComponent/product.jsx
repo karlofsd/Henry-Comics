@@ -1,22 +1,42 @@
-import React from 'react';
+import React,{useState} from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default function Product(props) {
+    
+    const [nestedModal, setNestedModal] = useState(false);
+    const [closeAll, setCloseAll] = useState(false);
+    
+    const toggleNested = () => {
+        setNestedModal(!nestedModal);
+        setCloseAll(false);
+      }
+      const toggleAll = () => {
+        setNestedModal(!nestedModal);
+        setCloseAll(true);
+      }
+
+    let {className,modal,toggle,p} = props
+
     return (
-    <div>
-        <div>
-        <img src="https://i.gifer.com/WiCJ.gif" alt="Producto"/>
-        </div>
-        <div>
-            <h3>Ironman #085</h3>
-            <h5>$1800</h5>
-            </div>
-            <div>
-            <p>Revista número 085 de la saga de Ironman, edición coleccionable</p>
-            <h5>Stock disponible: 6</h5>
-        </div>
-        <div>
-            <button>Agregar al carrito</button>
-        </div>
-    </div>
+        <Modal isOpen={modal} toggle={toggle} className={className}>
+            <ModalHeader toggle={toggle}>{p.name}</ModalHeader>
+            <ModalBody>
+                <p>{p.description}</p>
+                <br />
+                <Button color="success" onClick={toggleNested}>Ver Comentarios</Button>
+                <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined}>
+                    <ModalHeader>Aqui va la lista de comentarios</ModalHeader>
+                    <ModalBody>aqui va el input de comentario</ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={toggleNested}>enviar</Button>{' '}
+                        <Button color="secondary" onClick={toggleAll}>cancelar</Button>
+                    </ModalFooter>
+                </Modal>
+            </ModalBody>
+            <ModalFooter>
+                <Button color="primary" onClick={toggle}>Agregar a carrito</Button>{' '}
+                <Button color="secondary" onClick={toggle}>Cancel</Button>
+            </ModalFooter>
+        </Modal>
     );
 }
