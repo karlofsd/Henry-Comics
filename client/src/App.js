@@ -17,11 +17,13 @@ function App() {
   useEffect(() => {
     getProducts();
     getCategories();
+    console.log('app render')
   },[]);
 
   const getProducts = async () => {
     const { data } = await axios.get(`http://localhost:3001/products/`);
     setProducts(data);
+    console.log('productos')
   };
 
   const getCategories = async () => {
@@ -76,7 +78,7 @@ function App() {
       <Route 
         exact path="/admin" 
         render={() => 
-        <Admin newProd={createProduct} newCat={createCategory}/>} 
+        <Admin newProd={createProduct} newCat={createCategory} get={getProducts}/>} 
       />
     </Router>
   );

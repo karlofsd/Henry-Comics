@@ -8,7 +8,7 @@ const url = 'http://localhost:3001/products';
 
 
                 
-const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, setProducto,categoria, idProduct,setProductGet, productGet,setInsertarProducto,setEliminarProducto})=>{
+const FormCrud=({get,uploadImage,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, setProducto,categoria, idProduct,setProductGet, productGet,setInsertarProducto,setEliminarProducto})=>{
     
     let opcion =[];
 
@@ -30,12 +30,14 @@ const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, set
          });
          
          setInsertarProducto(false);
+         get()
     }
 
     const deleteCategoriProduc = async ()=>{
         await selectedOption.forEach(ele=>{
             axios.delete(`${url}/${product.id}/category/${ele.id}`)
         })
+        get()
     }
 
     const peticionPut=async()=>{
@@ -44,6 +46,7 @@ const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, set
           productGetApi();
           setInsertarProducto(false);
         })
+        get()
     }
 
     const producDelete=async()=>{
@@ -52,6 +55,7 @@ const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, set
             setProductGet(productGet.filter(producto=>producto.id!==idProduct));
             setEliminarProducto(false);
         })
+        get()
     }
 
 
@@ -106,6 +110,7 @@ const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, set
             deleteCategoriProduc()
         }
         setInsertarProducto(false);
+        get()
     }
 
 
@@ -138,7 +143,7 @@ const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, set
                             <textarea name='description' onChange={handleInputChange} value={product && product.description}/>
                             <br />
                             <label>Imagen:</label>
-                            <input type='file' accept='image/*' name='image' onChange={uploadImage} />
+                            <input type='file' /* accept='image/*' */ name='image' onChange={uploadImage} />
                             {tipoAccion === 'agregar'?
                                 <label>Categoría:</label>:
                                 <label>Eliminar categoría:</label>

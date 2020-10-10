@@ -15,6 +15,7 @@ export default function Catalog({products,id}) {
                 newFilter()
             }else{
                 setFilterProducts(products)
+                console.log('render catalogo',products)
             }
         }
     },[products,id,filterStatus])

@@ -6,7 +6,7 @@ import FormCrud from './FormCrud';
 const url = 'http://localhost:3001/products';
 const urlCategori ='http://localhost:3001/category/';
 
-const ProductsCrud = () =>{
+const ProductsCrud = ({get}) =>{
 
     //estado:
     const [productGet, setProductGet]=useState([]);
@@ -49,6 +49,7 @@ const ProductsCrud = () =>{
     const handleChangeDelete =(id)=>{
         setEliminarProducto(true)
         setIdProduct(id)
+        get()
     }
     const hangleChangeEdit = (ele)=>{
         console.log(productGet)
@@ -56,6 +57,7 @@ const ProductsCrud = () =>{
         setInsertarProducto(true);
         setCategoria(ele.categories)
         setProducto(ele);
+        get()
     }
 
 
@@ -89,7 +91,8 @@ const ProductsCrud = () =>{
                     </tbody>
                 </table>
             </div>
-            <FormCrud 
+            <FormCrud
+                get={get}
                 editIsOpen={insertarProducto}
                 deleteIsOpen={eliminarProducto}
                 tipoAccion={tipoAccion}
@@ -103,6 +106,7 @@ const ProductsCrud = () =>{
                 setInsertarProducto={setInsertarProducto}
                 setEliminarProducto={setEliminarProducto}
                 setCategoria={setCategoria}
+                uploadImage={uploadImage}
             />
         </div>
     )
