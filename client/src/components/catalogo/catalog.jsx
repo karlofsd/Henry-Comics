@@ -43,28 +43,28 @@ export default function Catalog({products,id}) {
         <div className='products'>
             {filterProducts && filterProducts.map(p =><ProductCard product={p}/>)}
         </div>
-        <div>
-            <h3>Carrito</h3>
+        <div className='carrito'>
+            <h3 className='title-carrito'>Carrito</h3>
             <div>
-                <ul>
-                    <li>
+                <ul className='list-carrito'>
+                    <li className='item-carrito'>
                         <label>item 1</label>
                         <button>x</button>
                     </li>
-                    <li>
+                    <li className='item-carrito'>
                         <label>item 2</label>
                         <button>x</button>
                     </li>
-                    <li>
+                    <li className='item-carrito'>
                         <label>item 3</label>
                         <button>x</button>
                     </li>
                 </ul>
             </div>
-            <div>
+            <div className='total'>
                 <label>total: $500</label>
             </div>
-            <div>
+            <div className='buttons'>
                 <button>comprar</button>
                 <button>vaciar</button>
             </div>
