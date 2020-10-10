@@ -5,6 +5,7 @@ import { Route, BrowserRouter as Router } from "react-router-dom";
 import Catalog from "./components/catalogo/catalog";
 import Product from "./components/productComponent/product";
 import Admin from "./components/admin/admin";
+import LandingCarrousel from "./components/carrousel/carrousel"
 import axios from "axios";
 
 function App() {
@@ -50,6 +51,11 @@ function App() {
   return (
     <Router>
       <NavBar categories={categories} click={clickEnter} />
+      <Route
+        exact
+        path="/"
+        render={() => <LandingCarrousel />}
+      />
       <Route
         exact
         path="/catalogo"
