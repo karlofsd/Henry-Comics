@@ -16,7 +16,7 @@ const NavBar = ({categories,click}) => {
     const toggle = () => setIsOpen(!isOpen);
 
     return(
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top fixed">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed">
             <div className="divlogo"><Link className="navbar-brand" to="/"><img src={logo} className="logo" /></Link></div>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
