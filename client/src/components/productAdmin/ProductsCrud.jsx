@@ -16,6 +16,7 @@ const ProductsCrud = ({get}) =>{
     const [tipoAccion, setTipoaccion] = useState(null)
     const [idProduct, setIdProduct] = useState(null)
     const [producto,setProducto] =useState({});
+    const [editCategory, setEditCategory] =useState([]);
 
 
     //Peticion a la api---------------------------------------------------------------------------------
@@ -35,8 +36,6 @@ const ProductsCrud = ({get}) =>{
 
     useEffect(()=>{
         productGetApi();
-        
-
     },[])
 
 
@@ -51,10 +50,10 @@ const ProductsCrud = ({get}) =>{
         setIdProduct(id)
     }
     const hangleChangeEdit = (ele)=>{
-        console.log(productGet)
         setTipoaccion(null);
         setInsertarProducto(true);
-        setCategoria(ele.categories)
+        getCategories();
+        setEditCategory(ele.categories)
         setProducto(ele);
     }
 
@@ -103,7 +102,8 @@ const ProductsCrud = ({get}) =>{
                 productGet={productGet}
                 setInsertarProducto={setInsertarProducto}
                 setEliminarProducto={setEliminarProducto}
-                setCategoria={setCategoria}             
+                setCategoria={setCategoria}
+                editCategory={editCategory}              
             />
         </div>
     )

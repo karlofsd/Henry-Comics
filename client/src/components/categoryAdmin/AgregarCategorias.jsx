@@ -88,13 +88,11 @@ const AgregarCategorias = ({newCat,categories,getCat}) =>{
                 }
             </div>
             <div>
-                <table className='table '>
+                <table className='table'>
                     <thead>
                         <tr>
                             <th>Id</th>
                             <th>Nombre</th>
-                            <th>precio</th>
-                            <th>Stock</th>
                         </tr>
                     </thead>
                     <tbody>
