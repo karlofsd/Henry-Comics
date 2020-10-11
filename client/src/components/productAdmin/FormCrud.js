@@ -20,7 +20,6 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
     const peticionPostProducto=async()=>{
         await axios.post(`${url}/create`, product)
         .then(response=>{
-
             postCategoriProduct(response.data.newProduct.id);
         })
         .catch((e) => {
