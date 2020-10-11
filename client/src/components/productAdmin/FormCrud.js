@@ -3,6 +3,8 @@ import Select from "react-select";
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalFooter, ModalHeader }from 'reactstrap';
+import { Alert } from 'reactstrap';
+
 
 const url = 'http://localhost:3001/products';
 
@@ -13,11 +15,20 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
     let opcion =[];
 
     const [selectedOption, setSelectedOption] = useState([]);
+    const [visible, setVisible] = useState(false);
+    const [successPost, setSuccessPost] = useState()
 
     const peticionPostProducto=async()=>{
         await axios.post(`${url}/create`, product)
         .then(response=>{
             postCategoriProduct(response.data.newProduct.id);
+            setSuccessPost(true);
+            setVisible(true);
+        })
+        .catch((e) => {
+        // setear para que avise que no se creó  
+            setSuccessPost(false);
+            setVisible(true);
         })
     }
 
@@ -67,7 +78,7 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
 
         const file = e.target.files[0]
         const base64 = await convertBase64(file)
-        console.log(base64)
+        // console.log(base64)
         setProducto({
             ...product,
             image:base64});
@@ -113,6 +124,7 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
         get()
     }
 
+    const onDismiss = () => setVisible(false);
 
     return(
         <div>
@@ -178,6 +190,14 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
                 </ModalFooter>
 
             </Modal>
+            { successPost ?
+                <Alert color="success" isOpen={visible} toggle={onDismiss} >
+                    Producto Agregado Correctamente !!
+                </Alert> :
+                <Alert color="danger" isOpen={visible} toggle={onDismiss} >
+                    Error!! Debe llenar todos los campos
+                </Alert>
+            }
         </div>
     )
 }
