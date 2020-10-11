@@ -16,15 +16,19 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
 
     const [selectedOption, setSelectedOption] = useState([]);
     const [visible, setVisible] = useState(false);
+    const [successPost, setSuccessPost] = useState()
 
     const peticionPostProducto=async()=>{
         await axios.post(`${url}/create`, product)
         .then(response=>{
             postCategoriProduct(response.data.newProduct.id);
+            setSuccessPost(true);
+            setVisible(true);
         })
         .catch((e) => {
         // setear para que avise que no se creó  
-            setVisible(true)
+            setSuccessPost(false);
+            setVisible(true);
         })
     }
 
@@ -186,9 +190,14 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
                 </ModalFooter>
 
             </Modal>
-            <Alert color="success" isOpen={visible} toggle={onDismiss} >
-                Error!!
-            </Alert>
+            { successPost ?
+                <Alert color="success" isOpen={visible} toggle={onDismiss} >
+                    Producto Agregado Correctamente !!
+                </Alert> :
+                <Alert color="danger" isOpen={visible} toggle={onDismiss} >
+                    Error!! Debe llenar todos los campos
+                </Alert>
+            }
         </div>
     )
 }
