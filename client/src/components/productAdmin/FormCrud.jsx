@@ -10,13 +10,15 @@ const url = 'http://localhost:3001/products';
 
 
                 
-const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, setProducto,categoria, idProduct,setProductGet, productGet,setInsertarProducto,setEliminarProducto})=>{
+const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, setProducto,categoria, idProduct,setProductGet, productGet,setInsertarProducto,setEliminarProducto})=>{
     
     let opcion =[];
+    let opcionEliminar =[];
 
     const [selectedOption, setSelectedOption] = useState([]);
     const [visible, setVisible] = useState(false);
     const [successPost, setSuccessPost] = useState()
+    const [selectedDelete, setSelectedDelete] = useState([]);
 
     const peticionPostProducto=async()=>{
         await axios.post(`${url}/create`, product)
@@ -45,7 +47,7 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
     }
 
     const deleteCategoriProduc = async ()=>{
-        await selectedOption.forEach(ele=>{
+        await selectedDelete.forEach(ele=>{
             axios.delete(`${url}/${product.id}/category/${ele.id}`)
         })
         get()
@@ -72,6 +74,9 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
 
     if(categoria.length>0){
         categoria.forEach(e=>{opcion.push({ value: e.name, label: e.name, id:e.id })})
+    }
+    if(editCategory.length>0){
+        editCategory.forEach(e=>{opcionEliminar.push({ value: e.name, label: e.name, id:e.id })})
     }
 
     const uploadImage = async (e) => {
@@ -118,11 +123,23 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
             setProducto({});
         }else{
             peticionPut();
+            postCategoriProduct(product.id);
             deleteCategoriProduc()
         }
         setInsertarProducto(false);
         get()
     }
+
+    const select =(
+        <Select
+            isMulti
+            name="categorias"
+            options={opcion}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={setSelectedOption}
+        />
+    );
 
     const onDismiss = () => setVisible(false);
 
@@ -156,18 +173,21 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
                             <br />
                             <label>Imagen:</label>
                             <input type='file' /* accept='image/*' */ name='image' onChange={uploadImage} />
-                            {tipoAccion === 'agregar'?
-                                <label>Categoría:</label>:
-                                <label>Eliminar categoría:</label>
+                            <label>Agregar categoría:</label>
+                            {select}
+                            {tipoAccion !== 'agregar'&&
+                                <div>
+                                    <label>Eliminar categoría:</label>
+                                        <Select
+                                            isMulti
+                                            name="categorias"
+                                            options={opcionEliminar}
+                                            className="basic-multi-select"
+                                            classNamePrefix="select"
+                                            onChange={setSelectedDelete}
+                                        />
+                                </div>
                             }
-                            <Select
-                                isMulti
-                                name="categorias"
-                                options={opcion}
-                                className="basic-multi-select"
-                                classNamePrefix="select"
-                                onChange={setSelectedOption}
-                            />
                         </ModalBody>
                         <ModalFooter>
                             {tipoAccion === 'agregar'?
