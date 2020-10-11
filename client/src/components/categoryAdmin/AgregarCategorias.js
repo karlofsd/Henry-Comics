@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Alert } from 'reactstrap';
 import axios from 'axios';
 
+import './AgregarCategorias.css'
 
 
 const url ='http://localhost:3001/category/';
@@ -40,28 +41,23 @@ const AgregarCategorias = () =>{
 
     const onDismiss = () => setVisible(false);
 
-
-
-
     return(
-        <div>
-            <Alert color="success" isOpen={visible} toggle={onDismiss} >
+        <div className='formCategories'>
+            <Alert className= 'alert' color="success" isOpen={visible} toggle={onDismiss} >
                 Categoría agregada!!
             </Alert>
-            <form onSubmit={onSubmit}>
+            <form className= 'formCat'onSubmit={onSubmit}>
                 <h3>Crear Categoría</h3>
                 <div className="form-group">
                     <label>Categoría:</label><br />
                     <input  type='text' name='name' onChange={handleInputChange} value={categorie.name} />
                 </div>
-                <div className="form-group">
-                    <label>Descripción:</label><br />
-                    <textarea name='description' onChange={handleInputChange} value={categorie.description}/>
-                </div>
-                <button class="btn btn-primary" type='submit'>Crear categoría</button>
-            </form>
-
-            
+                    <div className="form-group">
+                        <label>Descripción:</label><br />
+                        <textarea name='description' onChange={handleInputChange} value={categorie.description}/>
+                    </div>
+                    <button class="btn btn-primary" type='submit'>Crear categoría</button>
+                </form>
         </div>
     )
 }

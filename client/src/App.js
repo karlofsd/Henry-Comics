@@ -78,7 +78,9 @@ function App() {
       <Route 
         exact path="/admin" 
         render={() => 
-        <Admin newProd={createProduct} newCat={createCategory} get={getProducts}/>} 
+          <div className= 'rutaAdmin'>
+            <Admin newProd={createProduct} newCat={createCategory} get={getProducts}/> 
+          </div>}
       />
     </Router>
   );
