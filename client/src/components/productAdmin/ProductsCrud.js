@@ -49,7 +49,6 @@ const ProductsCrud = ({get}) =>{
     const handleChangeDelete =(id)=>{
         setEliminarProducto(true)
         setIdProduct(id)
-        get()
     }
     const hangleChangeEdit = (ele)=>{
         console.log(productGet)
@@ -57,7 +56,6 @@ const ProductsCrud = ({get}) =>{
         setInsertarProducto(true);
         setCategoria(ele.categories)
         setProducto(ele);
-        get()
     }
 
     const uploadImage = async (e) => {
