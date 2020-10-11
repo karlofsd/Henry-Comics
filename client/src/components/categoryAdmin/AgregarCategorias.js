@@ -15,11 +15,17 @@ const AgregarCategorias = () =>{
         name:'',
         description:''
     });
+    const [successPost, setSuccessPost] = useState()
 
     const postCategorie = async() =>{
         await axios.post(url, categorie)
         .then(res=>{
-            setVisible(true);
+            setSuccessPost(true)
+            setVisible(true);           
+        })
+        .catch((e) => {
+            setSuccessPost(false);
+            setVisible(true);             
         })
     }
 
@@ -43,9 +49,14 @@ const AgregarCategorias = () =>{
 
     return(
         <div className='formCategories'>
-            <Alert className= 'alert' color="success" isOpen={visible} toggle={onDismiss} >
-                Categoría agregada!!
-            </Alert>
+            {successPost ? 
+                <Alert className= 'alert' color="success" isOpen={visible} toggle={onDismiss} >
+                    Categoría agregada!!
+                </Alert> :
+                <Alert className= 'alert' color="danger" isOpen={visible} toggle={onDismiss} >
+                    Categoría no pudo ser creada, debe llenar todos los campos
+                </Alert>
+            }
             <form className= 'formCat'onSubmit={onSubmit}>
                 <h3>Crear Categoría</h3>
                 <div className="form-group">
