@@ -64,27 +64,29 @@ const AgregarCategorias = ({newCat,categories,getCat}) =>{
 
     return(
         <div className='formCategories'>
-            {successPost ? 
-                <Alert className= 'alert' color="success" isOpen={visible} toggle={onDismiss} >
-                    Categoría agregada!!
-                </Alert> :
-                <Alert className= 'alert' color="danger" isOpen={visible} toggle={onDismiss} >
-                    Categoría no pudo ser creada, debe llenar todos los campos
-                </Alert>
-            }
-            <form className= 'formCat'onSubmit={onSubmit}>
-                <h3>Crear Categoría</h3>
-                <div className="form-group">
-                    <label>Categoría:</label><br />
-                    <input  type='text' name='name' onChange={handleInputChange} value={categorie.name} />
-                </div>
-                <div className="form-group">
-                    <label>Descripción:</label><br />
-                    <textarea name='description' onChange={handleInputChange} value={categorie.description}/>
-                </div>
-                <button class="btn btn-primary" type='submit' onClick={postCategorie}>Crear categoría</button>
-                {categorie.id && <button class="btn btn-primary" type='submit' onClick={() => handleSave()}>Guardar</button>}
-            </form>
+            <div>
+                <form className= 'formCat'onSubmit={onSubmit}>
+                    <h3>Crear Categoría</h3>
+                    <div className="form-group">
+                        <label>Categoría:</label><br />
+                        <input  type='text' name='name' onChange={handleInputChange} value={categorie.name} />
+                    </div>
+                    <div className="form-group">
+                        <label>Descripción:</label><br />
+                        <textarea name='description' onChange={handleInputChange} value={categorie.description}/>
+                    </div>
+                    <button class="btn btn-primary" type='submit' onClick={postCategorie}>Crear categoría</button>
+                    {categorie.id && <button class="btn btn-primary" type='submit' onClick={() => handleSave()}>Guardar</button>}
+                </form>
+                {successPost ? 
+                    <Alert className= 'alert' color="success" isOpen={visible} toggle={onDismiss} >
+                        Categoría agregada !!
+                    </Alert> :
+                    <Alert className= 'alert' color="danger" isOpen={visible} toggle={onDismiss} >
+                        Debe llenar todos los campos !!
+                    </Alert>
+                }
+            </div>
             <div>
                 <table className='table '>
                     <thead>
