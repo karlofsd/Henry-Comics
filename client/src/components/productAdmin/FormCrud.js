@@ -3,6 +3,8 @@ import Select from "react-select";
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalFooter, ModalHeader }from 'reactstrap';
+import { Alert } from 'reactstrap';
+
 
 const url = 'http://localhost:3001/products';
 
@@ -13,11 +15,17 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
     let opcion =[];
 
     const [selectedOption, setSelectedOption] = useState([]);
+    const [visible, setVisible] = useState(false);
 
     const peticionPostProducto=async()=>{
         await axios.post(`${url}/create`, product)
         .then(response=>{
+
             postCategoriProduct(response.data.newProduct.id);
+        })
+        .catch((e) => {
+        // setear para que avise que no se creó  
+            setVisible(true)
         })
     }
 
@@ -67,7 +75,7 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
 
         const file = e.target.files[0]
         const base64 = await convertBase64(file)
-        console.log(base64)
+        // console.log(base64)
         setProducto({
             ...product,
             image:base64});
@@ -113,6 +121,7 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
         get()
     }
 
+    const onDismiss = () => setVisible(false);
 
     return(
         <div>
@@ -178,6 +187,9 @@ const FormCrud=({get,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product,
                 </ModalFooter>
 
             </Modal>
+            <Alert color="success" isOpen={visible} toggle={onDismiss} >
+                Error!!
+            </Alert>
         </div>
     )
 }
