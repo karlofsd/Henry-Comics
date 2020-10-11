@@ -8,7 +8,7 @@ import './AgregarCategorias.css'
 
 const url ='http://localhost:3001/category/';
 
-const AgregarCategorias = () =>{
+const AgregarCategorias = ({newCat,categories,getCat}) =>{
 
     const [visible, setVisible] = useState(false);
     const [categorie,setCategorie] = useState({
@@ -27,6 +27,7 @@ const AgregarCategorias = () =>{
             setSuccessPost(false);
             setVisible(true);             
         })
+        newCat()
     }
 
     const handleInputChange =(e)=>{//toma el value del input
@@ -36,13 +37,27 @@ const AgregarCategorias = () =>{
         })
     }
 
+    const handleChangeDelete = async(e) => {
+        await axios.delete(`http://localhost:3001/category/${e}`)
+        getCat()
+    }
+
+    const handleSave = async()=> {
+        await axios.put(`http://localhost:3001/category/${categorie.id}`,categorie)
+        getCat()
+    }
+
+    const hangleChangeEdit = (e) => {
+        setCategorie(e)
+    }
+
+
     const onSubmit = (e)=>{ //las acciones para agregar producto o actualizar.
         e.preventDefault();
         setCategorie({
             name:'',
             description:''
         })
-        postCategorie();
     }
 
     const onDismiss = () => setVisible(false);
@@ -63,12 +78,37 @@ const AgregarCategorias = () =>{
                     <label>Categoría:</label><br />
                     <input  type='text' name='name' onChange={handleInputChange} value={categorie.name} />
                 </div>
-                    <div className="form-group">
-                        <label>Descripción:</label><br />
-                        <textarea name='description' onChange={handleInputChange} value={categorie.description}/>
-                    </div>
-                    <button class="btn btn-primary" type='submit'>Crear categoría</button>
-                </form>
+                <div className="form-group">
+                    <label>Descripción:</label><br />
+                    <textarea name='description' onChange={handleInputChange} value={categorie.description}/>
+                </div>
+                <button class="btn btn-primary" type='submit' onClick={postCategorie}>Crear categoría</button>
+                {categorie.id && <button class="btn btn-primary" type='submit' onClick={() => handleSave()}>Guardar</button>}
+            </form>
+            <div>
+                <table className='table '>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>precio</th>
+                            <th>Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {categories && categories.map(ele=>(
+                            <tr>
+                            <td>{ele.id}</td>
+                            <td>{ele.name}</td>
+                            <td>
+                            <button className="btn btn-primary" onClick={()=>{hangleChangeEdit(ele)}} >Editar</button>
+                            <button className="btn btn-danger" onClick={()=>{handleChangeDelete(ele.id)}}>Eliminar</button>
+                            </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }

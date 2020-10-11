@@ -4,7 +4,7 @@ import ProductsCrud from '../productAdmin/ProductsCrud'
 import { BrowserRouter  as Router, Route, Link} from 'react-router-dom'
 import './admin.css'
 
-const Admin = ({newProd,newCat,get}) => {
+const Admin = ({newCat,get,categories,getCat}) => {
     return(
         <Router >
                 <div className= 'cPanel'>
@@ -19,13 +19,13 @@ const Admin = ({newProd,newCat,get}) => {
                     <Route
                         exact path = '/admin/category'
                         render = {()=>
-                            <AgregarCategorias newCat={newCat}/>
+                            <AgregarCategorias newCat={newCat} categories={categories} getCat={getCat}/>
                         }
                     />
                     <Route
                         exact path = '/admin/product'
                         render = {()=>
-                            <ProductsCrud newProd={newProd} get={get}/>
+                            <ProductsCrud get={get}/>
                         }
                     />
                 </div>
