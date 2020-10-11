@@ -28,7 +28,6 @@
 
 .carrousel {
   height: 550px;
-  margin-top: 20px;
 }
 
 .imgcarrousel {
@@ -41,4 +40,10 @@
   height: 15px;
   background-color: rgb(209, 40, 40);
   color: lightgray;
+}
+
+.rutaAdmin{
+  width: 100%;
+  display: flex !important;
+  flex-direction: row;
 }

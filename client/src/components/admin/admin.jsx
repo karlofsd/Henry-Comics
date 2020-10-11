@@ -1,13 +1,35 @@
 import React from 'react'
 import AgregarCategorias from '../categoryAdmin/AgregarCategorias'
 import ProductsCrud from '../productAdmin/ProductsCrud'
+import { BrowserRouter  as Router, Route, Link} from 'react-router-dom'
+import './admin.css'
 
 const Admin = ({newCat,get,categories,getCat}) => {
     return(
-        <div>
-            <AgregarCategorias newCat={newCat} categories={categories} getCat={getCat}/>
-            <ProductsCrud get={get}/>
-        </div>
+        <Router >
+                <div className= 'cPanel'>
+                    <Link to = '/admin/category'>
+                        <h4>Categorias</h4>
+                    </Link>
+                    <Link to = '/admin/product'>
+                        <h4>Productos</h4>
+                    </Link>
+                </div>
+                <div className= 'boxContent'>
+                    <Route
+                        exact path = '/admin/category'
+                        render = {()=>
+                            <AgregarCategorias newCat={newCat} categories={categories} getCat={getCat}/>
+                        }
+                    />
+                    <Route
+                        exact path = '/admin/product'
+                        render = {()=>
+                            <ProductsCrud get={get}/>
+                        }
+                    />
+                </div>
+        </Router>
     )
 }
 
