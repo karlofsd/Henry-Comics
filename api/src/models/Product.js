@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
+const img = require('./img/imgDefault')
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
+
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('product', {
@@ -33,8 +35,8 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     image: {
-      type: DataTypes.TEXT,
-      allowNull: false,
+      type: DataTypes.TEXT,      
+      defaultValue: img
     }
   });
 };
