@@ -15,8 +15,22 @@ describe('Product model', () => {
           .then(() => done(new Error('It requires a valid name')))
           .catch(() => done());
       });
-      it('should work when its a valid name', () => {
-        Product.create({ name: 'Producto' });
+      it('should have proper atribs and create without image', () => {
+        Product.create( { 
+          name: 'Producto', 
+          description: 'Description',
+          author: 'Author',
+          editorial: 'Editorial',
+          year: 2000,
+          price: 10,
+          stock: 100,
+        })
+        .then((res) => {
+          expect(res.name).to.be.equal('Producto')
+          expect(res.description).to.be.equal('Description')
+          expect(res.price).to.be.equal(10)
+          expect(res.stock).to.be.equal(100)
+        })
       });
     });
   });
