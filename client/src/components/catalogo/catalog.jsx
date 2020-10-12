@@ -3,6 +3,7 @@ import ProductCard from '../productComponent/productCard.jsx'
 import Filter from './filter/filter'
 import axios from 'axios'
 import './catalog.css'
+import './carrito.css'
 
 export default function Catalog({products,id}) {
     const [filterProducts,setFilterProducts] = useState(products)
@@ -48,26 +49,48 @@ export default function Catalog({products,id}) {
             <h3 className='title-carrito'>Carrito</h3>
             <div>
                 <ul className='list-carrito'>
+                    <label>Producto: </label>
                     <li className='item-carrito'>
-                        <label>item 1</label>
-                        <button>x</button>
+                        <div className='lab-inp-but'>
+                            <label>item 1</label>
+                            <input className='inc-dec' type='number' min='1' step='1'/>
+                            <button className='end-but'>x</button>
+                        </div>
                     </li>
                     <li className='item-carrito'>
-                        <label>item 2</label>
-                        <button>x</button>
+                    <div className='lab-inp-but'>
+                            <label>item 2</label>
+                            <input className='inc-dec' type='number' min='1' step='1'/>
+                            <button className='end-but'>x</button>
+                        </div>
                     </li>
                     <li className='item-carrito'>
-                        <label>item 3</label>
-                        <button>x</button>
+                    <div className='lab-inp-but'>
+                            <label>item 3</label>
+                            <input className='inc-dec' type='number' min='1' step='1'/>
+                            <button className='end-but'>x</button>
+                        </div>
+                    </li>
+                </ul>
+                <ul className='list-carrito'>
+                    <label>Envio: </label>
+                    <li className='item-carrito'>
+                        <label>En Puerta</label>
+                        <input type= 'checkbox'></input>
+                    </li>
+                    <li className='item-carrito'>
+                        <label>A Sucursal</label>
+                        <input type= 'checkbox'></input>
                     </li>
                 </ul>
             </div>
             <div className='total'>
-                <label>total: $500</label>
+                <label>Producto + Envio</label>
+                <label>Total: $500</label>
             </div>
             <div className='buttons'>
-                <button>comprar</button>
-                <button>vaciar</button>
+                <button>Comprar</button>
+                <button>Cancelar</button>
             </div>
         </div>
     </div>

@@ -1,0 +1,36 @@
+.filtro{
+    list-style: none;
+    padding-left: 0px;
+    line-height: 21pt;
+}
+
+.lista :hover{
+    border-bottom: 1px solid #d12828;
+}
+
+.cursor{
+    cursor: pointer;
+    color: #343a40;
+}
+
+.cursor:hover{
+    color :#d12828;
+}
+
+
+.limpiar{
+    text-align: end;
+    width: 100%;
+}
+
+.filter-fixed {
+    color: #343a40;
+    position: fixed;
+    width: 14%;
+    word-wrap: break-word;
+}
+
+.body{
+    height: 500px;
+    overflow-y: scroll;
+}
