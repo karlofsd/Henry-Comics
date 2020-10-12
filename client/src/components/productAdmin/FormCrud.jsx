@@ -3,21 +3,34 @@ import Select from "react-select";
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalFooter, ModalHeader }from 'reactstrap';
+import { Alert } from 'reactstrap';
+
 
 const url = 'http://localhost:3001/products';
 
 
                 
-const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, setProducto,categoria, idProduct,setProductGet, productGet,setInsertarProducto,setEliminarProducto})=>{
+const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, setProducto,categoria, idProduct,setProductGet, productGet,setInsertarProducto,setEliminarProducto})=>{
     
     let opcion =[];
+    let opcionEliminar =[];
 
     const [selectedOption, setSelectedOption] = useState([]);
+    const [visible, setVisible] = useState(false);
+    const [successPost, setSuccessPost] = useState()
+    const [selectedDelete, setSelectedDelete] = useState([]);
 
     const peticionPostProducto=async()=>{
         await axios.post(`${url}/create`, product)
         .then(response=>{
             postCategoriProduct(response.data.newProduct.id);
+            setSuccessPost(true);
+            setVisible(true);
+        })
+        .catch((e) => {
+        // setear para que avise que no se creó  
+            setSuccessPost(false);
+            setVisible(true);
         })
     }
 
@@ -30,12 +43,14 @@ const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, set
          });
          
          setInsertarProducto(false);
+         get()
     }
 
     const deleteCategoriProduc = async ()=>{
-        await selectedOption.forEach(ele=>{
+        await selectedDelete.forEach(ele=>{
             axios.delete(`${url}/${product.id}/category/${ele.id}`)
         })
+        get()
     }
 
     const peticionPut=async()=>{
@@ -44,6 +59,7 @@ const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, set
           productGetApi();
           setInsertarProducto(false);
         })
+        get()
     }
 
     const producDelete=async()=>{
@@ -52,12 +68,43 @@ const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, set
             setProductGet(productGet.filter(producto=>producto.id!==idProduct));
             setEliminarProducto(false);
         })
+        get()
     }
 
 
     if(categoria.length>0){
         categoria.forEach(e=>{opcion.push({ value: e.name, label: e.name, id:e.id })})
     }
+    if(editCategory.length>0){
+        editCategory.forEach(e=>{opcionEliminar.push({ value: e.name, label: e.name, id:e.id })})
+    }
+
+    const uploadImage = async (e) => {
+
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        // console.log(base64)
+        setProducto({
+            ...product,
+            image:base64});
+        e.preventDefault();
+    };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result)
+            }
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            }
+        })
+    };
+
 
 
 
@@ -65,7 +112,7 @@ const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, set
     const handleInputChange =(e)=>{//toma el value del input
         setProducto({
             ...product,
-            [e.target.name] : e.target.value
+            [e.target.name] : e.target.value.toLowerCase()
         })
     }
 
@@ -76,11 +123,25 @@ const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, set
             setProducto({});
         }else{
             peticionPut();
+            postCategoriProduct(product.id);
             deleteCategoriProduc()
         }
         setInsertarProducto(false);
+        get()
     }
 
+    const select =(
+        <Select
+            isMulti
+            name="categorias"
+            options={opcion}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={setSelectedOption}
+        />
+    );
+
+    const onDismiss = () => setVisible(false);
 
     return(
         <div>
@@ -111,19 +172,22 @@ const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, set
                             <textarea name='description' onChange={handleInputChange} value={product && product.description}/>
                             <br />
                             <label>Imagen:</label>
-                            <input type='file' accept='image/*' name='image' onChange={handleInputChange} />
-                            {tipoAccion === 'agregar'?
-                                <label>Categoría:</label>:
-                                <label>Eliminar categoría:</label>
+                            <input type='file' /* accept='image/*' */ name='image' onChange={uploadImage} />
+                            <label>Agregar categoría:</label>
+                            {select}
+                            {tipoAccion !== 'agregar'&&
+                                <div>
+                                    <label>Eliminar categoría:</label>
+                                        <Select
+                                            isMulti
+                                            name="categorias"
+                                            options={opcionEliminar}
+                                            className="basic-multi-select"
+                                            classNamePrefix="select"
+                                            onChange={setSelectedDelete}
+                                        />
+                                </div>
                             }
-                            <Select
-                                isMulti
-                                name="categorias"
-                                options={opcion}
-                                className="basic-multi-select"
-                                classNamePrefix="select"
-                                onChange={setSelectedOption}
-                            />
                         </ModalBody>
                         <ModalFooter>
                             {tipoAccion === 'agregar'?
@@ -146,6 +210,14 @@ const FormCrud=({editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, set
                 </ModalFooter>
 
             </Modal>
+            { successPost ?
+                <Alert color="success" isOpen={visible} toggle={onDismiss} >
+                    Producto Agregado Correctamente !!
+                </Alert> :
+                <Alert color="danger" isOpen={visible} toggle={onDismiss} >
+                    Error!! Debe llenar todos los campos
+                </Alert>
+            }
         </div>
     )
 }

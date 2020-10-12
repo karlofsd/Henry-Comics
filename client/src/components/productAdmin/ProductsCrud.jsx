@@ -6,7 +6,7 @@ import FormCrud from './FormCrud';
 const url = 'http://localhost:3001/products';
 const urlCategori ='http://localhost:3001/category/';
 
-const ProductsCrud = () =>{
+const ProductsCrud = ({get}) =>{
 
     //estado:
     const [productGet, setProductGet]=useState([]);
@@ -16,6 +16,7 @@ const ProductsCrud = () =>{
     const [tipoAccion, setTipoaccion] = useState(null)
     const [idProduct, setIdProduct] = useState(null)
     const [producto,setProducto] =useState({});
+    const [editCategory, setEditCategory] =useState([]);
 
 
     //Peticion a la api---------------------------------------------------------------------------------
@@ -35,8 +36,6 @@ const ProductsCrud = () =>{
 
     useEffect(()=>{
         productGetApi();
-        
-
     },[])
 
 
@@ -51,38 +50,13 @@ const ProductsCrud = () =>{
         setIdProduct(id)
     }
     const hangleChangeEdit = (ele)=>{
-        console.log(productGet)
         setTipoaccion(null);
         setInsertarProducto(true);
-        setCategoria(ele.categories)
+        getCategories();
+        setEditCategory(ele.categories)
         setProducto(ele);
     }
 
-    const uploadImage = async (e) => {
-
-        const file = e.target.files[0]
-        const base64 = await convertBase64(file)
-        console.log(base64)
-        setProducto({
-            ...producto,
-            image:base64});
-        e.preventDefault();
-    };
-
-    const convertBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
-
-            fileReader.onload = () => {
-                resolve(fileReader.result)
-            }
-
-            fileReader.onerror = (error) => {
-                reject(error);
-            }
-        })
-    };
 
     return (
         <div>
@@ -114,7 +88,8 @@ const ProductsCrud = () =>{
                     </tbody>
                 </table>
             </div>
-            <FormCrud 
+            <FormCrud
+                get={get}
                 editIsOpen={insertarProducto}
                 deleteIsOpen={eliminarProducto}
                 tipoAccion={tipoAccion}
@@ -128,6 +103,7 @@ const ProductsCrud = () =>{
                 setInsertarProducto={setInsertarProducto}
                 setEliminarProducto={setEliminarProducto}
                 setCategoria={setCategoria}
+                editCategory={editCategory}              
             />
         </div>
     )

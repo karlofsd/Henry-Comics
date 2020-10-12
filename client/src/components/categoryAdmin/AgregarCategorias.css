@@ -1,0 +1,18 @@
+.formCategories{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    align-content: center;
+    width: 500px;
+    margin: 10px;
+}
+    .alert{
+        align-self: start;
+        order:2
+    }
+
+    .formCat{
+        order: 1;
+
+    }

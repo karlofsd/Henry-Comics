@@ -9,6 +9,9 @@ server.post('/', (req, res) => {
         .then((category) => {
             res.status(201).json(category)
         })
+        .catch((e) => {
+            res.status(400).json('No se pudo crear categoria')
+        })
 })
 //S19: Crear Ruta para eliminar Categoria
 // res 200 OK. res Correcto
