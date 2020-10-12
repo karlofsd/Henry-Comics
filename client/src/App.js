@@ -54,7 +54,7 @@ function App() {
 
   return (
     <Router>
-      <NavBar categories={categories} click={clickEnter} />
+      <NavBar categories={categories} click={clickEnter} get={getProducts} />
       <Route
         exact
         path="/"
@@ -68,7 +68,7 @@ function App() {
       <Route
         exact
         path="/catalogo"
-        render={() => <Catalog products={products} />}
+        render={() => <Catalog products={products}/>}
       />
       <Route
         exact
