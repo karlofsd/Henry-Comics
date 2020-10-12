@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "./components/navBar/navBar";
-import "./App.css";
 import { Route, BrowserRouter as Router } from "react-router-dom";
+import "./App.css";
+import NavBar from "./components/navBar/navBar";
 import Catalog from "./components/catalogo/catalog";
 import Product from "./components/productComponent/product";
 import Admin from "./components/admin/admin";
-import LandingCarrousel from "./components/carrousel/carrousel"
+import LandingCarrousel from "./components/carrousel/carrousel";
+import Footer from "./components/footer/footer";
 import axios from "axios";
+
 
 function App() {
 
@@ -55,6 +57,11 @@ function App() {
         exact
         path="/"
         render={() => <LandingCarrousel />}
+      />
+      <Route
+        exact
+        path="/"
+        render={() => <Footer />}
       />
       <Route
         exact
