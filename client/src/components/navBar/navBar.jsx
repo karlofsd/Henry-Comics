@@ -16,6 +16,7 @@ const NavBar = ({categories,click}) => {
     const toggle = () => setIsOpen(!isOpen);
 
     return(
+
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top fixed">
             <div className="divlogo"><Link className="navbar-brand" to="/"><img src={logo} className="logo" /></Link></div>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +48,7 @@ const NavBar = ({categories,click}) => {
                         <Link className="nav-link" to="/admin">Admin Panel</Link>
                     </li>
                 </ul>
+                <div className="mr-5 text-white font-weight-bold henryComics container d-flex justify-content-center col-md-2 footerBorder"><h3>HENRY COMICS</h3></div>
                 <Buscar click={click}/>
             </div>
         </nav>
