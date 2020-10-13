@@ -1,11 +1,4 @@
-.carrito{
-    width: 15%;
-    display: flex;
-    flex-direction: column;
-    border: 2px solid whitesmoke;
-    border-radius: 2%;
-    align-items: center;
-}
+
     .title-carrito{
         text-align: center;
     }
