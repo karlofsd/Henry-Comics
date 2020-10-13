@@ -5,11 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalFooter, ModalHeader }from 'reactstrap';
 import { Alert } from 'reactstrap';
 
-
 const url = 'http://localhost:3001/products';
 
-
-                
 const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, setProducto,categoria, idProduct,setProductGet, productGet,setInsertarProducto,setEliminarProducto})=>{
     
     let opcion =[];
@@ -61,11 +58,11 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
     }
 
     const peticionPut=async()=>{
-        await axios.put(`${url}/${product.id}`, product)
-        .then(response=>{
-          productGetApi();
-          setInsertarProducto(false);
-        })
+        const {data} = await axios.put(`${url}/${product.id}`, product)
+        console.log(data)
+        productGetApi();
+        setInsertarProducto(false);
+        
         get()
     }
 
@@ -112,15 +109,12 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
         })
     };
 
-
-
-
-
     const handleInputChange =(e)=>{//toma el value del input
         setProducto({
             ...product,
             [e.target.name] : e.target.value
         })
+        console.log(product)
     }
 
     const onSubmit = (e)=>{ //las acciones para agregar producto o actualizar.
@@ -164,11 +158,14 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
                             <label>Autor:</label><br />
                             <input type='text' name='author' onChange={handleInputChange} value={product && product.author}/>
                             <br />
+                            <label>Collección:</label><br />
+                            <input type='text' name='collection' onChange={handleInputChange} value={product && product.collection}/>
+                            <br />
                             <label>Año:</label><br />
                             <input type='text' name='year' onChange={handleInputChange} value={product && product.year}/>
                             <br />
-                            <label>Editorial:</label><br />
-                            <input type='text' name='editorial' onChange={handleInputChange} value={product && product.editorial}/>
+                            <label>Serie:</label><br />
+                            <input type='text' name='serie' onChange={handleInputChange} value={product && product.serie}/>
                             <br />
                             <label>Precio:</label><br />
                             <input type='text' name='price' onChange={handleInputChange} value={product && product.price}/>

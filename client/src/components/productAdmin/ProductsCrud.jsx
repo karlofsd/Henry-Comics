@@ -56,6 +56,7 @@ const ProductsCrud = ({get}) =>{
         getCategories();
         setEditCategory(ele.categories)
         setProducto(ele);
+        console.log(ele)
     }
 
     const capitalize = (string) => {

@@ -7,35 +7,35 @@ import './filter.css';
 const Filter = ({products,filter,clean,status}) => { 
     
     const [filtro, setFiltro] = useState(false);
-    const [author, setAuthor] = useState(false);
-    const [editorial, setEditorial] = useState(false);
+    const [collection, setCollection] = useState(false);
+    const [serie, setSerie] = useState(false);
     const [year, setYear] = useState(false);
 
     const toggleF = () =>{
         setFiltro(!filtro);
-        setAuthor(false);
-        setEditorial(false);
+        setCollection(false);
+        setSerie(false);
         setYear(false);
     };
-    const toggleA = () => setAuthor(!author);
-    const toggleE = () => setEditorial(!editorial);
+    const toggleA = () => setCollection(!collection);
+    const toggleE = () => setSerie(!serie);
     const toggleY = () => setYear(!year);
 
     const [filtros,setFiltros] = useState({
-        autor: [],
-        editorial: [],
+        collection: [],
+        serie: [],
         año: [],
     })
 
 
     const getFilterList = () => {
-        let newAutors = products && products.map(p => p.author)
-        let newEditorial = products && products.map(p => p.editorial)
+        let newCollections = products && products.map(p => p.collection)
+        let newSeries = products && products.map(p => p.serie)
         let newAño = products && products.map(p => p.year)
         setFiltros({
             ...filtros,
-            autor: [...new Set(newAutors)],
-            editorial: [...new Set(newEditorial)],
+            collection: [...new Set(newCollections)],
+            serie: [...new Set(newSeries)],
             año: [...new Set(newAño)]
         })
     }
@@ -53,22 +53,22 @@ const Filter = ({products,filter,clean,status}) => {
             <Collapse isOpen={filtro}>
                 <Card>
                 <CardBody className='body' >
-                    <h5  onClick={toggleA} className="cursor">Autor</h5>
-                    <Collapse isOpen={author}>
+                    <h5  onClick={toggleA} className="cursor">Collección</h5>
+                    <Collapse isOpen={collection}>
                         <Card>
                         <CardBody>
                             <ul className='filtro'>
-                                {filtros.autor[0] && filtros.autor.map(a => <li className='lista'><a name={a} type='button' onClick={()=>filter(a,'author')}>{a}</a></li>)}
+                                {filtros.collection[0] && filtros.collection.map(a => <li className='lista'><a name={a} type='button' onClick={()=>filter(a,'collection')}>{a}</a></li>)}
                             </ul>
                         </CardBody>
                         </Card>
                     </Collapse>
-                    <h5 onClick={toggleE} className="cursor">Editorial</h5> 
-                    <Collapse isOpen={editorial}>
+                    <h5 onClick={toggleE} className="cursor">Serie</h5> 
+                    <Collapse isOpen={serie}>
                             <Card>
                             <CardBody>
                                 <ul className='filtro'>
-                                    {filtros.editorial[0] &&filtros.editorial.map(a => <li className='lista'><a name={a} type='button' onClick={()=>filter(a,'editorial')}>{a}</a></li>)}
+                                    {filtros.serie[0] &&filtros.serie.map(a => <li className='lista'><a name={a} type='button' onClick={()=>filter(a,'serie')}>{a}</a></li>)}
                                 </ul>
                             </CardBody>
                             </Card>
