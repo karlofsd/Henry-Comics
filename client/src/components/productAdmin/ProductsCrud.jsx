@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios'
+import axios from 'axios';
 import FormCrud from './FormCrud';
+import './productCrud.css';
 
 const url = 'http://localhost:3001/products';
 const urlCategori ='http://localhost:3001/category/';
@@ -62,10 +63,10 @@ const ProductsCrud = ({get}) =>{
         <div>
             <button className="btn btn-secondary m-3" onClick={()=>handleChange()} >Agrgar producto</button> {/* Abre una  ventana con el formulario para agregar prductos */}
 
-            <div>
-                <table className='table table-bordered table-hover m-3'>
+            <div className='tablaProd'>
+                <table className='table table-hover '>
                     <thead>
-                        <tr className='table table-bordered'>
+                        <tr className='table table-hover'>
                             <th>Id</th>
                             <th>Nombre</th>
                             <th>precio</th>
@@ -80,9 +81,9 @@ const ProductsCrud = ({get}) =>{
                             <td>{ele.name}</td>
                             <td>{ele.price}</td>
                             <td>{ele.stock}</td>
-                            <td className='table w-auto table-bordered'>
-                            <button className="btn btn-secondary btn-sm m-2 p-1" onClick={()=>{hangleChangeEdit(ele)}} >Editar</button>
-                            <button className="btn btn-dark btn-sm m-2 p-1" onClick={()=>{handleChangeDelete(ele.id)}}>Eliminar</button>
+                            <td className='table w-auto table-hover'>
+                                <button className="btn btn-secondary btn-sm m-2 p-1" onClick={()=>{hangleChangeEdit(ele)}} >Editar</button>
+                                <button className="btn btn-dark btn-sm m-2 p-1" onClick={()=>{handleChangeDelete(ele.id)}}>Eliminar</button>
                             </td>
                             </tr>
                         ))}
