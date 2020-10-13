@@ -1,11 +1,11 @@
 .formCategories{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     flex-direction: row;
-    align-content: center;
-    width: 500px;
-    margin: 10px;
+    align-content: flex-start;
+    width: 100%;
+    margin: 20px;
 }
     .alert{
         align-self: start;
