@@ -32,7 +32,7 @@ export default function Product(props) {
                     <div className='data-body'>
                         <label className="info-label"><b>Autor:</b> {capitalize(p.author)}</label>
                         <label className="info-label"><b>Año:</b> {p.year}</label>
-                        <label className="info-label"><b>Editorial:</b> {capitalize(p.editorial)}</label>
+                        <label className="info-label"><b>Serie:</b> {capitalize(p.serie)}</label>
                         <label className="info-label"><b>Calificación:</b> ""</label>
                         <div>
                             <label className="info-label"><b>Descripcion:</b> </label>
