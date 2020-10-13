@@ -58,6 +58,9 @@ const ProductsCrud = ({get}) =>{
         setProducto(ele);
     }
 
+    const capitalize = (string) => {
+        return string.substring(0, 1).toUpperCase() + string.substring(1);
+    }
 
     return (
         <div>
@@ -78,7 +81,7 @@ const ProductsCrud = ({get}) =>{
                         {productGet.map(ele=>(
                             <tr>
                             <td>{ele.id}</td>
-                            <td>{ele.name}</td>
+                            <td>{capitalize(ele.name)}</td>
                             <td>{ele.price}</td>
                             <td>{ele.stock}</td>
                             <td className='table w-auto table-hover'>

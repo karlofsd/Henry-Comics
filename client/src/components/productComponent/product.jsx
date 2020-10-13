@@ -17,7 +17,7 @@ export default function Product(props) {
         setCloseAll(true);
       }
 
-    let {className,modal,toggle,p} = props
+    let {className, modal, toggle, p, capitalize} = props;
 
     return (
         <Modal isOpen={modal} toggle={toggle} className='gral-content' contentClassName='content-title'>
@@ -30,9 +30,9 @@ export default function Product(props) {
                         <img src={p.image} className='img-body'/>
                     </div>
                     <div className='data-body'>
-                        <label className="info-label"><b>Autor:</b> {p.author}</label>
+                        <label className="info-label"><b>Autor:</b> {capitalize(p.author)}</label>
                         <label className="info-label"><b>Año:</b> {p.year}</label>
-                        <label className="info-label"><b>Editorial:</b> {p.editorial}</label>
+                        <label className="info-label"><b>Editorial:</b> {capitalize(p.editorial)}</label>
                         <label className="info-label"><b>Calificación:</b> ""</label>
                         <div>
                             <label className="info-label"><b>Descripcion:</b> </label>
