@@ -66,7 +66,7 @@ const ProductsCrud = ({get}) =>{
             <div className='tablaProd'>
                 <table className='table table-bordered table-hover m-3'>
                     <thead>
-                        <tr className='table table-bordered'>
+                        <tr className='table table-hover'>
                             <th>Id</th>
                             <th>Nombre</th>
                             <th>precio</th>
