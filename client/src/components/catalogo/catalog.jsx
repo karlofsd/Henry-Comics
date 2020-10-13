@@ -5,9 +5,8 @@ import axios from 'axios'
 import './catalog.css'
 import './carrito.css'
 
-export default function Catalog({products,id}) {
+export default function Catalog({products,id,filterStatus,setFilterStatus}) {
     const [filterProducts,setFilterProducts] = useState(products)
-    const [filterStatus, setFilterStatus] = useState(false)
 
     useEffect(() => {
         if(!filterStatus){
@@ -40,7 +39,7 @@ export default function Catalog({products,id}) {
     return (
     <div className='catalogo'>
         <div className='filter'>
-            <Filter products={filterProducts} filter={filter} clean={clean}/>
+            <Filter products={filterProducts} status={filterStatus} filter={filter} clean={clean}/>
         </div>
         <div className='products'>
             {filterProducts && filterProducts.map(p =><ProductCard product={p}/>)}

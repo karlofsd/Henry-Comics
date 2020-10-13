@@ -14,7 +14,7 @@ function App() {
 
   const [products, setProducts] = useState();
   const [categories, setCategories] = useState();
-  const [product, setProduct] = useState();
+  const [filterStatus, setFilterStatus] = useState(false)
 
   useEffect(() => {
     getProducts();
@@ -38,6 +38,7 @@ function App() {
       `http://localhost:3001/products/search?text=${e}`
     );
     setProducts(data);
+    setFilterStatus(false)
   };
 
   const createCategory = async(e) => {
@@ -68,7 +69,7 @@ function App() {
       <Route
         exact
         path="/catalogo"
-        render={() => <Catalog products={products}/>}
+        render={() => <Catalog products={products} filterStatus={filterStatus} setFilterStatus={setFilterStatus}/>}
       />
       <Route
         exact
