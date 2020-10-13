@@ -14,7 +14,11 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    editorial: {
+    collection: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    serie: {
       type: DataTypes.STRING,
       allowNull: false
     },
