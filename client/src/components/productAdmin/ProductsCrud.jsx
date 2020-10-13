@@ -61,7 +61,7 @@ const ProductsCrud = ({get}) =>{
 
     return (
         <div>
-            <button className="btn btn-secondary m-3" onClick={()=>handleChange()} >Agrgar producto</button> {/* Abre una  ventana con el formulario para agregar prductos */}
+            <button className="btn btn-secondary m-3" onClick={()=>handleChange()} >Agregar producto</button> {/* Abre una  ventana con el formulario para agregar prductos */}
 
             <div className='tablaProd'>
                 <table className='table table-hover '>

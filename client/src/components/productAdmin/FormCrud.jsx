@@ -21,7 +21,14 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
     const [selectedDelete, setSelectedDelete] = useState([]);
 
     const peticionPostProducto=async()=>{
-        await axios.post(`${url}/create`, product)
+        let body = {
+            ...product,
+            name: product.name.toLowerCase(),
+            author: product.author.toLowerCase(),
+            description: product.description.toLowerCase(),
+            editorial: product.editorial.toLowerCase()
+        }
+        await axios.post(`${url}/create`, body)
         .then(response=>{
             postCategoriProduct(response.data.newProduct.id);
             setSuccessPost(true);
@@ -110,10 +117,9 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
 
 
     const handleInputChange =(e)=>{//toma el value del input
-        let input = e.target.value.toLowerCase();
         setProducto({
             ...product,
-            [e.target.name] : input
+            [e.target.name] : e.target.value
         })
     }
 
@@ -153,16 +159,16 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
                         <ModalBody>
                             <div><p>Completá los datos correspondientes al nuevo producto.</p></div>
                             <label>Nombre:</label><br />
-                            <input type='text' name='name' onChange={handleInputChange}/>
+                            <input type='text' name='name' onChange={handleInputChange} value={product && product.name}/>
                             <br />
                             <label>Autor:</label><br />
-                            <input type='text' name='author' onChange={handleInputChange}/>
+                            <input type='text' name='author' onChange={handleInputChange} value={product && product.author}/>
                             <br />
                             <label>Año:</label><br />
                             <input type='text' name='year' onChange={handleInputChange} value={product && product.year}/>
                             <br />
                             <label>Editorial:</label><br />
-                            <input type='text' name='editorial' onChange={handleInputChange} />
+                            <input type='text' name='editorial' onChange={handleInputChange} value={product && product.editorial}/>
                             <br />
                             <label>Precio:</label><br />
                             <input type='text' name='price' onChange={handleInputChange} value={product && product.price}/>
@@ -171,7 +177,7 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
                             <input type='text' name='stock' onChange={handleInputChange} value={product && product.stock}/>
                             <br />
                             <label>Descripción:</label><br />
-                            <textarea name='description' onChange={handleInputChange} />
+                            <textarea name='description' onChange={handleInputChange} value={product && product.description}/>
                             <br />
                             <label>Imagen:</label>
                             <input type='file' /* accept='image/*' */ name='image' onChange={uploadImage} />
