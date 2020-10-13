@@ -8,8 +8,8 @@ import './carrito.css';
 
 export default function Carrito(){
     return(
-        <div>
-            <Button color='primary' id='toggler' style={{marginBottom: '1rem'}}>
+        <div className='cart'>
+            <Button color='dark' id='toggler' style={{marginBottom: '1rem'}}>
                 <FontAwesomeIcon icon={faShoppingCart}/>
             </Button>
             <UncontrolledCollapse toggler='#toggler'>
@@ -64,7 +64,7 @@ export default function Carrito(){
                             <label>Total: $500</label>
                         </div>
                         <div className='buttons'>
-                            <Button color='success'>Comprar</Button>
+                            <Button color='dark'>Comprar</Button>
                             <Button color='danger'>Cancelar</Button>
                         </div>
                     </CardBody>

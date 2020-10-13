@@ -122,10 +122,9 @@ server.put("/:id", (req, res, next) => {
 		editorial:req.body.editorial,
 		year:req.body.year,
 		description: req.body.description,
-		category: req.body.category,
 		stock: req.body.stock,
 		price: req.body.price,
-		img: req.body.img,
+		image: req.body.image,
 	  },
 	  {
 		where: {
