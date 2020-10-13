@@ -150,6 +150,7 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
                 <ModalHeader>
                     <form className="form-group" onSubmit={onSubmit}>
                         <ModalBody>
+                            <div><p>Completá los datos correspondientes al nuevo producto.</p></div>
                             <label>Nombre:</label><br />
                             <input type='text' name='name' onChange={handleInputChange} value={product && product.name}/>
                             <br />
@@ -191,10 +192,10 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
                         </ModalBody>
                         <ModalFooter>
                             {tipoAccion === 'agregar'?
-                                <button className="btn btn-success" type='submit'>Agregar</button>:
-                                <button className="btn btn-primary" type='submit'>Editar</button>   
+                                <button className="btn btn-dark" type='submit'>Agregar</button>:
+                                <button className="btn btn-secondary" type='submit'>Editar</button>   
                                 }
-                            <button type='button' className="btn btn-secundary" onClick={()=>setInsertarProducto(false)}>Cancelar</button>
+                            <button type='button' className="btn btn-secondary" onClick={()=>setInsertarProducto(false)}>Cancelar</button>
                         </ModalFooter>
                     </form>
                 </ModalHeader>

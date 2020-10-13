@@ -5,3 +5,22 @@
     width: 85%;
 
 }
+
+.bg-rojo{
+    background-color: rgb(209, 40, 40);
+}
+
+
+a {
+    
+    color: black;
+}
+a:hover{
+    color: darkgrey ;
+}
+a:active{
+    color: lightgrey ;
+}
+a:visited{
+    color: black ;
+}
