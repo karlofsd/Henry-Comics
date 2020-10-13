@@ -4,6 +4,11 @@
     line-height: 21pt;
 }
 
+.filter-header{
+    display: flex;
+    justify-content: space-between;
+}
+
 .lista :hover{
     border-bottom: 1px solid #d12828;
 }
@@ -17,12 +22,6 @@
     color :#d12828;
 }
 
-
-.limpiar{
-    text-align: end;
-    width: 100%;
-}
-
 .filter-fixed {
     color: #343a40;
     position: fixed;
@@ -31,6 +30,6 @@
 }
 
 .body{
-    height: 500px;
-    overflow-y: scroll;
+    /* height: 500px; */
+    overflow-y: auto;
 }
