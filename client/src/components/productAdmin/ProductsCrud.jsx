@@ -62,7 +62,7 @@ const ProductsCrud = ({get}) =>{
         <div>
             <button className="btn btn-secondary m-3" onClick={()=>handleChange()} >Agrgar producto</button> {/* Abre una  ventana con el formulario para agregar prductos */}
 
-            <div>
+            <div className='tablaProd'>
                 <table className='table table-bordered table-hover m-3'>
                     <thead>
                         <tr className='table table-bordered'>
