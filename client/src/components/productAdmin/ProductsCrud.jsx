@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios'
+import axios from 'axios';
 import FormCrud from './FormCrud';
-import './productCrud.css'
+import './productCrud.css';
 
 const url = 'http://localhost:3001/products';
 const urlCategori ='http://localhost:3001/category/';
@@ -60,7 +60,7 @@ const ProductsCrud = ({get}) =>{
 
 
     return (
-        <div className='prod'>
+        <div>
             <button className="btn btn-secondary m-3" onClick={()=>handleChange()} >Agrgar producto</button> {/* Abre una  ventana con el formulario para agregar prductos */}
 
             <div className='tablaProd'>
