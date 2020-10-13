@@ -4,7 +4,7 @@ import { faFilter, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './filter.css';
 
-const Filter = ({products,filter,clean}) => { 
+const Filter = ({products,filter,clean,status}) => { 
     
     const [filtro, setFiltro] = useState(false);
     const [author, setAuthor] = useState(false);
@@ -46,13 +46,13 @@ const Filter = ({products,filter,clean}) => {
 
     return (
         <div className="filter-fixed ">
-            <h5 onClick={toggleF} className="cursor"><FontAwesomeIcon icon={faFilter} /> Filtros</h5>
+            <div className='filter-header'>
+                <h5 onClick={toggleF} className="cursor"><FontAwesomeIcon icon={faFilter} /> Filtros</h5>
+                {status && <button type='button' className='btn btn-danger' onClick={() => clean()}><FontAwesomeIcon icon={faTrash} /></button>}  
+            </div>
             <Collapse isOpen={filtro}>
                 <Card>
                 <CardBody className='body' >
-                    <div className='limpiar'>
-                        <button type='button' className='btn btn-danger' onClick={() => clean()}><FontAwesomeIcon icon={faTrash} /></button>
-                    </div>
                     <h5  onClick={toggleA} className="cursor">Autor</h5>
                     <Collapse isOpen={author}>
                         <Card>
