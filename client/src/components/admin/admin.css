@@ -11,16 +11,16 @@
 }
 
 
-a {
-    
-    color: black;
+.nav a h4 {    
+    color: white;
 }
-a:hover{
+
+.nav a h4:hover{
     color: darkgrey ;
 }
-a:active{
-    color: lightgrey ;
+.nav a h4:active{
+    color: black ;
 }
-a:visited{
+.nav a h4:visited{
     color: black ;
 }

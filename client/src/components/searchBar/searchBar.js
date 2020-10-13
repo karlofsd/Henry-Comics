@@ -19,7 +19,7 @@ export default function Buscar({click}) {
     return (
         <form class="form-inline my-2 my-lg-0" onSubmit={handleSubmit}>
             <input class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search" value={searchText} onChange={handleChange}/>
-            <Link to='/catalogo' class="btn btn-outline-danger my-2 my-sm-0" type="submit" onClick={() => click(lowerCaseText)}>Buscar</Link>
+            <Link to='/catalogo' class="btn btn-danger my-2 my-sm-0" type="submit" onClick={() => click(lowerCaseText)}>Buscar</Link>
         </form>
     );
 }

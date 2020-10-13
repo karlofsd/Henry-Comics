@@ -5,7 +5,7 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-  } from 'reactstrap'
+} from 'reactstrap'
 import {Link} from 'react-router-dom'
 import logo from './img/logo.png'
 
@@ -24,7 +24,7 @@ const NavBar = ({categories,click,get}) => {
             </button>
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav mr-auto">
+                <ul className="navbar-nav">
                     <li className="nav-item active">
                         <Link id="redtext" className="nav-link" to="/"> Home <span className="sr-only">(current)</span></Link>
                     </li>
@@ -48,7 +48,7 @@ const NavBar = ({categories,click,get}) => {
                         <Link className="nav-link" to="/admin">Admin Panel</Link>
                     </li>
                 </ul>
-                <div className="mr-5 text-white font-weight-bold henryComics container d-flex justify-content-center col-md-2 footerBorder"><h3>HENRY COMICS</h3></div>
+                <div className="text-white font-weight-bold henryComics container d-flex justify-content-center col-md-2 footerBorder ml-30vw"><h3>HENRY COMICS</h3></div>
                 <Buscar click={click}/>
             </div>
         </nav>
