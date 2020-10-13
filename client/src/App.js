@@ -75,7 +75,7 @@ function App() {
         exact
         path="/catalogo/category/:id"
         render={({ match }) => (
-          <Catalog id={Number(match.params.id)} />
+          <Catalog id={Number(match.params.id)} filterStatus={filterStatus} setFilterStatus={setFilterStatus}/>
         )}
       />
       <Route
