@@ -8,9 +8,9 @@ module.exports = (sequelize) => {
       validate: {
         notEmpty: true
       }
-    },
+    },  
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         notEmpty: true
