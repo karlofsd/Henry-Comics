@@ -64,7 +64,7 @@ const ProductsCrud = ({get}) =>{
             <button className="btn btn-secondary m-3" onClick={()=>handleChange()} >Agrgar producto</button> {/* Abre una  ventana con el formulario para agregar prductos */}
 
             <div className='tablaProd'>
-                <table className='table table-bordered table-hover m-3'>
+                <table className='table table-hover '>
                     <thead>
                         <tr className='table table-hover'>
                             <th>Id</th>
@@ -81,9 +81,9 @@ const ProductsCrud = ({get}) =>{
                             <td>{ele.name}</td>
                             <td>{ele.price}</td>
                             <td>{ele.stock}</td>
-                            <td className='table w-auto table-bordered'>
-                            <button className="btn btn-secondary btn-sm m-2 p-1" onClick={()=>{hangleChangeEdit(ele)}} >Editar</button>
-                            <button className="btn btn-dark btn-sm m-2 p-1" onClick={()=>{handleChangeDelete(ele.id)}}>Eliminar</button>
+                            <td className='table w-auto table-hover'>
+                                <button className="btn btn-secondary btn-sm m-2 p-1" onClick={()=>{hangleChangeEdit(ele)}} >Editar</button>
+                                <button className="btn btn-dark btn-sm m-2 p-1" onClick={()=>{handleChangeDelete(ele.id)}}>Eliminar</button>
                             </td>
                             </tr>
                         ))}
