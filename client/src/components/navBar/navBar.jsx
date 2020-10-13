@@ -9,7 +9,7 @@ import {
 import {Link} from 'react-router-dom'
 import logo from './img/logo.png'
 
-const NavBar = ({categories,click}) => {
+const NavBar = ({categories,click,get}) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -29,7 +29,7 @@ const NavBar = ({categories,click}) => {
                         <Link id="redtext" className="nav-link" to="/"> Home <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/catalogo">Catalogo</Link>
+                        <Link className="nav-link" to="/catalogo" onClick={()=>get()}>Catalogo</Link>
                     </li>
                     <UncontrolledDropdown nav inNavbar>
                         <DropdownToggle nav caret>
