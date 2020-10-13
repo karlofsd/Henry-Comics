@@ -9,13 +9,14 @@ import {
 import {Link} from 'react-router-dom'
 import logo from './img/logo.png'
 
-const NavBar = ({categories,click}) => {
+const NavBar = ({categories,click,get}) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
 
     return(
+
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top fixed">
             <div className="divlogo"><Link className="navbar-brand" to="/"><img src={logo} className="logo" /></Link></div>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +29,7 @@ const NavBar = ({categories,click}) => {
                         <Link id="redtext" className="nav-link" to="/"> Home <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/catalogo">Catalogo</Link>
+                        <Link className="nav-link" to="/catalogo" onClick={()=>get()}>Catalogo</Link>
                     </li>
                     <UncontrolledDropdown nav inNavbar>
                         <DropdownToggle nav caret>
@@ -47,6 +48,7 @@ const NavBar = ({categories,click}) => {
                         <Link className="nav-link" to="/admin">Admin Panel</Link>
                     </li>
                 </ul>
+                <div className="mr-5 text-white font-weight-bold henryComics container d-flex justify-content-center col-md-2 footerBorder"><h3>HENRY COMICS</h3></div>
                 <Buscar click={click}/>
             </div>
         </nav>

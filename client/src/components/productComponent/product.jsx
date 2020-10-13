@@ -1,5 +1,7 @@
 import React,{useState} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import './product.css'
+
 
 export default function Product(props) {
     
@@ -18,12 +20,32 @@ export default function Product(props) {
     let {className,modal,toggle,p} = props
 
     return (
-        <Modal isOpen={modal} toggle={toggle} className={className}>
-            <ModalHeader toggle={toggle}>{p.name}</ModalHeader>
+        <Modal isOpen={modal} toggle={toggle} className='gral-content' contentClassName='content-title'>
+            <ModalHeader toggle={toggle} className='box-title'> 
+                <h2 className='title'>{p.name}</h2> 
+            </ModalHeader>
             <ModalBody>
-                <p>{p.description}</p>
-                <br />
-                <Button color="success" onClick={toggleNested}>Ver Comentarios</Button>
+                <div className='content-body'>
+                    <div className='content-img'>
+                        <img src={p.image} className='img-body'/>
+                    </div>
+                    <div className='data-body'>
+                        <label className="info-label"><b>Autor:</b> {p.author}</label>
+                        <label className="info-label"><b>Año:</b> {p.year}</label>
+                        <label className="info-label"><b>Editorial:</b> {p.editorial}</label>
+                        <label className="info-label"><b>Calificación:</b> ""</label>
+                        <div>
+                            <label className="info-label"><b>Descripcion:</b> </label>
+                            <p className='description-body'>"{p.description=p.description[0].toUpperCase()+p.description.slice(1)}"</p>
+                        </div>
+                        <div className='price-cart'>
+                            <h3 className='h3-price'>${p.price}</h3>
+                            <Button color="dark" onClick={toggle}>Agregar a carrito</Button>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <Button color="danger" className='comments' onClick={toggleNested}>Ver Comentarios</Button>
                 <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined}>
                     <ModalHeader>Aqui va la lista de comentarios</ModalHeader>
                     <ModalBody>aqui va el input de comentario</ModalBody>
@@ -32,11 +54,7 @@ export default function Product(props) {
                         <Button color="secondary" onClick={toggleAll}>cancelar</Button>
                     </ModalFooter>
                 </Modal>
-            </ModalBody>
-            <ModalFooter>
-                <Button color="primary" onClick={toggle}>Agregar a carrito</Button>{' '}
-                <Button color="secondary" onClick={toggle}>Cancel</Button>
-            </ModalFooter>
+            </ModalBody>           
         </Modal>
     );
 }

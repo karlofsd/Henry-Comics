@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "./components/navBar/navBar";
-import "./App.css";
 import { Route, BrowserRouter as Router } from "react-router-dom";
+import "./App.css";
+import NavBar from "./components/navBar/navBar";
 import Catalog from "./components/catalogo/catalog";
 import Product from "./components/productComponent/product";
 import Admin from "./components/admin/admin";
-import LandingCarrousel from "./components/carrousel/carrousel"
+import LandingCarrousel from "./components/carrousel/carrousel";
+import Footer from "./components/footer/footer";
 import axios from "axios";
+
 
 function App() {
 
   const [products, setProducts] = useState();
   const [categories, setCategories] = useState();
-  const [product, setProduct] = useState();
+  const [filterStatus, setFilterStatus] = useState(false)
 
   useEffect(() => {
     getProducts();
@@ -36,6 +38,7 @@ function App() {
       `http://localhost:3001/products/search?text=${e}`
     );
     setProducts(data);
+    setFilterStatus(false)
   };
 
   const createCategory = async(e) => {
@@ -52,7 +55,7 @@ function App() {
 
   return (
     <Router>
-      <NavBar categories={categories} click={clickEnter} />
+      <NavBar categories={categories} click={clickEnter} get={getProducts} />
       <Route
         exact
         path="/"
@@ -60,14 +63,19 @@ function App() {
       />
       <Route
         exact
+        path="/"
+        render={() => <Footer />}
+      />
+      <Route
+        exact
         path="/catalogo"
-        render={() => <Catalog products={products} />}
+        render={() => <Catalog products={products} filterStatus={filterStatus} setFilterStatus={setFilterStatus}/>}
       />
       <Route
         exact
         path="/catalogo/category/:id"
         render={({ match }) => (
-          <Catalog id={Number(match.params.id)} />
+          <Catalog id={Number(match.params.id)} filterStatus={filterStatus} setFilterStatus={setFilterStatus}/>
         )}
       />
       <Route
@@ -78,7 +86,7 @@ function App() {
       <Route 
         exact path="/admin" 
         render={() => 
-          <div className= 'rutaAdmin'>
+          <div>
             <Admin newCat={getCategories} get={getProducts} getCat={getCategories} categories={categories}/> 
           </div>}
       />

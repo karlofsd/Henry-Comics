@@ -60,16 +60,17 @@ const ProductsCrud = ({get}) =>{
 
     return (
         <div>
-            <button className="btn btn-success" onClick={()=>handleChange()} >Agrgar producto</button> {/* Abre una  ventana con el formulario para agregar prductos */}
+            <button className="btn btn-secondary m-3" onClick={()=>handleChange()} >Agrgar producto</button> {/* Abre una  ventana con el formulario para agregar prductos */}
 
             <div>
-                <table className='table '>
+                <table className='table table-bordered table-hover m-3'>
                     <thead>
-                        <tr>
+                        <tr className='table table-bordered'>
                             <th>Id</th>
                             <th>Nombre</th>
                             <th>precio</th>
                             <th>Stock</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,9 +80,9 @@ const ProductsCrud = ({get}) =>{
                             <td>{ele.name}</td>
                             <td>{ele.price}</td>
                             <td>{ele.stock}</td>
-                            <td>
-                            <button className="btn btn-primary" onClick={()=>{hangleChangeEdit(ele)}} >Editar</button>
-                            <button className="btn btn-danger" onClick={()=>{handleChangeDelete(ele.id)}}>Eliminar</button>
+                            <td className='table w-auto table-bordered'>
+                            <button className="btn btn-secondary btn-sm m-2 p-1" onClick={()=>{hangleChangeEdit(ele)}} >Editar</button>
+                            <button className="btn btn-dark btn-sm m-2 p-1" onClick={()=>{handleChangeDelete(ele.id)}}>Eliminar</button>
                             </td>
                             </tr>
                         ))}

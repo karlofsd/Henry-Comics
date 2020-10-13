@@ -1,0 +1,35 @@
+.filtro{
+    list-style: none;
+    padding-left: 0px;
+    line-height: 21pt;
+}
+
+.filter-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.lista :hover{
+    border-bottom: 1px solid #d12828;
+}
+
+.cursor{
+    cursor: pointer;
+    color: #343a40;
+}
+
+.cursor:hover{
+    color :#d12828;
+}
+
+.filter-fixed {
+    color: #343a40;
+    position: fixed;
+    width: 14%;
+    word-wrap: break-word;
+}
+
+.body{
+    /* height: 500px; */
+    overflow-y: auto;
+}
