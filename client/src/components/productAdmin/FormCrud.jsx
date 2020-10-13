@@ -110,9 +110,10 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
 
 
     const handleInputChange =(e)=>{//toma el value del input
+        let input = e.target.value.toLowerCase();
         setProducto({
             ...product,
-            [e.target.name] : e.target.value.toLowerCase()
+            [e.target.name] : input
         })
     }
 
@@ -152,16 +153,16 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
                         <ModalBody>
                             <div><p>Completá los datos correspondientes al nuevo producto.</p></div>
                             <label>Nombre:</label><br />
-                            <input type='text' name='name' onChange={handleInputChange} value={product && product.name}/>
+                            <input type='text' name='name' onChange={handleInputChange}/>
                             <br />
                             <label>Autor:</label><br />
-                            <input type='text' name='author' onChange={handleInputChange} value={product && product.author}/>
+                            <input type='text' name='author' onChange={handleInputChange}/>
                             <br />
                             <label>Año:</label><br />
                             <input type='text' name='year' onChange={handleInputChange} value={product && product.year}/>
                             <br />
                             <label>Editorial:</label><br />
-                            <input type='text' name='editorial' onChange={handleInputChange} value={product && product.editorial}/>
+                            <input type='text' name='editorial' onChange={handleInputChange} />
                             <br />
                             <label>Precio:</label><br />
                             <input type='text' name='price' onChange={handleInputChange} value={product && product.price}/>
@@ -170,7 +171,7 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
                             <input type='text' name='stock' onChange={handleInputChange} value={product && product.stock}/>
                             <br />
                             <label>Descripción:</label><br />
-                            <textarea name='description' onChange={handleInputChange} value={product && product.description}/>
+                            <textarea name='description' onChange={handleInputChange} />
                             <br />
                             <label>Imagen:</label>
                             <input type='file' /* accept='image/*' */ name='image' onChange={uploadImage} />
