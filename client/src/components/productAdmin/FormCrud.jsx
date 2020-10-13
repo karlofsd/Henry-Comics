@@ -26,7 +26,7 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
             name: product.name.toLowerCase(),
             author: product.author.toLowerCase(),
             description: product.description.toLowerCase(),
-            editorial: product.editorial.toLowerCase()
+            editorial: product.serie.toLowerCase()
         }
         await axios.post(`${url}/create`, body)
         .then(response=>{
