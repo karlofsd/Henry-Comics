@@ -1,17 +1,25 @@
 import React, {useState, useEffect} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import {useSelector, useDispatch} from 'react-redux';
+import { getProducts } from '../../redux/productos';
+import { getCategory } from '../../redux/categorias';
 import axios from 'axios';
 import FormCrud from './FormCrud';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './productCrud.css';
+
 
 const url = 'http://localhost:3001/products';
 const urlCategori ='http://localhost:3001/category/';
 
-const ProductsCrud = ({get}) =>{
+const ProductsCrud = (/*{get}*/) =>{
+
+    const dispatch = useDispatch();
+    const productGet = useSelector(store => store.productState.products)
+    const categoryGet = useSelector(store => store.categoryState.categories)
 
     //estado:
-    const [productGet, setProductGet]=useState([]);
-    const [categoria,setCategoria] = useState([])
+    //const [productGet, setProductGet]=useState([]);
+    //const [categoria,setCategoria] = useState([])
     const [insertarProducto, setInsertarProducto] = useState(false)
     const [eliminarProducto, setEliminarProducto] = useState(false)
     const [tipoAccion, setTipoaccion] = useState(null)
@@ -21,22 +29,23 @@ const ProductsCrud = ({get}) =>{
 
 
     //Peticion a la api---------------------------------------------------------------------------------
-    const productGetApi= async()=>{
-        await axios.get(url)
-        .then(result=>{
-            setProductGet(result.data);
-        })
-    }
+    // const productGetApi= async()=>{
+    //     await axios.get(url)
+    //     .then(result=>{
+    //         setProductGet(result.data);
+    //     })
+    // }
 
-    const getCategories = async()=>{
-        await axios.get(urlCategori)
-        .then(result=>{
-            setCategoria(result.data)
-        })
-    }
+    // const getCategories = async()=>{
+    //     await axios.get(urlCategori)
+    //     .then(result=>{
+    //         setCategoria(result.data)
+    //     })
+    // }
 
     useEffect(()=>{
-        productGetApi();
+        dispatch(getProducts())
+        
     },[])
 
 
@@ -44,7 +53,8 @@ const ProductsCrud = ({get}) =>{
         setTipoaccion('agregar');
         setInsertarProducto(true);
         setProducto({})
-        getCategories();
+        //getCategories();
+        dispatch(getCategory())
     }
     const handleChangeDelete =(id)=>{
         setEliminarProducto(true)
@@ -53,7 +63,8 @@ const ProductsCrud = ({get}) =>{
     const hangleChangeEdit = (ele)=>{
         setTipoaccion(null);
         setInsertarProducto(true);
-        getCategories();
+        //getCategories();
+        dispatch(getCategory())
         setEditCategory(ele.categories)
         setProducto(ele);
         console.log(ele)
@@ -95,20 +106,20 @@ const ProductsCrud = ({get}) =>{
                 </table>
             </div>
             <FormCrud
-                get={get}
+                get={()=>dispatch(getProducts())}
                 editIsOpen={insertarProducto}
                 deleteIsOpen={eliminarProducto}
                 tipoAccion={tipoAccion}
-                productGetApi={productGetApi}
+                //productGetApi={productGetApi}
                 product={producto}
                 setProducto={setProducto}
-                categoria={categoria}
+                category={categoryGet}
                 idProduct={idProduct}
-                setProductGet={setProductGet}
+                // setProductGet={setProductGet}
                 productGet={productGet}
                 setInsertarProducto={setInsertarProducto}
                 setEliminarProducto={setEliminarProducto}
-                setCategoria={setCategoria}
+               // setCategoria={setCategoria}
                 editCategory={editCategory}              
             />
         </div>

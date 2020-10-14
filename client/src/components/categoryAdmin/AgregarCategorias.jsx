@@ -1,64 +1,85 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Alert } from 'reactstrap';
 import axios from 'axios';
-
+import {useSelector, useDispatch} from 'react-redux';
+import { getCategory } from '../../redux/categorias'
 import './AgregarCategorias.css'
-
 
 const url ='http://localhost:3001/category/';
 
-const AgregarCategorias = ({newCat,categories,getCat}) =>{
+const AgregarCategorias = ({/* newCat,categories,getCat */}) =>{
+    
+    const categories = useSelector( store => store.categoryState.categories)
+    const dispatch = useDispatch()
+    
+    useEffect(()=>{
+        dispatch(getCategory())
+    },[])
 
+    // ------------ALERTS--------------------
+    const [successPost, setSuccessPost] = useState()
     const [visible, setVisible] = useState(false);
+    //-----------------------------------------------
+    
+    //-----------INPUT CHANGE------------------
     const [categorie,setCategorie] = useState({
         name:'',
         description:''
     });
-    const [successPost, setSuccessPost] = useState()
-
-    const postCategorie = async() =>{
-        await axios.post(url, categorie)
-        .then(res=>{
-            setSuccessPost(true)
-            setVisible(true);           
-        })
-        .catch((e) => {
-            setSuccessPost(false);
-            setVisible(true);             
-        })
-        newCat()
-    }
-
+    
     const handleInputChange =(e)=>{//toma el value del input
         setCategorie({
             ...categorie,
             [e.target.name] : e.target.value
         })
     }
+    
+    const hangleChangeEdit = (e) => { //SELECCIONA CATEGORIA
+        setCategorie(e)  
+    }
+    //-----------------------------------------
 
-    const handleChangeDelete = async(e) => {
-        await axios.delete(`http://localhost:3001/category/${e}`)
-        getCat()
+    //------------CRUD----------------------
+    const postCategorie = async() =>{ // ------------> CREAR CATEGORIA
+        try{
+            await axios.post(url, categorie)
+            setSuccessPost(true)
+            setVisible(true)
+            dispatch(getCategory())          
+        }
+        catch(e){
+            setSuccessPost(false);
+            setVisible(true);             
+        }
     }
 
-    const handleSave = async()=> {
+    const handleChangeDelete = async(e) => { // --------> ELIMINAR CATEGORIA
+        try{
+            await axios.delete(`http://localhost:3001/category/${e}`)
+            setSuccessPost(true)
+            setVisible(true);        
+        }
+        catch(e){
+            setSuccessPost(false);
+            setVisible(true);            
+        }
+        dispatch(getCategory())
+    }
+
+    const handleSave = async()=> { // -------------> EDITAR CATEGORIA
         await axios.put(`http://localhost:3001/category/${categorie.id}`,categorie)
-        getCat()
+        dispatch(getCategory())
     }
 
-    const hangleChangeEdit = (e) => {
-        setCategorie(e)
-    }
-
-
-    const onSubmit = (e)=>{ //las acciones para agregar producto o actualizar.
+    const onSubmit = (e)=>{ // DESPUES DE ENVIAR
         e.preventDefault();
         setCategorie({
             name:'',
             description:''
         })
     }
+    //---------------------------------------------------------------------
 
     const onDismiss = () => setVisible(false);
 
@@ -82,10 +103,10 @@ const AgregarCategorias = ({newCat,categories,getCat}) =>{
                     </form>
                     {successPost ? 
                         <Alert className= 'alert' color="success" isOpen={visible} toggle={onDismiss} >
-                        ¡Categoría agregada!
+                        ¡Operacion exitosa!
                         </Alert> :
                         <Alert className= 'alert' color="danger" isOpen={visible} toggle={onDismiss} >
-                        Por favor complete todos los campos.
+                        Error !!
                         </Alert>
                     }
                 </div>
@@ -104,10 +125,12 @@ const AgregarCategorias = ({newCat,categories,getCat}) =>{
                                 <td className="w-50">{ele.name}</td>
                                 <td className="w-50">
                                     <button className="btn btn-secondary btn-sm m-2 p-1" onClick={()=>{hangleChangeEdit(ele)}} >Editar</button>
+                                  
                                     <button className="btn btn-dark btn-sm m-2 p-1" onClick={()=>{handleChangeDelete(ele.id)}}>Eliminar</button>
                                 </td>
                             </tr>
                         ))}
+                     
                         </tbody>
                     </table>
                 </div>

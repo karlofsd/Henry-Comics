@@ -8,40 +8,38 @@ import Admin from "./components/admin/admin";
 import LandingCarrousel from "./components/carrousel/carrousel";
 import Footer from "./components/footer/footer";
 import axios from "axios";
-
+import {useDispatch,useSelector} from 'react-redux'  //hooks
+import {getProducts} from './redux/productos'        //actions
 
 function App() {
-
-  const [products, setProducts] = useState();
-  const [categories, setCategories] = useState();
-  const [filterStatus, setFilterStatus] = useState(false)
+  // ---funciones Redux---
+  const dispatch = useDispatch() 
+  const products = useSelector( store => store.productState.products)
+             
+  // const [products, setProducts] = useState(); // ELIMINAR
+  // const [categories, setCategories] = useState(); // ELIMINAR
+  // const [filterStatus, setFilterStatus] = useState(false) //ELIMINAR
 
   useEffect(() => {
-    getProducts();
-    getCategories();
+    /* dispatch(getProducts())
+    getCategories(); */
     console.log('app render')
-  },[]);
+  },[products]);
 
-  const getProducts = async () => {
-    const { data } = await axios.get(`http://localhost:3001/products/`);
-    setProducts(data);
-    console.log('productos')
-  };
-
-  const getCategories = async () => {
+  //---ELIMINAR---
+  // const getProducts = async () => {
+  //   const { data } = await axios.get(`http://localhost:3001/products/`);
+  //   setProducts(data);
+  //   console.log('productos')
+  // };
+  
+  /* const getCategories = async () => {
     const { data } = await axios.get(`http://localhost:3001/category/`);
     setCategories(data);
-  };
+  }; */
+  //-------------
 
-  const clickEnter = async (e) => {
-    const { data } = await axios.get(
-      `http://localhost:3001/products/search?text=${e}`
-    );
-    setProducts(data);
-    setFilterStatus(false)
-  };
-
-  const createCategory = async(e) => {
+  /* const createCategory = async(e) => {
     const {data} = await axios.post('http://localhost:3001/category',e)
     alert(data.message)
     getCategories()
@@ -50,12 +48,12 @@ function App() {
   const createProduct = async(e) => {
     const {data} = await axios.post('http://localhost:3001/products/create',e)
     alert(data.message)
-    getProducts() 
-  }
+    getProducts()
+  } */
 
   return (
     <Router>
-      <NavBar categories={categories} click={clickEnter} get={getProducts} />
+      <NavBar /* categories={categories}  *//* click={clickEnter} */ get={getProducts} />
       <Route
         exact
         path="/"
@@ -69,14 +67,14 @@ function App() {
       <Route
         exact
         path="/catalogo"
-        render={() => <Catalog products={products} filterStatus={filterStatus} setFilterStatus={setFilterStatus}/>}
+        render={() => <Catalog products={products}/*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
       />
       <Route
         exact
         path="/catalogo/category/:id"
-        render={({ match }) => (
-          <Catalog id={Number(match.params.id)} filterStatus={filterStatus} setFilterStatus={setFilterStatus}/>
-        )}
+        render={({ match }) => {
+          return <Catalog id={Number(match.params.id)} products={products}/* filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>
+        }}
       />
       <Route
         exact
@@ -87,7 +85,7 @@ function App() {
         exact path="/admin" 
         render={() => 
           <div>
-            <Admin newCat={getCategories} get={getProducts} getCat={getCategories} categories={categories}/> 
+            <Admin /* newCat={getCategories}  get={getProducts} /* getCat={getCategories} *//*  categories={categories} *//> 
           </div>}
       />
     </Router>

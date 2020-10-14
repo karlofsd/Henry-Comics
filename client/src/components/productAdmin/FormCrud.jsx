@@ -7,14 +7,14 @@ import { Alert } from 'reactstrap';
 
 const url = 'http://localhost:3001/products';
 
-const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGetApi, product, setProducto,categoria, idProduct,setProductGet, productGet,setInsertarProducto,setEliminarProducto})=>{
+ const FormCrud=({get,editCategory,editIsOpen,deleteIsOpen,tipoAccion,  product, setProducto, category , idProduct, productGet,setInsertarProducto,setEliminarProducto})=>{
     
     let opcion =[];
     let opcionEliminar =[];
 
     const [selectedOption, setSelectedOption] = useState([]);
     const [visible, setVisible] = useState(false);
-    const [successPost, setSuccessPost] = useState()
+    const [successPost, setSuccessPost] = useState();
     const [selectedDelete, setSelectedDelete] = useState([]);
 
     const peticionPostProducto=async()=>{
@@ -38,46 +38,42 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
         })
     }
 
-    const postCategoriProduct = async (idProduct)=>{
-        await selectedOption.forEach(ele=>{
+    const postCategoriProduct = async (idProduct) => {
+        await selectedOption.forEach(ele => {
             axios.post(`${url}/${idProduct}/category/${ele.id}`)
-            .then(response=>{
-                productGetApi()
+            .then(response => {
+                get()
             })
          });
          
          setInsertarProducto(false);
-         get()
     }
 
-    const deleteCategoriProduc = async ()=>{
-        await selectedDelete.forEach(ele=>{
+    const deleteCategoriProduct = async () => {
+        await selectedDelete.forEach(ele => {
             axios.delete(`${url}/${product.id}/category/${ele.id}`)
         })
         get()
     }
 
-    const peticionPut=async()=>{
+    const peticionPut = async() => {
         const {data} = await axios.put(`${url}/${product.id}`, product)
         console.log(data)
-        productGetApi();
         setInsertarProducto(false);
-        
         get()
     }
 
-    const producDelete=async()=>{
+    const producDelete = async() => {
         await axios.delete(`${url}/${idProduct}`)
         .then(response=>{
-            setProductGet(productGet.filter(producto=>producto.id!==idProduct));
+            //setProductGet(productGet.filter(producto=>producto.id!==idProduct));
+            get();
             setEliminarProducto(false);
-        })
-        get()
+        })        
     }
 
-
-    if(categoria.length>0){
-        categoria.forEach(e=>{opcion.push({ value: e.name, label: e.name, id:e.id })})
+    if(category.length>0){
+        category.forEach(e=>{opcion.push({ value: e.name, label: e.name, id:e.id })})
     }
     if(editCategory.length>0){
         editCategory.forEach(e=>{opcionEliminar.push({ value: e.name, label: e.name, id:e.id })})
@@ -125,7 +121,7 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
         }else{
             peticionPut();
             postCategoriProduct(product.id);
-            deleteCategoriProduc()
+            deleteCategoriProduct()
         }
         setInsertarProducto(false);
         get()
@@ -145,8 +141,7 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
     const onDismiss = () => setVisible(false);
 
     return(
-        <div>
-            
+        <div>            
             <Modal isOpen={editIsOpen}>
                 <ModalHeader>
                     <form className="form-group" onSubmit={onSubmit}>
@@ -207,20 +202,19 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
 
             <Modal isOpen={deleteIsOpen}>
                 <ModalBody>
-                    Estás seguro que deseas eliminar el producto
+                    ¿Estás seguro que deseas eliminar el producto?
                 </ModalBody>
                 <ModalFooter>
                     <button className="btn btn-danger" onClick={()=>{producDelete()}}>Si</button>
                     <button  className="btn btn-secundary" onClick={()=>{setEliminarProducto(false)}}>No</button>
                 </ModalFooter>
-
             </Modal>
             { successPost ?
                 <Alert color="success" isOpen={visible} toggle={onDismiss} >
-                    Producto Agregado Correctamente !!
+                    ¡Operación exitosa!
                 </Alert> :
                 <Alert color="danger" isOpen={visible} toggle={onDismiss} >
-                    Error!! Debe llenar todos los campos
+                    Error, debe llenar todos los campos.
                 </Alert>
             }
         </div>
