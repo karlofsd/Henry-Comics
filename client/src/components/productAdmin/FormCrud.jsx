@@ -18,7 +18,14 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
     const [selectedDelete, setSelectedDelete] = useState([]);
 
     const peticionPostProducto=async()=>{
-        await axios.post(`${url}/create`, product)
+        let body = {
+            ...product,
+            name: product.name.toLowerCase(),
+            author: product.author.toLowerCase(),
+            description: product.description.toLowerCase(),
+            serie: product.serie.toLowerCase()
+        }
+        await axios.post(`${url}/create`, body)
         .then(response=>{
             postCategoriProduct(response.data.newProduct.id);
             setSuccessPost(true);
@@ -105,7 +112,7 @@ const FormCrud=({get, editCategory,editIsOpen,deleteIsOpen,tipoAccion, productGe
     const handleInputChange =(e)=>{//toma el value del input
         setProducto({
             ...product,
-            [e.target.name] : e.target.value.toLowerCase()
+            [e.target.name] : e.target.value
         })
         console.log(product)
     }

@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import './productCard.css'
 import Product from './product'
 
-export default function ProductCard({product}) {
+export default function ProductCard({product, capitalize}) {
     
     /* const [detail,setDetail] = useState(false) */
     const [modal, setModal] = useState(false);
@@ -26,7 +26,7 @@ export default function ProductCard({product}) {
                 </div>
             </div>
         </div>
-        <Product modal={modal} toggle={toggle} p={product} />
+        <Product modal={modal} toggle={toggle} p={product} capitalize={capitalize} />
         </Fragment>
     );
 }
