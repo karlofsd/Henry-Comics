@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Buscar from '../searchBar/searchBar'
 import {
     UncontrolledDropdown,
@@ -8,12 +8,20 @@ import {
 } from 'reactstrap'
 import {Link} from 'react-router-dom'
 import logo from './img/logo.png'
+import {useDispatch, useSelector} from 'react-redux'
+import {getProducts,filterCategory} from '../../redux/productos'
+import {getCategory} from '../../redux/categorias'
 
-const NavBar = ({categories,click,get}) => {
-
+const NavBar = ({/* categories, */click,get}) => {
+    const categories = useSelector( store => store.categoryState.categories)
+    const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
+
+    useEffect(()=> {
+        dispatch(getCategory())
+    },[])
 
     return(
 
@@ -28,7 +36,7 @@ const NavBar = ({categories,click,get}) => {
                         <Link id="redtext" className="nav-link" to="/"> Home <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/catalogo" onClick={()=>get()}>Catalogo</Link>
+                        <Link className="nav-link" to="/catalogo" onClick={()=> dispatch(getProducts())}>Catalogo</Link>
                     </li>
                     <UncontrolledDropdown nav inNavbar>
                         <DropdownToggle nav caret>
@@ -36,7 +44,7 @@ const NavBar = ({categories,click,get}) => {
                         </DropdownToggle>
                         <DropdownMenu left>
                             {categories && categories.map(c =>
-                            <Link to={`/catalogo/category/${c.id}`}>
+                            <Link to={`/catalogo/category/${c.id}`} /* onClick={()=> dispatch(filterCategory(c.id))} */>
                                 <DropdownItem>{c.name}</DropdownItem>
                             </Link>)}
                         </DropdownMenu>
