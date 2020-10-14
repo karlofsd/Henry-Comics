@@ -17,9 +17,16 @@ const url = 'http://localhost:3001/products';
     const [successPost, setSuccessPost] = useState();
     const [selectedDelete, setSelectedDelete] = useState([]);
 
-    const peticionPostProducto = async() => {
-        await axios.post(`${url}/create`, product)
-        .then(response => {
+    const peticionPostProducto=async()=>{
+        let body = {
+            ...product,
+            name: product.name.toLowerCase(),
+            author: product.author.toLowerCase(),
+            description: product.description.toLowerCase(),
+            serie: product.serie.toLowerCase()
+        }
+        await axios.post(`${url}/create`, body)
+        .then(response=>{
             postCategoriProduct(response.data.newProduct.id);
             setSuccessPost(true);
             setVisible(true);
@@ -101,7 +108,7 @@ const url = 'http://localhost:3001/products';
     const handleInputChange =(e)=>{//toma el value del input
         setProducto({
             ...product,
-            [e.target.name] : e.target.value.toLowerCase()
+            [e.target.name] : e.target.value
         })
         console.log(product)
     }

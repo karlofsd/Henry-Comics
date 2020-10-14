@@ -70,10 +70,13 @@ const ProductsCrud = (/*{get}*/) =>{
         console.log(ele)
     }
 
+    const capitalize = (string) => {
+        return string.substring(0, 1).toUpperCase() + string.substring(1);
+    }
 
     return (
         <div>
-            <button className="btn btn-secondary m-3" onClick={()=>handleChange()} >Agrgar producto</button> {/* Abre una  ventana con el formulario para agregar prductos */}
+            <button className="btn btn-secondary m-3" onClick={()=>handleChange()} >Agregar producto</button> {/* Abre una  ventana con el formulario para agregar prductos */}
 
             <div className='tablaProd'>
                 <table className='table table-hover '>
@@ -90,7 +93,7 @@ const ProductsCrud = (/*{get}*/) =>{
                         {productGet.map(ele=>(
                             <tr>
                             <td>{ele.id}</td>
-                            <td>{ele.name}</td>
+                            <td>{capitalize(ele.name)}</td>
                             <td>{ele.price}</td>
                             <td>{ele.stock}</td>
                             <td className='table w-auto table-hover'>
