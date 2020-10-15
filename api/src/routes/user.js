@@ -99,3 +99,69 @@ server.post("/user/add", function (req, res) {
   //         .json({ message: "No se encontro el usuario.", data: err });
   //     });
   // });
+
+server.delete('/user/:idUser/cart',(req, res)=>{
+  const {idUser} = req.params;
+  const item = req.body;
+
+  Orden.findAll({
+    where: {
+      userId: idUser,
+      status:'carrito',
+      priceNow:0
+    }
+    })
+    .then(carrito=>{
+      LineaDeOrden.destroy({
+        where: {
+          productId: item.id, 
+          ordenId:carrito[0].id}
+        })
+        .then(resp=>{
+          res.status(200).json({ message: "success" });
+        })
+        .catch(error=>{
+          res.status(404).json({ message: "Not found" });
+        })
+    })
+    .catch(error=>{
+      res.status(404).json({ message: "Not found" });
+    });
+});
+
+server.put('/user/:idUser/cart',(req, res)=>{
+  const {idUser} = req.params;
+  const item = req.body;
+
+  Orden.findAll({
+      where:{
+          userId: idUser,
+          status:'carrito',
+          priceNow:0
+      }
+  })
+  .then(carrito=>{
+    LineaDeOrden.update(
+      {
+        quantity: item.quantity
+      },
+      {
+        where: {
+          ordenId: carrito[0].id, 
+          productId: item.id
+        }
+      })
+      .then(resp=>{
+        res.status(200).json({ message: 'success' });
+      })
+      .catch(error=>{
+        res.status(404).json({ message: 'Not found',error });
+      })
+    })
+    .catch(error=>{
+      res.status(404).json({ message: "Not found" , error});
+    })
+})  
+
+
+module.exports = server;

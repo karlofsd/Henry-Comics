@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { validator } = require('sequelize/types/lib/utils/validator-extras');
+
 
 module.exports = (sequelize) => {
 
