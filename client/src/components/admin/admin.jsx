@@ -1,6 +1,7 @@
 import React from 'react';
 import AgregarCategorias from '../categoryAdmin/AgregarCategorias';
 import ProductsCrud from '../productAdmin/ProductsCrud';
+import Orden from '../ordenes/orden'
 import { BrowserRouter  as Router, Route, Link} from 'react-router-dom';
 import './admin.css';
 
@@ -13,11 +14,16 @@ import './admin.css';
                         <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
                             <Link to = '/admin/category' className="text-decoration-none"><h4>Categorias</h4></Link>
                         </a>
-                        <div className="row cPanel-productos">
-                            <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
-                                <Link to = '/admin/product' className="text-decoration-none"><h4>Productos</h4></Link>
-                            </a>
-                        </div>
+                    </div>
+                    <div className="row cPanel-productos">
+                        <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+                            <Link to = '/admin/product' className="text-decoration-none"><h4>Productos</h4></Link>
+                        </a>
+                    </div>
+                    <div className="row cPanel-ordenes">
+                        <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+                            <Link to = '/admin/ordenes' className="text-decoration-none"><h4>Ordenes</h4></Link>
+                        </a>
                     </div>
                 </ul>
             </div>            
@@ -35,6 +41,16 @@ import './admin.css';
                         exact path = '/admin/product'
                         render = {()=>
                             <ProductsCrud /> 
+                            // get={get} (exProps)
+                            //SE BORRAN LAS PROPS
+                        }
+                    />
+                </div>
+                <div>
+                    <Route
+                        exact path = '/admin/ordenes'
+                        render = {()=>
+                            <Orden /> 
                             // get={get} (exProps)
                             //SE BORRAN LAS PROPS
                         }

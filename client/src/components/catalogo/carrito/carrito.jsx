@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faCartArrowDown } from '@fortawesome/free-solid-svg-icons'
 import './carrito.css';
 
-
-
 export default function Carrito(){
     return(
         <div className='cart'>
@@ -47,7 +45,7 @@ export default function Carrito(){
                                     </div>
                                 </li>
                             </ul>
-                            <ul className='list-carrito'>
+                            {/* <ul className='list-carrito'>
                                 <label>Envio: </label>
                                 <li className='item-carrito'>
                                     <label>En Puerta</label>                                    
@@ -57,7 +55,7 @@ export default function Carrito(){
                                     <label>A Sucursal</label>
                                     <Input addon type='checkbox' arial-label='Check'/>
                                 </li>
-                            </ul>
+                            </ul> */}
                         </div>
                         <div className='total'>
                             <label>Producto + Envio</label>

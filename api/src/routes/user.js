@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { User } = require('../db');
+const { User, Orden, LineaDeOrden, Product } = require('../db');
 
 
 server.get('/', (req, res, next)=>{
@@ -163,5 +163,66 @@ server.put('/user/:idUser/cart',(req, res)=>{
     })
 })  
 
+  //Crea un nuevo carro al usuario si no esta creado y sube productos.
+  server.post('/:idUser/cart',(req, res)=>{
+    const {idUser} = req.params;
+    const item = req.body;
 
-module.exports = server;
+    Orden.findOrCreate({
+        where:{
+            userId: idUser,
+            status:'carrito'
+        }
+
+    }).then(ress=>{
+        LineaDeOrden.findOrCreate({
+            where:{
+                productId:item.id,
+                ordenId: ress[0].id,
+                price: item.price,
+            }
+
+        })
+        .then(resp =>{
+
+            if(resp[1]===false){
+                LineaDeOrden.increment(
+                    {quantity: +1},
+                    {where:{productId:item.id, ordenId:resp[0].ordenId}}
+                )
+                .then(respuesta=>{
+                    res.send(respuesta);
+                })
+                .catch(err=>{
+
+                  res.status(404).json({ message: "Not found" });
+                })
+            }else{
+                res.send(resp)
+            }
+        })
+        .catch(err=>{
+            res.json(err)
+        })
+    })
+
+});
+
+//Trae todos los producto del carrito
+server.get('/:idUser/cart',(req,res)=>{
+    const {idUser} = req.params;
+
+    Orden.findOne({
+        where:{userId:idUser, status:'carrito'},
+        include:Product
+    })
+    .then(ress=>{
+        res.json(ress)
+    })
+    .catch(err=>{
+       res.status(404).json({ message: "Not found" });
+    })
+});
+
+
+  module.exports = server;
