@@ -6,11 +6,11 @@ module.exports = (sequelize) => {
   sequelize.define('user', {
     firstname:{
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     lastname:{
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     username:{
       type: DataTypes.STRING,
