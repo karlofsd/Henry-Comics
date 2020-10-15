@@ -7,7 +7,11 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER
         },
         quantity:{
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            defaultValue: 1,
+			validate: {
+				min: 0,
+			},
         }
     });
   };
