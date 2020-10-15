@@ -1,0 +1,36 @@
+.orden{
+    width:40%;
+    height: 60vh;
+    margin: auto
+}
+
+.orden .top{
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+    .orden h2{
+        padding: 10px;
+    }
+    .orden table{
+        width: 80%;
+    }
+    .orden .datos{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+.orden .bottom{
+    background: rgba(0,0,0,0.7);
+    color: white;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px;
+    height: 30%;
+    width: 100%;
+}
