@@ -9,11 +9,13 @@ import './ordenesAdmin.css'
 const OrderTable = () => {
 
   const [orders, setOrders ] = useState([]);
-  const [order, setOrder] = useState();  
-
-  const [modal, setModal] = useState(false);
-
-  const toggle = () => setModal(!modal);
+  const [order, setOrder ] = useState();
+ 
+  // const [modal, setModal] = useState(false);
+  const toggle = (order) => {
+    // setModal(!modal);
+    setOrder(order);
+  }
 
   useEffect(() => {
     getOrders()
@@ -25,26 +27,27 @@ const OrderTable = () => {
   } 
 
   return (
-    // <div>
+    <div className='gral-order'>
+      <div className='lista-orden'>
       <ListGroup>
         {
           orders && orders.map((order) => (
-            <ListGroupItem tag="button" action>
+            <ListGroupItem tag="button" onClick={() => toggle(order)}>
             <Badge pill>{order.id}</Badge>
-            {'   ' + order.status.toUpperCase()}
-            <button className="btn btn-secondary m-3" onClick={toggle}>Detalle</button>
-              <Modal isOpen={modal} toggle={toggle}>
-                <Orden order={order} />
-              </Modal>
+            {'   ' + order.status.toUpperCase()}        
             </ListGroupItem>         
           ))
         }    
       </ListGroup>
-      // </div>
+      </div>
+      <div className='detalle-orden'>
+      { 
+        order && <Orden order={order} />              
+      }
+      </div>
+    </div>
   );
-
 }
-
 
 //   return (
 //     <div>

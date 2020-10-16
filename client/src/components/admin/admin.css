@@ -24,6 +24,9 @@
 .nav a h4:visited{
     color: black ;
 } */
+.admin{
+    margin-bottom: 30px;
+}
 
 .admin .nav-link{
     color:white

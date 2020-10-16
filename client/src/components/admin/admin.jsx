@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import AgregarCategorias from '../categoryAdmin/AgregarCategorias';
 import ProductsCrud from '../productAdmin/ProductsCrud';
 
-import Orden from '../ordenes/orden'
+import OrderTable from '../ordenes/ordenesAdmin'
 //import { BrowserRouter  as Router, Route, Link} from 'react-router-dom';
 import './admin.css';
 
@@ -107,7 +107,7 @@ const Admin = ({/*newCat,get,categories,getCat*/}) => {
           <ProductsCrud/>
         </TabPane>
         <TabPane tabId="3">
-          <Orden/>
+          <OrderTable/>
         </TabPane>
       </TabContent>
     </div>
