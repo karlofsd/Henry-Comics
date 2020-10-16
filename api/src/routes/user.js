@@ -12,7 +12,7 @@ User.findAll()
 
 
 
-server.post("/user/add", function (req, res) {
+server.post("/add", function (req, res) {
     var { firstname, lastname, username, email, password } = req.body;
     User.create(
       {
@@ -129,7 +129,7 @@ server.delete('/user/:idUser/cart',(req, res)=>{
     });
 });
 
-server.put('/user/:idUser/cart',(req, res)=>{
+server.put('/:idUser/cart',(req, res)=>{
   const {idUser} = req.params;
   const item = req.body;
 
@@ -224,5 +224,22 @@ server.get('/:idUser/cart',(req,res)=>{
     })
 });
 
+// S45 ruta que devuelve todas las ordenes de un usuario
+server.get('/:id/orders', (req, res) => {
+  const { id } = req.params;
+
+  Orden.findAll({
+    where:{
+      userId: id
+    },
+    include: Product
+  })
+  .then((order) => {
+    res.status(200).json(order)
+  })
+  .catch((err) => {
+    res.status(404).json({message: err})
+  })
+});
 
   module.exports = server;
