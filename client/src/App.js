@@ -69,13 +69,13 @@ function App() {
       <Route
         exact
         path="/catalogo"
-        render={() => <Catalog products={products}/*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
+        render={() => <Catalog products={products.rows} count={products.count}/*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
       />
       <Route
         exact
         path="/catalogo/category/:id"
         render={({ match }) => {
-          return <Catalog id={Number(match.params.id)} products={products}/* filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>
+          return <Catalog id={Number(match.params.id)} products={products.rows} count={products.count}/* filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>
         }}
       />
       <Route
@@ -91,7 +91,7 @@ function App() {
           </div>}
       />
       <Route 
-        exact path="/newUser" 
+        exact path="/signup" 
         render={() => 
           <div>
             <UserForm /> 

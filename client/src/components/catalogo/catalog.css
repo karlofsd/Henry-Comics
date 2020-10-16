@@ -14,9 +14,16 @@
     width: 65%;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
 }
 .carrito{
     display: flex;
     flex-direction: column;
     width: 20%;
+}
+
+#pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

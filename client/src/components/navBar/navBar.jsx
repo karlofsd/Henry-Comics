@@ -50,7 +50,10 @@ const NavBar = ({/* categories, */click,get}) => {
                         </DropdownMenu>
                     </UncontrolledDropdown>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/carrito">Cart</Link>
+                        <Link className="nav-link" to="/signup">Registrarse</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/login">Iniciar Sesión</Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/admin">Admin Panel</Link>

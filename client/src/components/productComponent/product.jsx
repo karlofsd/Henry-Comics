@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import React,{useState} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './product.css'
@@ -18,6 +19,16 @@ export default function Product(props) {
       }
 
     let {className, modal, toggle, p, capitalize} = props;
+    
+    const addToCart = async() => {
+        let item = {
+            id : p.id,
+            price: p.price
+        }
+        const {data} = await Axios.post(`http://localhost:3001/user/1/cart`,item)
+        toggle()
+        alert(data)
+    }
 
     return (
         <Modal isOpen={modal} toggle={toggle} className='gral-content' contentClassName='content-title'>
@@ -40,7 +51,7 @@ export default function Product(props) {
                         </div>
                         <div className='price-cart'>
                             <h3 className='h3-price'>${p.price}</h3>
-                            <Button color="dark" onClick={toggle}>Agregar a carrito</Button>
+                            <Button color="dark" onClick={addToCart}>Agregar a carrito</Button>
                         </div>
                     </div>
                 </div>
