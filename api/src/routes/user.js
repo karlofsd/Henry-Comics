@@ -21,9 +21,6 @@ server.post("/add", function (req, res) {
         username: username,
         email: email,
         password: password,
-      },
-      {
-        fields: ["firstname", "lastname", "username", "email", "password"],
       }
     )
       .then(function (user) {
@@ -173,7 +170,6 @@ server.put('/:idUser/cart',(req, res)=>{
             userId: idUser,
             status:'carrito'
         }
-
     }).then(ress=>{
         LineaDeOrden.findOrCreate({
             where:{
@@ -181,7 +177,6 @@ server.put('/:idUser/cart',(req, res)=>{
                 ordenId: ress[0].id,
                 price: item.price,
             }
-
         })
         .then(resp =>{
 
