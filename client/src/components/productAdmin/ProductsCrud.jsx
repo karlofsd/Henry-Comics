@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { allProducts } from '../../redux/productos';
+import { getProducts } from '../../redux/productos';
 import { getCategory } from '../../redux/categorias';
 import axios from 'axios';
 import FormCrud from './FormCrud';
@@ -44,7 +44,7 @@ const ProductsCrud = (/*{get}*/) =>{
     // }
 
     useEffect(()=>{
-        dispatch(allProducts())   
+        dispatch(getProducts())   
     },[])
 
 
@@ -105,7 +105,7 @@ const ProductsCrud = (/*{get}*/) =>{
                 </table>
             </div>
             <FormCrud
-                get={()=>dispatch(allProducts())}
+                get={()=>dispatch(getProducts())}
                 editIsOpen={insertarProducto}
                 deleteIsOpen={eliminarProducto}
                 tipoAccion={tipoAccion}

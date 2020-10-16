@@ -17,7 +17,7 @@ function App() {
   // ---funciones Redux---
   const dispatch = useDispatch() 
   const products = useSelector( store => store.productState.products)
-             
+  const status = useSelector( store => store.productState.statusFilter)
   // const [products, setProducts] = useState(); // ELIMINAR
   // const [categories, setCategories] = useState(); // ELIMINAR
   // const [filterStatus, setFilterStatus] = useState(false) //ELIMINAR
@@ -26,7 +26,7 @@ function App() {
     /* dispatch(getProducts())
     getCategories(); */
     console.log('app render')
-  },[products]);
+  },[]);
 
   //---ELIMINAR---
   // const getProducts = async () => {
@@ -55,7 +55,7 @@ function App() {
 
   return (
     <Router>
-      <NavBar /* categories={categories}  *//* click={clickEnter} */ get={getProducts} />
+      <NavBar /* categories={categories}  *//* click={clickEnter} */ />
       <Route
         exact
         path="/"
@@ -69,14 +69,19 @@ function App() {
       <Route
         exact
         path="/catalogo"
-        render={() => <Catalog products={products.rows} count={products.count}/*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
+        render={({location}) => <Catalog products={products} status={status}/*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
       />
       <Route
         exact
         path="/catalogo/category/:id"
         render={({ match }) => {
-          return <Catalog id={Number(match.params.id)} products={products.rows} count={products.count}/* filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>
+          return <Catalog id={Number(match.params.id)} products={products} status={status}/* filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>
         }}
+      />
+      <Route
+        exact
+        path="/catalogo/search"
+        render={({location}) => <Catalog products={products} status={status} search={location.search.split('=')[1]}/*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
       />
       <Route
         exact

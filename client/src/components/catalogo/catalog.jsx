@@ -5,7 +5,7 @@ import axios from 'axios'
 import Carrito from './carrito/carrito.jsx'
 import './catalog.css'
 import {useSelector, useDispatch} from 'react-redux'
-import {filterCategory,getProducts} from '../../redux/productos'
+import {filterCategory,findProducts,getProducts,clean} from '../../redux/productos'
 import Pagination from '@material-ui/lab/Pagination'
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -18,31 +18,110 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function Catalog({products,count,id/*filterStatus,setFilterStatus*/}) {
+export default function Catalog({products,id,status,search,location}) {
+    
     const classes = useStyles();
     
-    const status = useSelector( store => store.productState.statusFilter)
-    /* const [filterProducts,setFilterProducts] = useState(products) */
-    // const filterProducts = useSelector( store => store.productState.filterProducts)
     const dispatch = useDispatch()
-    console.log('id from app' ,id)
-
+    
+    
+    // -------PAGINACION-------
     const [page,setPage] = useState(1)
+    const [paginated,setPaginated] = useState()
+    const [pageStatus, setPageStatus] = useState(false)
+    const limit = 2
+    const counter = Math.ceil(products.length/limit)
+    
+    const paginator = (e) => {
+        console.log('paginando')
+        let newArr = products.slice((e-1)*limit,limit*e)
+        setPaginated(newArr)/* 
+        setPageStatus('paginando') */
+        console.log(newArr)
+    }
+    
+    const handlePageChange = (event,value) => {
+        setPage(value)
+        setPageStatus(true)
+    }
+    // ---------------------------------------------
 
     useEffect(() => {
-        console.log(page)
-        if(!status){
-            console.log(id)
-            if(id){
-                dispatch(filterCategory(id,page))
-            }else{
-                dispatch(getProducts(page))
-                console.log('render catalogo',products)
+        console.log('--------- render 1--------')
+        console.log('status',status)
+        console.log(search)
+        console.log('page',pageStatus)
+        if(!status && !pageStatus){
+            const fetchData = async() => {
+                if(id){
+                    await dispatch(filterCategory(id))
+                    await setPageStatus(true)
+                }
+                else if(search){
+                    console.log('buscando')
+                    dispatch(findProducts(search))
+                }
+                else{
+                    await dispatch(getProducts())
+                    await setPageStatus(true)
+                    console.log('render catalogo',products)
+                }
             }
+            fetchData()
         }
-    },[status,id,page])
-    
-    // PASAR A REDUX/PRODUCTOS
+        /* paginator(page) */
+        console.log('----------------------------')
+    },[status,id,pageStatus,search])
+
+    useEffect(()=>{
+        console.log('---------render 2-------')
+        paginator(page) 
+        console.log('----------------------')
+    },[products,page])
+
+    const capitalize = (string) => {
+        let splitted = string.split(' ');
+        let str = [];
+        splitted.forEach(element => {
+            str.push(element.substring(0, 1).toUpperCase() + element.substring(1))          
+        });
+        str = str.join(' ');
+        return str;
+    }
+
+    return (
+    <div className='catalogo'>
+        <div className='filter'>
+            <Filter products = {products} status={status} id={id} page={setPage} pageStatus={setPageStatus}/>
+        </div>
+        <div className='products'>
+            <div>
+                {paginated  && paginated.map(p =><ProductCard product={p} capitalize={capitalize}/>)}
+            </div>
+            <div className={classes.root} id='pagination'>
+                <Pagination
+                    className="my-3"
+                    count={counter}
+                    page={page}
+                    siblingCount={1}
+                    boundaryCount={1}
+                    variant="outlined"
+                    shape="rounded"
+                    onChange={handlePageChange}
+                />
+            </div>
+        </div>
+        <div className= 'carrito'>
+            <Carrito />
+        </div>
+    </div>
+    );
+}
+
+// CODIGO ANTIGUO
+/* const [filterProducts,setFilterProducts] = useState(products) */
+// const filterProducts = useSelector( store => store.productState.filterProducts)
+// PASAR A REDUX/PRODUCTOS
     // const newFilter = async() => {
     //     const {data} = await axios.get(`http://localhost:3001/products/category/${id}`)
     //     setFilterProducts(data)
@@ -59,46 +138,3 @@ export default function Catalog({products,count,id/*filterStatus,setFilterStatus
     // const clean = () => {
     //     setFilterStatus(false)
     // }
-
-    const capitalize = (string) => {
-        let splitted = string.split(' ');
-        let str = [];
-        splitted.forEach(element => {
-            str.push(element.substring(0, 1).toUpperCase() + element.substring(1))          
-        });
-        str = str.join(' ');
-        return str;
-    }
-
-    const handlePageChange = (event,value) => {
-        setPage(value)
-    }
-
-    return (
-    <div className='catalogo'>
-        <div className='filter'>
-            <Filter products = {products} status={status} id={id}/*  clean={clean} *//>
-        </div>
-        <div className='products'>
-            <div>
-                {products  && products.map(p =><ProductCard product={p} capitalize={capitalize}/>)}
-            </div>
-            <div className={classes.root} id='pagination'>
-                <Pagination
-                    className="my-3"
-                    count={Math.ceil(count/3)}
-                    page={page}
-                    siblingCount={1}
-                    boundaryCount={1}
-                    variant="outlined"
-                    shape="rounded"
-                    onChange={handlePageChange}
-                />
-            </div>
-        </div>
-        <div className= 'carrito'>
-            <Carrito />
-        </div>
-    </div>
-    );
-}
