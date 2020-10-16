@@ -2,6 +2,7 @@ import axios from 'axios'
 
 //CONSTANTES
 
+const GET_ALLPRODUCTS = 'GET_ALLPRODUCTS'
 const GET_PRODUCTS = 'GET_PRODUCTS';
 const GET_SELPRODUCT = 'GET_SELPRODUCT';
 const FILTER_CATEGORIES = 'FILTER_CATEGORIES';
@@ -22,6 +23,11 @@ const initialState = {
 
 export default function productReducer (state = initialState, action){
     switch(action.type){
+        case GET_ALLPRODUCTS:
+            return {
+                products: action.payload,
+                statusFilter: false
+            }
         case GET_PRODUCTS:
             return {
                 products: action.payload,
@@ -63,13 +69,27 @@ export default function productReducer (state = initialState, action){
 
 let arrProducts;
 
+export const getAllProducts = () => async(dispatch) => {
+    try{
+       const {data} = await axios.get(url)
+
+       dispatch({
+           type: GET_ALLPRODUCTS,
+           payload: data
+       })
+    }catch(error){
+       console.log(error)
+    }
+}
+
 export const getProducts = () => async(dispatch) => {
      try{
         const {data} = await axios.get(url)
-       
+        let conStock = data.filter(e => e.stock > 0)
+
         dispatch({
             type: GET_PRODUCTS,
-            payload: data
+            payload: conStock
         })
      }catch(error){
         console.log(error)
@@ -101,7 +121,7 @@ export const findProducts = (arg) => async(dispatch) => {
         console.log(error)
     }
 }
-
+//data.filter(e.stock > 0)
 export const filterProducts = (products,propiedad,arg) => async(dispatch) => {
     try{
         let data = products.filter(e => e[arg] === propiedad)

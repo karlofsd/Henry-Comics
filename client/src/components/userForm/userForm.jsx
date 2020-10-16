@@ -1,5 +1,4 @@
 import React from "react";
-import ErrorMessage from "./errorMessage";
 import { useForm } from "react-hook-form";
 
 
@@ -23,14 +22,14 @@ export default function UserForm() {
             name="username"
             ref={register({ minLength: 3, required: true})}
           />
-          <ErrorMessage error={errors.username} />
+          
     
           <label>Email</label>
           <input
             name="email"
             ref={register({ required: true, pattern: /^\S+@\S+$/i })}
           />
-          <ErrorMessage error={errors.email} />
+         
 
           <label>Contraseña</label>
           <input
@@ -38,7 +37,7 @@ export default function UserForm() {
             name="password"
             ref={register({ required: true, minLength: 6 })}
           />
-          <ErrorMessage error={errors.password} />
+          
     
           <input disabled={isSubmitting} type="submit" />
         </form>
