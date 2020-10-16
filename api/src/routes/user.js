@@ -100,9 +100,8 @@ server.post("/add", function (req, res) {
   //     });
   // });
 
-server.delete('/:idUser/cart',(req, res)=>{
-  const {idUser} = req.params;
-  const item = req.body;
+server.delete('/:idUser/cart/:idProduct',(req, res)=>{
+  const {idUser, idProduct} = req.params;
 
   Orden.findAll({
     where: {
@@ -113,7 +112,7 @@ server.delete('/:idUser/cart',(req, res)=>{
     .then(carrito=>{
       LineaDeOrden.destroy({
         where: {
-          productId: item.id, 
+          productId: idProduct,
           ordenId:carrito[0].id}
         })
         .then(resp=>{
