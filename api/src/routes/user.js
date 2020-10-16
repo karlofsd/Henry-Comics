@@ -100,21 +100,19 @@ server.post("/add", function (req, res) {
   //     });
   // });
 
-server.delete('/user/:idUser/cart',(req, res)=>{
-  const {idUser} = req.params;
-  const item = req.body;
+server.delete('/:idUser/cart/:idProduct',(req, res)=>{
+  const {idUser, idProduct} = req.params;
 
   Orden.findAll({
     where: {
       userId: idUser,
-      status:'carrito',
-      priceNow:0
+      status:'carrito'
     }
     })
     .then(carrito=>{
       LineaDeOrden.destroy({
         where: {
-          productId: item.id, 
+          productId: idProduct,
           ordenId:carrito[0].id}
         })
         .then(resp=>{
@@ -136,8 +134,7 @@ server.put('/:idUser/cart',(req, res)=>{
   Orden.findAll({
       where:{
           userId: idUser,
-          status:'carrito',
-          priceNow:0
+          status:'carrito'
       }
   })
   .then(carrito=>{

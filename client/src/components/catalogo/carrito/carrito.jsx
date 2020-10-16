@@ -1,12 +1,54 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { UncontrolledCollapse, Button, CardBody, Card, Input } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faCartArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { faShoppingCart, faTrash } from '@fortawesome/free-solid-svg-icons'
 import './carrito.css';
+import axios from 'axios';
+import CartProduct from './CartProduct';
 
 export default function Carrito(){
+
+    const [carrito, setCarrito] = useState([]);
+
+    const carritoGet = async () =>{
+        try{
+          const {data} =  await axios.get(`http://localHost:3001/user/${1}/cart`)
+          setCarrito(data.products)
+        }catch(err){
+
+        }
+    }
+
+    const carritoDelete = async (id) =>{
+        try{
+            await axios.delete(`http://localHost:3001/user/${1}/cart/${id}`,)
+            carritoGet();
+          }catch(err){
+  
+          }
+    }
+
+    useEffect(() => {
+        carritoGet();
+    }, [])
+
+   
+
+    const totalProduct = () =>{
+        let nuevo;
+        if(carrito !== []){
+            nuevo =  carrito.map(cart => cart.price * cart.lineaDeOrden.quantity);
+        }
+
+        let total = nuevo.reduce((a, b) => a + b, 0);
+        
+        return `$${total}`
+    }
+
+
     return(
         <div className='cart'>
+            
             <Button color='dark' id='toggler' style={{marginBottom: '1rem'}}>
                 <FontAwesomeIcon icon={faShoppingCart}/>
             </Button>
@@ -17,49 +59,23 @@ export default function Carrito(){
                         <div>
                             <ul className='list-carrito'>
                                 <label>Producto: </label>
-                                <li className='item-carrito'>
-                                    <div className='lab-inp-but'>
-                                        <label>Thunders</label>
-                                        <input className='inc-dec' type='number' min='1' step='1'/>
-                                        <Button color='warning'>
-                                            <FontAwesomeIcon icon={faCartArrowDown}/>  
-                                        </Button>
-                                    </div>
-                                </li>
-                                <li className='item-carrito'>
-                                <div className='lab-inp-but'>
-                                        <label>Avengers</label>
-                                        <input className='inc-dec' type='number' min='1' step='1'/>
-                                        <Button color='warning'>
-                                            <FontAwesomeIcon icon={faCartArrowDown}/>  
-                                        </Button>   
-                                    </div>
-                                </li>
-                                <li className='item-carrito'>
-                                <div className='lab-inp-but'>
-                                        <label>Condorito</label>
-                                        <input className='inc-dec' type='number' min='1' step='1'/>
-                                        <Button color='warning'>
-                                            <FontAwesomeIcon icon={faCartArrowDown}/>  
-                                        </Button>
-                                    </div>
-                                </li>
+                                {carrito && carrito.map(cart=>(
+                                    <div>
+
+                                            <CartProduct 
+                                                name={cart.name}
+                                                quantity={cart.lineaDeOrden.quantity}
+                                                id={cart.id}
+                                                price={cart.price}
+                                                carritoDelete={carritoDelete}
+                                                carritoGet={carritoGet}
+                                            />
+                                    </div>  
+                                ))}
                             </ul>
-                            {/* <ul className='list-carrito'>
-                                <label>Envio: </label>
-                                <li className='item-carrito'>
-                                    <label>En Puerta</label>                                    
-                                    <Input addon type='checkbox' arial-label='Check'/>
-                                </li>
-                                <li className='item-carrito'>
-                                    <label>A Sucursal</label>
-                                    <Input addon type='checkbox' arial-label='Check'/>
-                                </li>
-                            </ul> */}
                         </div>
                         <div className='total'>
-                            <label>Producto + Envio</label>
-                            <label>Total: $500</label>
+                                <label>Total: {totalProduct()}</label>
                         </div>
                         <div className='buttons'>
                             <Button color='dark'>Comprar</Button>

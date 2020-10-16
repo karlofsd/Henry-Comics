@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Alert } from 'reactstrap';
+import { Alert, Table } from 'reactstrap';
 import axios from 'axios';
 import {useSelector, useDispatch} from 'react-redux';
 import { getCategory } from '../../redux/categorias'
@@ -110,29 +110,29 @@ const AgregarCategorias = ({/* newCat,categories,getCat */}) =>{
                         </Alert>
                     }
                 </div>
-                <div className='col-lg w-100'>
-                    <table className='table table-hover table-responsive w-100'>
+                <div /* className='col-lg w-100 */>
+                    <Table /* className='table table-hover table-responsive w-100' */ bordered>
                         <thead>
                             <tr>
-                                <th className='th'>Id</th>
-                                <th className='th'>Nombre</th>
+                                <th /* className='th' */>Id</th>
+                                <th /* className='th' */>Nombre</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                         {categories && categories.map(ele=>(
                             <tr>
-                                <td className= 'table table-responsive'>{ele.id}</td>
+                                <td /* className= 'table table-responsive' */>{ele.id}</td>
                                 <td className="w-50">{ele.name}</td>
-                                <td className="w-50">
+                                <td /* className="w-100" */ style={{width:'300px'}}>
                                     <button className="btn btn-secondary btn-sm m-2 p-1" onClick={()=>{hangleChangeEdit(ele)}} >Editar</button>
                                   
                                     <button className="btn btn-dark btn-sm m-2 p-1" onClick={()=>{handleChangeDelete(ele.id)}}>Eliminar</button>
                                 </td>
                             </tr>
                         ))}
-                     
                         </tbody>
-                    </table>
+                    </Table>
                 </div>
             </div>
         </div>    

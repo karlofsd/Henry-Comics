@@ -20,6 +20,7 @@ const handleInputChange = e =>{
 const handleSubmit =  e => {
   e.preventDefault();
   setUserData ({email: '', password: ''})
+
 }
   const handleRegister = async e => {
         

@@ -1,0 +1,14 @@
+.gral-order{
+  width: 100vw;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 30px;
+}
+
+.lista-orden{
+  width: 40%;
+}
+
+.detalle-orden{
+  width: 40%;
+}

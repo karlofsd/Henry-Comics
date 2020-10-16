@@ -1,4 +1,5 @@
 import React from 'react'
+import {Table} from 'reactstrap'
 import './orden.css'
 
 const Orden = () => {
@@ -6,7 +7,7 @@ const Orden = () => {
         <div className="shadow orden">
             <div className="top">
                 <h2>ORDEN #3</h2>
-                <table>
+                {/* <table>
                     <thead>
                         <td>Nombre</td>
                         <td>Precio</td>
@@ -21,7 +22,25 @@ const Orden = () => {
                             <td>$450</td>
                         </tr>
                     </tbody>
-                </table>
+                </table> */}
+                <Table size="sm" bordered>
+                    <thead>
+                        <tr>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <th scope="row">Batman</th>
+                        <td>$150</td>
+                        <td>3</td>
+                        <td>$450</td>
+                        </tr>
+                    </tbody>
+                </Table>
                 <div className='datos'>
                     <span>Estado: Creada</span>
                     <span>Fecha: 17/11/20</span>
