@@ -1,46 +1,49 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, {useState}from "react";
+import axios from 'axios';
 
 
 export default function UserForm() {
-    const {
-        register,
-        handleSubmit,
-        errors,
-        formState: { isSubmitting }
-      } = useForm();
-      const onSubmit = data => {
-        alert(JSON.stringify(data));
-      };
-     
-    
-      return (
-        <form className="App" onSubmit={handleSubmit(onSubmit)}>
-          <h5>Crea tu cuenta de usuario completando el siguiente formulario:</h5>
-          <label>Nombre de Usuario</label>
-          <input
-            name="username"
-            ref={register({ minLength: 3, required: true})}
-          />
-          
-    
-          <label>Email</label>
-          <input
-            name="email"
-            ref={register({ required: true, pattern: /^\S+@\S+$/i })}
-          />
-         
 
-          <label>Contraseña</label>
-          <input
-            type="password"
-            name="password"
-            ref={register({ required: true, minLength: 6 })}
-          />
-          
-    
-          <input disabled={isSubmitting} type="submit" />
-        </form>
-  );
+const [userData, setUserData] = useState({
+  email: '',
+  password: '',
+});
+
+const onEnterKey = e => {
+  if (e.key === 'Enter') handleRegister(e);
+};
+
+const handleInputChange = e =>{
+  setUserData ({...userData, [e.target.name]: e.target.value});
+};
+
+const handleSubmit =  e => {
+  e.preventDefault();
+  setUserData ({email: '', password: ''})
+
 }
+  const handleRegister = async e => {
+        
+  
+  try{
+    await axios.post('http://localhost:3001/users/add', userData);
+  
 
+  }catch(error){
+    console.log(error)
+  }
+};
+return (
+  <form onSubmit={handleSubmit()}>
+  <label>
+    Email:
+    <input type="email" name="email" value={setUserData.email} placeholder="Email" onChange={handleInputChange} onKeyPress={onEnterKey}/>
+  </label>
+  <label>
+  Contraseña:
+  <input type="password" name="password" value={setUserData.password} placeholder="Contraseña" onChange={handleInputChange} onKeyPress={onEnterKey}/>
+  </label>
+  <button type="submit"  onClick={(e) => handleRegister(e)}>Registrer</button>
+</form>
+)
+}
