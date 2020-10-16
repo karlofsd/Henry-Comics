@@ -17,19 +17,23 @@ const handleInputChange = e =>{
   setUserData ({...userData, [e.target.name]: e.target.value});
 };
 
-const handleRegister = async e => {
+const handleSubmit =  e => {
   e.preventDefault();
-
-  try{
-    const user = await axios.post('http://localhost:3001/users/add', userData);
+  setUserData ({email: '', password: ''})
+}
+  const handleRegister = async e => {
+        
   
-    setUserData ({email: '', password: ''})
+  try{
+    await axios.post('http://localhost:3001/users/add', userData);
+  
+
   }catch(error){
     console.log(error)
   }
 };
 return (
-  <form>
+  <form onSubmit={handleSubmit()}>
   <label>
     Email:
     <input type="email" name="email" value={setUserData.email} placeholder="Email" onChange={handleInputChange} onKeyPress={onEnterKey}/>
@@ -38,7 +42,7 @@ return (
   Contraseña:
   <input type="password" name="password" value={setUserData.password} placeholder="Contraseña" onChange={handleInputChange} onKeyPress={onEnterKey}/>
   </label>
-  <button type="submit"  onClick={(e) => handleSubmit(e)}>Registrar</button>
+  <button type="submit"  onClick={(e) => handleRegister(e)}>Registrar</button>
 </form>
 )
 }
