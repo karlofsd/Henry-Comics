@@ -7,7 +7,7 @@ import { Alert } from 'reactstrap';
 
 const url = 'http://localhost:3001/products';
 
- const FormCrud=({get,editCategory,editIsOpen,deleteIsOpen,tipoAccion,  product, setProducto, category , idProduct, productGet,setInsertarProducto,setEliminarProducto})=>{
+ const FormCrud=({get, editCategory, editIsOpen, deleteIsOpen, tipoAccion, product, setProducto, category , idProduct, productGet, setInsertarProducto, setEliminarProducto})=>{
     
     let opcion =[];
     let opcionEliminar =[];

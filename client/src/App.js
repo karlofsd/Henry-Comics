@@ -5,11 +5,13 @@ import NavBar from "./components/navBar/navBar";
 import Catalog from "./components/catalogo/catalog";
 import Product from "./components/productComponent/product";
 import Admin from "./components/admin/admin";
+import UserForm from "./components/userForm/userForm";
 import LandingCarrousel from "./components/carrousel/carrousel";
 import Footer from "./components/footer/footer";
 import axios from "axios";
 import {useDispatch,useSelector} from 'react-redux'  //hooks
 import {getProducts} from './redux/productos'        //actions
+
 
 function App() {
   // ---funciones Redux---
@@ -86,6 +88,13 @@ function App() {
         render={() => 
           <div>
             <Admin /* newCat={getCategories}  get={getProducts} /* getCat={getCategories} *//*  categories={categories} *//> 
+          </div>}
+      />
+      <Route 
+        exact path="/newUser" 
+        render={() => 
+          <div>
+            <UserForm /> 
           </div>}
       />
     </Router>
