@@ -17,7 +17,13 @@ export default function Product(props) {
         setCloseAll(true);
       }
 
-    let {className, modal, toggle, p, capitalize} = props;
+
+    let {className, modal, toggle, p, capitalize, addCart} = props;
+
+    const handleAdd = (e)=>{
+        toggle();
+        addCart(e);
+    }
 
     return (
         <Modal isOpen={modal} toggle={toggle} className='gral-content' contentClassName='content-title'>
@@ -40,7 +46,7 @@ export default function Product(props) {
                         </div>
                         <div className='price-cart'>
                             <h3 className='h3-price'>${p.price}</h3>
-                            <Button color="dark" onClick={toggle}>Agregar a carrito</Button>
+                            <Button color="dark" onClick={()=>handleAdd(p)}>Agregar a carrito</Button>
                         </div>
                     </div>
                 </div>
