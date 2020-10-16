@@ -100,15 +100,14 @@ server.post("/add", function (req, res) {
   //     });
   // });
 
-server.delete('/user/:idUser/cart',(req, res)=>{
+server.delete('/:idUser/cart',(req, res)=>{
   const {idUser} = req.params;
   const item = req.body;
 
   Orden.findAll({
     where: {
       userId: idUser,
-      status:'carrito',
-      priceNow:0
+      status:'carrito'
     }
     })
     .then(carrito=>{
@@ -136,8 +135,7 @@ server.put('/:idUser/cart',(req, res)=>{
   Orden.findAll({
       where:{
           userId: idUser,
-          status:'carrito',
-          priceNow:0
+          status:'carrito'
       }
   })
   .then(carrito=>{
