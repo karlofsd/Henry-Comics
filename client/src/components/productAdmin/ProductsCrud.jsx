@@ -15,6 +15,7 @@ const ProductsCrud = (/*{get}*/) =>{
 
     const dispatch = useDispatch();
     const productGet = useSelector(store => store.productState.products)
+    console.log(productGet)
     const categoryGet = useSelector(store => store.categoryState.categories)
 
     //estado:
@@ -91,7 +92,7 @@ const ProductsCrud = (/*{get}*/) =>{
                         </tr>
                     </thead>
                     <tbody>
-                        {productGet.map(ele=>(
+                        { productGet.map(ele=>(
                             <tr>
                             <td>{ele.id}</td>
                             <td>{capitalize(ele.name)}</td>
