@@ -3,21 +3,46 @@ import {useSelector, useDispatch} from 'react-redux';
 import Orden from '../ordenes/orden';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import { ListGroup, ListGroupItem, Badge } from 'reactstrap';
+import { ListGroup, ListGroupItem, Badge, Modal } from 'reactstrap';
+import './ordenesAdmin.css'
 
-const OrderTable = () => {  
+const OrderTable = () => {
+
+  const [orders, setOrders ] = useState([]);
+  const [order, setOrder] = useState();  
+
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
+
+  useEffect(() => {
+    getOrders()
+  }, []);
   
-  // const orders = await axios.get()
-
-
+  const getOrders = async () => {
+    const data = await axios.get('http://localhost:3001/orders')   
+    setOrders(data.data);
+  } 
 
   return (
-    <ListGroup>
-      <ListGroupItem className="justify-content-between">Cras justo odio <Badge pill>14</Badge></ListGroupItem>
-      <ListGroupItem className="justify-content-between">Dapibus ac facilisis in <Badge pill>2</Badge></ListGroupItem>
-      <ListGroupItem className="justify-content-between">Morbi leo risus <Badge pill>1</Badge></ListGroupItem>
-    </ListGroup>
+    // <div>
+      <ListGroup>
+        {
+          orders && orders.map((order) => (
+            <ListGroupItem tag="button" action>
+            <Badge pill>{order.id}</Badge>
+            {'   ' + order.status.toUpperCase()}
+            <button className="btn btn-secondary m-3" onClick={toggle}>Detalle</button>
+              <Modal isOpen={modal} toggle={toggle}>
+                <Orden order={order} />
+              </Modal>
+            </ListGroupItem>         
+          ))
+        }    
+      </ListGroup>
+      // </div>
   );
+
 }
 
 
@@ -28,15 +53,18 @@ const OrderTable = () => {
 //           <thead>
 //             <tr className='table table-hover'>
 //               <th>Id</th>
-//               <th>Estado</th>
-//               <th>Items</th>
-//               <th>Precio</th>
-//               <th></th>
+//               <th>Estado</th>      
 //             </tr>
 //           </thead>
 //           <tbody> 
-//             <Orden />         
-//             {/* map */}
+//             {
+//               orders && orders.map(order => (
+//                 <tr>
+//                   <td className= 'table table-responsive'>{order.id}</td>
+//                 </tr>
+//               ))
+//             }
+            
 //           </tbody>
 //         </table>
 //       </div>
