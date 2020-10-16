@@ -18,21 +18,36 @@ server.put('/:id',(req,res) => {
 
 //S44 ruta que devuelve todas las ordenes 
 server.get('/', (req, res) => {
-  const { status } = req.query
-  Orden.findAll(
-    {
-      where: {
-        status: status
-      },
-      include: Product
-    }
-  )
-  .then((orders) => {
-      res.status(200).json(orders);
-  })
-  .catch((err) => {
-    res.status(404).json({message: err})
-  })
+  const { status } = req.query;
+
+  if (status) {
+    Orden.findAll(
+      {
+        where: {
+          status: status
+        },
+        include: Product
+      }
+    )
+    .then((orders) => {
+        res.status(200).json(orders);
+    })
+    .catch((err) => {
+      res.status(404).json({message: err})
+    })
+  } else {
+    Orden.findAll(
+      {        
+        include: Product
+      }
+    )
+    .then((orders) => {
+        res.status(200).json(orders);
+    })
+    .catch((err) => {
+      res.status(404).json({message: err})
+    })
+  }
 });
 
 module.exports = server;
