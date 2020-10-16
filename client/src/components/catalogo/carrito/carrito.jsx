@@ -5,31 +5,40 @@ import { faShoppingCart, faTrash } from '@fortawesome/free-solid-svg-icons'
 import './carrito.css';
 import axios from 'axios';
 import CartProduct from './CartProduct';
+import { useSelector, useDispatch } from 'react-redux';
+import { getCarrito } from '../../../redux/carrito';
 
 export default function Carrito(){
 
-    const [carrito, setCarrito] = useState([]);
+    const carrito = useSelector(store => store.carritoState.carritoProducts);
+    const dispatch = useDispatch();
 
-    const carritoGet = async () =>{
-        try{
-          const {data} =  await axios.get(`http://localHost:3001/user/${1}/cart`)
-          setCarrito(data.products)
-        }catch(err){
 
-        }
-    }
+    //const [carrito, setCarrito] = useState([]);
+
+    // const carritoGet = async () =>{
+    //     try{
+    //       const {data} =  await axios.get(`http://localHost:3001/user/${1}/cart`)
+    //       setCarrito(data.products)
+    //     }catch(err){
+
+    //     }
+    // }
 
     const carritoDelete = async (id) =>{
         try{
             await axios.delete(`http://localHost:3001/user/${1}/cart/${id}`,)
-            carritoGet();
+            //carritoGet();
+            dispatch(getCarrito());
           }catch(err){
   
           }
     }
 
     useEffect(() => {
-        carritoGet();
+        //carritoGet();
+        dispatch(getCarrito());
+        console.log('!!!!!!!',carrito);
     }, [])
 
    
@@ -68,7 +77,7 @@ export default function Carrito(){
                                                 id={cart.id}
                                                 price={cart.price}
                                                 carritoDelete={carritoDelete}
-                                                carritoGet={carritoGet}
+                                                carritoGet={() => dispatch(getCarrito())}
                                             />
                                     </div>  
                                 ))}
