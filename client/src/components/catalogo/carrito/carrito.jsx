@@ -1,7 +1,7 @@
 import React from 'react';
 import { UncontrolledCollapse, Button, CardBody, Card, Input } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faCartArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { faShoppingCart, faTrash } from '@fortawesome/free-solid-svg-icons'
 import './carrito.css';
 
 export default function Carrito(){
@@ -22,25 +22,7 @@ export default function Carrito(){
                                         <label>Thunders</label>
                                         <input className='inc-dec' type='number' min='1' step='1'/>
                                         <Button color='warning'>
-                                            <FontAwesomeIcon icon={faCartArrowDown}/>  
-                                        </Button>
-                                    </div>
-                                </li>
-                                <li className='item-carrito'>
-                                <div className='lab-inp-but'>
-                                        <label>Avengers</label>
-                                        <input className='inc-dec' type='number' min='1' step='1'/>
-                                        <Button color='warning'>
-                                            <FontAwesomeIcon icon={faCartArrowDown}/>  
-                                        </Button>   
-                                    </div>
-                                </li>
-                                <li className='item-carrito'>
-                                <div className='lab-inp-but'>
-                                        <label>Condorito</label>
-                                        <input className='inc-dec' type='number' min='1' step='1'/>
-                                        <Button color='warning'>
-                                            <FontAwesomeIcon icon={faCartArrowDown}/>  
+                                            <FontAwesomeIcon icon={faTrash}/>  
                                         </Button>
                                     </div>
                                 </li>
