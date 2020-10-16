@@ -42,7 +42,7 @@ return (
   Contraseña:
   <input type="password" name="password" value={setUserData.password} placeholder="Contraseña" onChange={handleInputChange} onKeyPress={onEnterKey}/>
   </label>
-  <button type="submit"  onClick={(e) => handleRegister(e)}>Registrar</button>
+  <button type="submit"  onClick={(e) => handleRegister(e)}>Registrer</button>
 </form>
 )
 }
