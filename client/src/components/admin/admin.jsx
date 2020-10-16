@@ -1,7 +1,7 @@
 import React from 'react';
 import AgregarCategorias from '../categoryAdmin/AgregarCategorias';
 import ProductsCrud from '../productAdmin/ProductsCrud';
-import Orden from '../ordenes/orden'
+import OrderTable from '../ordenes/ordenesAdmin';
 import { BrowserRouter  as Router, Route, Link} from 'react-router-dom';
 import './admin.css';
 
@@ -50,7 +50,7 @@ import './admin.css';
                     <Route
                         exact path = '/admin/ordenes'
                         render = {()=>
-                            <Orden /> 
+                            <OrderTable /> 
                             // get={get} (exProps)
                             //SE BORRAN LAS PROPS
                         }
