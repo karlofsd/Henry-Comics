@@ -18,10 +18,10 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function Catalog({products,id,status,search,location}) {
+export default function Catalog({products,id,/* status, */search}) {
     
     const classes = useStyles();
-    
+    const status = useSelector( store => store.productState.statusFilter)
     const dispatch = useDispatch()
     
     
@@ -35,9 +35,8 @@ export default function Catalog({products,id,status,search,location}) {
     const paginator = (e) => {
         console.log('paginando')
         let newArr = products.slice((e-1)*limit,limit*e)
-        setPaginated(newArr)/* 
-        setPageStatus('paginando') */
-        console.log(newArr)
+        setPaginated(newArr)
+        setPageStatus(false)
     }
     
     const handlePageChange = (event,value) => {
@@ -48,36 +47,38 @@ export default function Catalog({products,id,status,search,location}) {
 
     useEffect(() => {
         console.log('--------- render 1--------')
-        console.log('status',status)
-        console.log(search)
-        console.log('page',pageStatus)
-        if(!status && !pageStatus){
+        if(!status){
+            console.log('status',status)
+            console.log(search)
+            console.log('page',pageStatus)
             const fetchData = async() => {
                 if(id){
-                    await dispatch(filterCategory(id))
-                    await setPageStatus(true)
+                    /* await */ dispatch(filterCategory(id))
+                    console.log('render category')
+                    /* await */ return setPageStatus(true)
                 }
                 else if(search){
                     console.log('buscando')
-                    dispatch(findProducts(search))
+                    await dispatch(findProducts(search))
+                    return setPageStatus(true)
                 }
                 else{
-                    await dispatch(getProducts())
-                    await setPageStatus(true)
+                    /* await */ dispatch(getProducts())
                     console.log('render catalogo',products)
+                    /* await */ return setPageStatus(true)
                 }
             }
             fetchData()
         }
-        /* paginator(page) */
+       /*  paginator(page) */
         console.log('----------------------------')
-    },[status,id,pageStatus,search])
+    },[status,id,search])
 
     useEffect(()=>{
         console.log('---------render 2-------')
-        paginator(page) 
+        paginator(page)
         console.log('----------------------')
-    },[products,page])
+    },[page,products])
 
     const capitalize = (string) => {
         let splitted = string.split(' ');

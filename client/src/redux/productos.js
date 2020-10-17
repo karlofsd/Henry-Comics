@@ -25,7 +25,7 @@ export default function productReducer (state = initialState, action){
         case GET_PRODUCTS:
             return {
                 products: action.payload,
-                /* statusFilter: false */
+                statusFilter: false
             }
         case GET_SELPRODUCT:
             return {
@@ -58,7 +58,8 @@ export default function productReducer (state = initialState, action){
         default:
             return {
                 ...state,
-                selProduct: {}
+                selProduct: {},
+                statusFilter:false
             }        
     }
 }
@@ -103,7 +104,7 @@ export const findProducts = (arg) => async(dispatch) => {
     }
 }
 
-export const filterProducts = (products,propiedad,arg) => async(dispatch) => {
+export const filterProducts = (products,propiedad,arg) => (dispatch) => {
     try{
         let data = products.filter(e => e[arg] === propiedad)
         dispatch({
@@ -127,7 +128,7 @@ export const filterCategory = (id) => async(dispatch) => {
     }
 }
 
-export const clean = (id) => (dispatch) => {
+export const clean = () => (dispatch) => {
     dispatch({
         type:CLEAN
     })

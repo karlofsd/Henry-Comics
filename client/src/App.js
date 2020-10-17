@@ -17,16 +17,16 @@ function App() {
   // ---funciones Redux---
   const dispatch = useDispatch() 
   const products = useSelector( store => store.productState.products)
-  const status = useSelector( store => store.productState.statusFilter)
+  //const status = useSelector( store => store.productState.statusFilter)
   // const [products, setProducts] = useState(); // ELIMINAR
   // const [categories, setCategories] = useState(); // ELIMINAR
   // const [filterStatus, setFilterStatus] = useState(false) //ELIMINAR
 
-  useEffect(() => {
-    /* dispatch(getProducts())
-    getCategories(); */
-    console.log('app render')
-  },[]);
+  // useEffect(() => {
+  //   /* dispatch(getProducts())
+  //   getCategories(); */
+  //   console.log('app render')
+  // },[]);
 
   //---ELIMINAR---
   // const getProducts = async () => {
@@ -69,19 +69,19 @@ function App() {
       <Route
         exact
         path="/catalogo"
-        render={({location}) => <Catalog products={products} status={status}/*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
+        render={({location}) => <Catalog products={products} /* status={status} *//*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
       />
       <Route
         exact
         path="/catalogo/category/:id"
         render={({ match }) => {
-          return <Catalog id={Number(match.params.id)} products={products} status={status}/* filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>
+          return <Catalog id={Number(match.params.id)} products={products} /* status={status} *//* filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>
         }}
       />
       <Route
         exact
         path="/catalogo/search"
-        render={({location}) => <Catalog products={products} status={status} search={location.search.split('=')[1]}/*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
+        render={({location}) => <Catalog products={products} /* status={status} */ search={location.search.split('=')[1]}/*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
       />
       <Route
         exact
