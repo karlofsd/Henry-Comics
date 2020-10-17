@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const {Orden, LineaDeOrden, Product} = require('../db.js');
+const {Orden, LineaDeOrden, Product, User} = require('../db.js');
 
 server.get('/:id',(req,res) => {
     let {id} = req.params
@@ -26,7 +26,7 @@ server.get('/', (req, res) => {
         where: {
           status: status
         },
-        include: Product
+        include: [Product, User]  
       }
     )
     .then((orders) => {
@@ -38,7 +38,7 @@ server.get('/', (req, res) => {
   } else {
     Orden.findAll(
       {        
-        include: Product
+        include: [Product, User]        
       }
     )
     .then((orders) => {
