@@ -18,16 +18,11 @@ export default function Product(props) {
         setCloseAll(true);
       }
 
-    let {className, modal, toggle, p, capitalize} = props;
-    
-    const addToCart = async() => {
-        let item = {
-            id : p.id,
-            price: p.price
-        }
-        const {data} = await Axios.post(`http://localhost:3001/user/1/cart`,item)
-        toggle()
-        alert(data)
+    let {className, modal, toggle, p, capitalize, addCart} = props;
+
+    const handleAdd = (e)=>{
+        toggle();
+        addCart(e);
     }
 
     return (
@@ -51,7 +46,7 @@ export default function Product(props) {
                         </div>
                         <div className='price-cart'>
                             <h3 className='h3-price'>${p.price}</h3>
-                            <Button color="dark" onClick={addToCart}>Agregar a carrito</Button>
+                            <Button color="dark" onClick={()=>handleAdd(p)}>Agregar a carrito</Button>
                         </div>
                     </div>
                 </div>

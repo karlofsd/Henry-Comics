@@ -58,6 +58,9 @@ const NavBar = ({/* categories, */}) => {
                     <li className="nav-item">
                         <Link className="nav-link" to="/admin">Admin Panel</Link>
                     </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/users/add">¡Crea tu cuenta!</Link>
+                    </li>
                 </ul>
                 <div className="text-white font-weight-bold henryComics container d-flex justify-content-center col-md-2 footerBorder ml-30vw"><h3>HENRY COMICS</h3></div>
                 <Buscar/>

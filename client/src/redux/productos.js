@@ -2,6 +2,7 @@ import axios from 'axios'
 
 //CONSTANTES
 
+const GET_ALLPRODUCTS = 'GET_ALLPRODUCTS';
 const GET_PRODUCTS = 'GET_PRODUCTS';
 const GET_SELPRODUCT = 'GET_SELPRODUCT';
 const FILTER_CATEGORIES = 'FILTER_CATEGORIES';
@@ -22,6 +23,11 @@ const initialState = {
 
 export default function productReducer (state = initialState, action){
     switch(action.type){
+        case GET_ALLPRODUCTS:
+            return { 
+                products: action.payload,
+                statusFilter: false
+            }
         case GET_PRODUCTS:
             return {
                 products: action.payload,
@@ -71,7 +77,7 @@ export const getProducts = () => async(dispatch) => {
         const {data} = await axios.get(url)
         dispatch({
             type: GET_PRODUCTS,
-            payload: data
+            payload: conStock
         })
      }catch(error){
         console.log(error)
