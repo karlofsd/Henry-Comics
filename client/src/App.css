@@ -1,3 +1,7 @@
+/*----------- NAVBAR -----------*/
+.fixed {
+ height: 60px
+}
 #redtext {
   color: rgb(209, 40, 40);
   font-weight: bold;
@@ -5,46 +9,34 @@
 #redtext:hover {
   color: lightgrey;
 }
-
 .logo {
   width: 40px;
   border-radius: 15%;
   box-shadow: 3px 3px rgb(73, 73, 73);
-  animation-timing-function: ease-in;
 }
-
 .logo:hover {
   width: 42px;
- 
 }
-
 .divlogo {
   width: 50px;
+  height: 50px;
 }
-
-.fixed {
-  height: 80px;
-}
-
 .henryComics {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   margin-top: 10px;
 }
-
+/*----------- CARRUSEL -----------*/
+.imgcarrousel {
+  object-fit: cover;
+  width: 100%;
+}
 .carrousel {
   height: 550px;
   width: 100%;
 }
-
-.imgcarrousel {
-  object-fit: cover;
-  width: 100%;
-
-}
+/*-------------------------------*/
 
 .footer {
-  position: relative;
-  bottom:0;
   width: 100%;
   padding-top: 20px;
   margin-top: 40px;
@@ -60,7 +52,7 @@
   box-shadow: 3px 3px rgb(73, 73, 73);
 }
 
-.footerBorder {
+.redBorder {
   border-left: 2px solid;
   border-color: rgb(209, 40, 40);
   padding-left: 20px;

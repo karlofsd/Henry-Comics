@@ -4,9 +4,6 @@ import axios from 'axios'
 
 const GET_USERS = 'GET_USERS';
 
-
-
-
  //STATE
 
 const initialState = {

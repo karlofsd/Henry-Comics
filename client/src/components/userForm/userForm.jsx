@@ -5,7 +5,7 @@ import axios from 'axios';
 export default function UserForm() {
 
 const [userData, setUserData] = useState({
-  email: '',
+  email: '', 
   password: '',
 });
 
@@ -17,7 +17,7 @@ const handleInputChange = e =>{
   setUserData ({...userData, [e.target.name]: e.target.value});
 };
 
-const handleSubmit =  e => {
+const handleSubmit = e => {
   e.preventDefault();
   setUserData ({email: '', password: ''})
 
@@ -34,7 +34,8 @@ const handleSubmit =  e => {
   }
 };
 return (
-  <form onSubmit={handleSubmit()}>
+  <div>
+    <form onSubmit={() => handleSubmit()}>
   <label>
     Email:
     <input type="email" name="email" value={setUserData.email} placeholder="Email" onChange={handleInputChange} onKeyPress={onEnterKey}/>
@@ -43,7 +44,9 @@ return (
   Contraseña:
   <input type="password" name="password" value={setUserData.password} placeholder="Contraseña" onChange={handleInputChange} onKeyPress={onEnterKey}/>
   </label>
-  <button type="submit"  onClick={(e) => handleRegister(e)}>Registrer</button>
+  <button type="submit button"  onClick={(e) => handleRegister(e)}>Registrer</button>
 </form>
+</div>
+  
 )
 }

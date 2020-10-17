@@ -90,7 +90,14 @@ function App() {
             <Admin /* newCat={getCategories}  get={getProducts} /* getCat={getCategories} *//*  categories={categories} *//> 
           </div>}
       />
-      
+    
+     <Route 
+        exact path="/users/add" 
+        render={() => 
+          <div>
+            <UserForm /> 
+          </div>}
+      />
     </Router>
   );
 }
