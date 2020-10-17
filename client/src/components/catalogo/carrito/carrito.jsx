@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { UncontrolledCollapse, Button, CardBody, Card, Input } from 'reactstrap';
+import { UncontrolledCollapse, Button, CardBody, Card, Badge } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faTrash } from '@fortawesome/free-solid-svg-icons'
 import './carrito.css';
@@ -54,25 +54,37 @@ export default function Carrito(){
         return `$${total}`
     }
 
+    const cantProduct = () =>{
+        let nuevo;
+        if(carrito !== []){
+            nuevo =  carrito.map(cart => cart.lineaDeOrden.quantity);
+        }
+        let total = nuevo.reduce((a, b) => a + b, 0);
+        if(total>0){
+            return <Badge color="danger">{total}</Badge>
+        }
+    }
+
 
     return(
         <div className='cart'>
             
             <Button color='dark' id='toggler' style={{marginBottom: '1rem'}}>
-                <FontAwesomeIcon icon={faShoppingCart}/>
+                <FontAwesomeIcon icon={faShoppingCart}/>  {cantProduct()}
             </Button>
             <UncontrolledCollapse toggler='#toggler'>
                 <Card>
                     <CardBody>
                         <h3 className='title-carrito'>Carrito</h3>
-                        <div>
+                        <hr />
+                        <div className='body1'>
                             <ul className='list-carrito'>
-                                <label>Producto: </label>
                                 {carrito && carrito.map(cart=>(
                                     <div>
 
                                             <CartProduct 
                                                 name={cart.name}
+                                                stock={cart.stock}
                                                 quantity={cart.lineaDeOrden.quantity}
                                                 id={cart.id}
                                                 price={cart.price}
@@ -87,8 +99,7 @@ export default function Carrito(){
                                 <label>Total: {totalProduct()}</label>
                         </div>
                         <div className='buttons'>
-                            <Button color='dark'>Comprar</Button>
-                            <Button color='danger'>Cancelar</Button>
+                            <Button className="btn btn-secondary btn-sm m-2 p-1">Comprar</Button>
                         </div>
                     </CardBody>
                 </Card>

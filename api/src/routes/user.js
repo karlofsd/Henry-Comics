@@ -164,6 +164,12 @@ server.put('/:idUser/cart',(req, res)=>{
   server.post('/:idUser/cart',(req, res)=>{
     const {idUser} = req.params;
     const item = req.body;
+    let stock;
+
+    Product.findByPk(item.id)
+      .then(res=>{
+        stock= res.stock;
+      })
 
     Orden.findOrCreate({
         where:{
@@ -181,7 +187,10 @@ server.put('/:idUser/cart',(req, res)=>{
 
         })
         .then(resp =>{
-
+            if(resp[0].quantity>= stock){
+              res.status(404).send('Producto supera el stock')
+              return;
+            }
             if(resp[1]===false){
                 LineaDeOrden.increment(
                     {quantity: +1},
