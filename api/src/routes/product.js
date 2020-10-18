@@ -3,16 +3,18 @@ const { Product, Category } = require('../db.js');
 const {Sequelize:{Op}} = require('sequelize')
 
 server.get('/', (req, res, next) => {
+	
 	Product.findAll({include: Category})
 		.then(products => {
 			res.send(products);
 		})
-		.catch(next);
+		.catch(next)
 });
 
 server.get('/category/:categoryId',(req,res) => {
 	let {categoryId} = req.params
-	Product.findAll({include:[{
+	Product.findAll({
+		include:[{
 		model: Category,
 		where: {id:categoryId}
 	}]})

@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import React,{useState} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './product.css'
@@ -16,7 +17,6 @@ export default function Product(props) {
         setNestedModal(!nestedModal);
         setCloseAll(true);
       }
-
 
     let {className, modal, toggle, p, capitalize, addCart} = props;
 

@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 
-
 module.exports = (sequelize) => {
 
   sequelize.define('user', {
@@ -28,7 +27,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false
     }
-
   });
 }; 
   

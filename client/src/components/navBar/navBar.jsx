@@ -12,7 +12,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getProducts,filterCategory} from '../../redux/productos'
 import {getCategory} from '../../redux/categorias'
 
-const NavBar = ({/* categories, */click,get}) => {
+const NavBar = ({/* categories, */}) => {
     const categories = useSelector( store => store.categoryState.categories)
     const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +20,7 @@ const NavBar = ({/* categories, */click,get}) => {
     const toggle = () => setIsOpen(!isOpen);
 
     useEffect(()=> {
-        dispatch(getCategory())
+        dispatch(getCategory()) 
     },[])
 
     return(
@@ -44,23 +44,23 @@ const NavBar = ({/* categories, */click,get}) => {
                         </DropdownToggle>
                         <DropdownMenu left>
                             {categories && categories.map(c =>
-                            <Link to={`/catalogo/category/${c.id}`} /* onClick={()=> dispatch(filterCategory(c.id))} */>
+                            <Link to={`/catalogo/category/${c.id}`}>
                                 <DropdownItem>{c.name}</DropdownItem>
                             </Link>)}
                         </DropdownMenu>
                     </UncontrolledDropdown>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/carrito">Cart</Link>
-                    </li>
-                    <li className="nav-item">
                         <Link className="nav-link" to="/admin">Admin Panel</Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/users/add">¡Crea tu cuenta!</Link>
+                        <Link className="nav-link" to="/login">Iniciar Sesión</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/signup">¡Crea tu cuenta!</Link>
                     </li>
                 </ul>
                 <div className="text-white font-weight-bold henryComics container d-flex justify-content-center col-md-2 footerBorder ml-30vw"><h3>HENRY COMICS</h3></div>
-                <Buscar click={click}/>
+                <Buscar/>
             </div>
         </nav>
     )

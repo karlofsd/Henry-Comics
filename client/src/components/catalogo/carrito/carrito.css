@@ -22,7 +22,7 @@
             }
             .inc-dec{
                 display: flex;
-                width: 30%;
+                width: 20%;
             }
             .end-buts{
                 align-self: flex-end;
@@ -35,3 +35,9 @@
         display: flex;
         justify-content: space-around;
     }
+
+    .body1 {    
+        max-height: 350px;
+        overflow-y: auto;
+    }
+    

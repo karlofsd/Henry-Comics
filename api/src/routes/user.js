@@ -21,9 +21,6 @@ server.post("/add", function (req, res) {
         username: username,
         email: email,
         password: password,
-      },
-      {
-        fields: ["firstname", "lastname", "username", "email", "password"],
       }
     )
       .then(function (user) {
@@ -164,13 +161,18 @@ server.put('/:idUser/cart',(req, res)=>{
   server.post('/:idUser/cart',(req, res)=>{
     const {idUser} = req.params;
     const item = req.body;
+    let stock;
+
+    Product.findByPk(item.id)
+      .then(res=>{
+        stock= res.stock;
+      })
 
     Orden.findOrCreate({
         where:{
             userId: idUser,
             status:'carrito'
         }
-
     }).then(ress=>{
         LineaDeOrden.findOrCreate({
             where:{
@@ -178,10 +180,12 @@ server.put('/:idUser/cart',(req, res)=>{
                 ordenId: ress[0].id,
                 price: item.price,
             }
-
         })
         .then(resp =>{
-
+            if(resp[0].quantity>= stock){
+              res.status(404).send('Producto supera el stock')
+              return;
+            }
             if(resp[1]===false){
                 LineaDeOrden.increment(
                     {quantity: +1},
