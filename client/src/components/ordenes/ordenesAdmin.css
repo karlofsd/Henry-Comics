@@ -6,9 +6,27 @@
 }
 
 .lista-orden{
-  width: 40%;
+  width: 30%;
 }
+  .lista-orden .list-group-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 5px 50px;
+    font-size: large;
+  }
+  .lista-orden .list-group-item:hover{
+    background-color: tomato;
+    color:white
+  }
 
 .detalle-orden{
   width: 40%;
+}
+
+.estados-select {
+  padding-left: 30px; 
+
+  font-size: 20px;
+  width: 15%;
 }

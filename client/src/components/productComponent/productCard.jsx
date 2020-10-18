@@ -4,25 +4,36 @@ import Product from './product'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import {  useDispatch } from 'react-redux';
-import { getCarrito } from '../../redux/carrito';
+import { getCarrito, getLocalCarrito } from '../../redux/carrito';
 
 import axios from 'axios';
 
 
 export default function ProductCard({product, capitalize}) {
-    
+    let user;
     const dispatch = useDispatch()
 
     const addCart = async(body)=>{
-        await axios.post(`http://localhost:3001/user/${1}/cart`, body)
-        .then(res=>{
-            dispatch(getCarrito())
-
-            //{console.log('res',res)}
-        })
-        .catch(err=>{
-            console.log('err', err)
-        })
+        if(user){
+            await axios.post(`http://localhost:3001/user/${1}/cart`, body)
+            .then(res=>{
+                dispatch(getCarrito())
+            })
+            .catch(err=>{
+                console.log('err', err)
+            })
+        }else{
+            if (!localStorage.carrito) {
+                localStorage.setItem("carrito", JSON.stringify([body]));
+                return dispatch(getLocalCarrito())
+            }
+            const data = JSON.parse(localStorage.getItem("carrito"));
+            if(!data.some(p => p.id === product.id )){
+                data.push(body);
+                localStorage.setItem("carrito", JSON.stringify(data));
+                dispatch(getLocalCarrito())
+            };
+        }
     }
 
     /* const [detail,setDetail] = useState(false) */

@@ -27,17 +27,17 @@ const Orden = () => {
                     <thead>
                         <tr>
                         <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Total</th>
+                        <th className='tO w-20'>Precio</th>
+                        <th className='tO w-15'>Cantidad</th>
+                        <th className='tO w-20'>Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                         <th scope="row">Batman</th>
-                        <td>$150</td>
-                        <td>3</td>
-                        <td>$450</td>
+                        <td className='tO'>$150</td>
+                        <td className='tO'>3</td>
+                        <td className='tO'>$450</td>
                         </tr>
                     </tbody>
                 </Table>

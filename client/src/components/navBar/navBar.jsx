@@ -20,7 +20,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getProducts,filterCategory} from '../../redux/productos'
 import {getCategory} from '../../redux/categorias'
 
-const NavBar = ({/* categories, */click,get}) => {
+const NavBar = ({/* categories, */}) => {
     const categories = useSelector( store => store.categoryState.categories)
     const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false);
@@ -28,13 +28,13 @@ const NavBar = ({/* categories, */click,get}) => {
     const toggle = () => setIsOpen(!isOpen);
 
     useEffect(()=> {
-        dispatch(getCategory())
+        dispatch(getCategory()) 
     },[])
 
     return(
         <div>
         <Navbar color="dark" light expand="md">
-
+          
           <NavbarBrand href="/">
               <div className="divlogo">
                     <Link className="navbar-brand" to="/">
@@ -83,12 +83,19 @@ const NavBar = ({/* categories, */click,get}) => {
                     Admin Panel
                     </NavLink>
               </NavItem>
-
+              
               <NavItem>
-                    <NavLink href="/users/add" className="text-light">
+                    <NavLink href="/login" className="text-light">
+                    Iniciar Sesión
+                    </NavLink>
+              </NavItem>
+              
+              <NavItem>
+                    <NavLink href="/singup" className="text-light">
                     ¡Crea tu cuenta!
                     </NavLink>
               </NavItem>
+              
             </Nav>
           <Buscar click={click} className="pl-5"/>
           </Collapse>

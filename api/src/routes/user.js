@@ -11,6 +11,21 @@ User.findAll()
 })
 
 
+server.get('/login', (req, res, next)=>{
+  const {email, password} = req.query;
+  User.findOne({
+    where:{
+      email: email,
+      password: password
+    }
+  })
+      .then(users => {
+          res.json(users.id);
+      })
+      .catch(next);
+})
+
+
 
 server.post("/add", function (req, res) {
     var { firstname, lastname, username, email, password } = req.body;
@@ -21,12 +36,15 @@ server.post("/add", function (req, res) {
         username: username,
         email: email,
         password: password,
-      },
-      {
-        fields: ["firstname", "lastname", "username", "email", "password"],
       }
     )
       .then(function (user) {
+       
+        Orden.create({
+          userId: user.id,
+          status:'carrito'
+        })
+
         res.status(200).json({ message: "Se creo correctamente el usuario", data: user });
       })
       .catch(function (err) {
@@ -164,13 +182,18 @@ server.put('/:idUser/cart',(req, res)=>{
   server.post('/:idUser/cart',(req, res)=>{
     const {idUser} = req.params;
     const item = req.body;
+    let stock;
+
+    Product.findByPk(item.id)
+      .then(res=>{
+        stock= res.stock;
+      })
 
     Orden.findOrCreate({
         where:{
             userId: idUser,
             status:'carrito'
         }
-
     }).then(ress=>{
         LineaDeOrden.findOrCreate({
             where:{
@@ -178,10 +201,12 @@ server.put('/:idUser/cart',(req, res)=>{
                 ordenId: ress[0].id,
                 price: item.price,
             }
-
         })
         .then(resp =>{
-
+            if(resp[0].quantity>= stock){
+              res.status(404).send('Producto supera el stock')
+              return;
+            }
             if(resp[1]===false){
                 LineaDeOrden.increment(
                     {quantity: +1},
