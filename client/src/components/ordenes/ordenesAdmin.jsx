@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { ListGroup, ListGroupItem, Badge} from 'reactstrap';
-import Select from "react-select";
 import Orden from '../ordenes/orden';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
@@ -8,13 +7,14 @@ import './ordenesAdmin.css'
 
 const OrderTable = () => {
 
-  const [orders, setOrders ] = useState([]);
-  const [order, setOrder ] = useState();
+  const [orders, setOrders] = useState([]);
+  const [order, setOrder] = useState();
   const [status, setStatus] = useState(); 
+  const [statusG, setStatusG] = useState();
     
   useEffect(() => {
     getOrders(status)
-  }, [status]);  
+  }, [status, statusG]);  
   
   const toggle = (order) => {    
     setOrder(order);        
@@ -61,7 +61,7 @@ const OrderTable = () => {
         </div>
         <div className='detalle-orden'>
         { 
-          order && <Orden order={order} getOrders={getOrders}/>              
+          order && <Orden order={order} setStatusG={setStatusG} statusG={statusG} toggle={toggle}/>              
         }
         </div>
       </div>

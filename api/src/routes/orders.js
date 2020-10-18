@@ -11,11 +11,7 @@ server.get('/:id',(req,res) => {
 server.put('/:id',(req,res) => {
     let {status} = req.query
     let {id} = req.params
-<<<<<<< HEAD
-    Orden.update({status}, {where: {id}})
-=======
     Orden.update({status},{where: {id}})
->>>>>>> master
     .then(order => res.status(201).json({message:`orden ${status}`,order}))
     .catch(err => res.status(400).json(err))
 })

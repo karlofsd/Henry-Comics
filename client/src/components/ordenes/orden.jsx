@@ -4,30 +4,15 @@ import './orden.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Orden = ({order, getOrders}) => {
-
-    // const [order, setOrder] = useState();
-    const [total, setTotal] = useState(0);
+const Orden = ({order, setStatusG, statusG, toggle}) => {
+    
+    const [total, setTotal ] = useState(0);
     const [status, setStatus ] = useState();
-    const [action, setAction] = useState();
 
-    // useEffect(() => {
-    //     getOrder()
-    // },[order]);
-
-    // useEffect(() => {
-    //     setStatus(order.status);    
-           
-    //     switch(status){
-    //         case 'creada':
-    //             setAction('?status=procesando');                
-    //         case 'procesando':
-    //             setAction('?status=completa');                
-    //         case 'cancelar':
-    //             setAction('?status=cancelada');          
-    //     }
-    // },[order])
-
+    useEffect(() => {
+        
+    },[order, statusG]);
+    
     useEffect(() => {     
         let total = 0;   
 
@@ -35,6 +20,7 @@ const Orden = ({order, getOrders}) => {
           total = total + (p.price * p.lineaDeOrden.quantity);            
         })
         setTotal(total)   
+        setStatus(order.status);    
         
     },[order])    
 
@@ -44,10 +30,32 @@ const Orden = ({order, getOrders}) => {
     //     setOrder(data.data);
     // }
     
-    const handleStatusChange = (id) => {
+    const handleProcess = async (order) => {
+        try{
+            await axios.put(`http://localhost:3001/orders/${order.id}?status=procesando`)            
+            setStatusG(!statusG);  
+            // toggle(order);          
+        } catch(err) {
+            console.log(err);              
+        }       
+    }
 
-        axios.put(`http://localhost:3001/orders/${id}${action}`)
-        getOrders()
+    const handleComplete = async (id) => {
+        try{
+            await axios.put(`http://localhost:3001/orders/${id}?status=completa`)            
+            setStatusG(!statusG);
+        } catch(err) {
+            console.log(err);              
+        } 
+    }
+
+    const handleCancel = async (id) => {
+        try{
+            await axios.put(`http://localhost:3001/orders/${id}?status=cancelada`)            
+            setStatusG(!statusG);
+        } catch(err) {
+            console.log(err);              
+        } 
     }
           
     return(
@@ -87,17 +95,17 @@ const Orden = ({order, getOrders}) => {
                     <p className='priceproductcard' >${total}</p>
                     </div>
                     {   status === 'creada' ?
-                    <button className="btn btn-light pill-rounded" onClick={() => handleStatusChange(order.id)} >Procesar</button> 
+                    <button className="btn btn-light pill-rounded" onClick={() => handleProcess(order)} >Procesar</button> 
                     :
                         status === 'procesando' ?
-                    <button className="btn btn-light pill-rounded" onClick={handleStatusChange}>Completar</button>
+                    <button className="btn btn-light pill-rounded" onClick={() => handleComplete(order)}>Completar</button>
                     : 
                         status === 'completa' ?
                     <h3><span className="badge badge-success" >Completa</span> </h3>
                     :
                     <h3><span className="badge badge-danger">Cancelada</span></h3>
                     }
-                    <button className="btn btn-danger pill-rounded " >Cancelar</button>
+                    <button className="btn btn-danger pill-rounded" onClick={() => handleCancel(order.id)} >Cancelar</button>
                 </div>
             </div>
         </div>
