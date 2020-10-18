@@ -10,6 +10,7 @@ const GET_USERS = 'GET_USERS';
  //STATE
 
 const initialState = {
+    user: "",
     users: [],
 }
 
