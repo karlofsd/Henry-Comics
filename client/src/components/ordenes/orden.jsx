@@ -34,24 +34,24 @@ const Orden = ({order, setStatusG, statusG, toggle}) => {
         try{
             await axios.put(`http://localhost:3001/orders/${order.id}?status=procesando`)            
             setStatusG(!statusG);  
-            // toggle(order);          
+            toggle(order);          
         } catch(err) {
             console.log(err);              
         }       
     }
 
-    const handleComplete = async (id) => {
+    const handleComplete = async (order) => {
         try{
-            await axios.put(`http://localhost:3001/orders/${id}?status=completa`)            
+            await axios.put(`http://localhost:3001/orders/${order.id}?status=completa`)            
             setStatusG(!statusG);
         } catch(err) {
             console.log(err);              
         } 
     }
 
-    const handleCancel = async (id) => {
+    const handleCancel = async (order) => {
         try{
-            await axios.put(`http://localhost:3001/orders/${id}?status=cancelada`)            
+            await axios.put(`http://localhost:3001/orders/${order.id}?status=cancelada`)            
             setStatusG(!statusG);
         } catch(err) {
             console.log(err);              
@@ -105,7 +105,7 @@ const Orden = ({order, setStatusG, statusG, toggle}) => {
                     :
                     <h3><span className="badge badge-danger">Cancelada</span></h3>
                     }
-                    <button className="btn btn-danger pill-rounded" onClick={() => handleCancel(order.id)} >Cancelar</button>
+                    <button className="btn btn-danger pill-rounded" onClick={() => handleCancel(order)} >Cancelar</button>
                 </div>
             </div>
         </div>
