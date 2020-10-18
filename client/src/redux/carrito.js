@@ -18,7 +18,11 @@ export default function carritoReducer (state = initialState, action){
         case GET_CARRITO:
             return {
                 ...state,
-                carritoProducts: action.payload
+                carritoProducts: action.payload.products,
+                carritoInfo: {
+                    id: action.payload.id,
+                    userId: action.payload.userId
+                }
             }
         default:
             return {
@@ -27,16 +31,17 @@ export default function carritoReducer (state = initialState, action){
     }
 }
 
-
 // // ACTIONS
 
 export const getCarrito = () => async(dispatch) => { 
      try{
         const {data} = await axios.get(`http://localhost:3001/user/${1}/cart`)
+        console.log(data)
         dispatch({
             type: GET_CARRITO,
-            payload: data.products
+            payload: data
         })
+   
      }catch(error){
         console.log(error)
      }

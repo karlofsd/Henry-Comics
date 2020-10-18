@@ -10,15 +10,13 @@ import axios from 'axios';
 
 
 export default function ProductCard({product, capitalize}) {
-    
+    let user;
     const dispatch = useDispatch()
 
     const addCart = async(body)=>{
         await axios.post(`http://localhost:3001/user/${1}/cart`, body)
         .then(res=>{
             dispatch(getCarrito())
-
-            //{console.log('res',res)}
         })
         .catch(err=>{
             console.log('err', err)
