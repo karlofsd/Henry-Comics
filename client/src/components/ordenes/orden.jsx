@@ -4,39 +4,29 @@ import './orden.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Orden = ({order, setStatusG, statusG, toggle}) => {
+
+const Orden = ({order, setStatusG, statusG, getOrder}) => {    
     
     const [total, setTotal ] = useState(0);
-    const [status, setStatus ] = useState();
-
-    useEffect(() => {
-        
-    },[order, statusG]);
-    
-    useEffect(() => {     
+    const [status, setStatus ] = useState();    
+      
+    useEffect(() => { 
         let total = 0;   
 
-        order && order.products.forEach((p) => {
+        order.products && order.products.forEach((p) => {
           total = total + (p.price * p.lineaDeOrden.quantity);            
         })
         setTotal(total)   
         setStatus(order.status);    
-        
     },[order])    
-
-    // const getOrder = async (id) => {
-    //     const data = await axios.get(`http://localhost:3001/orders/${orderId}`);
-    //     console.log(data.data);          
-    //     setOrder(data.data);
-    // }
     
     const handleProcess = async (order) => {
         try{
             await axios.put(`http://localhost:3001/orders/${order.id}?status=procesando`)            
             setStatusG(!statusG);  
-            toggle(order);          
+            getOrder(order.id);
         } catch(err) {
-            console.log(err);              
+            console.log(err);
         }       
     }
 
@@ -44,6 +34,7 @@ const Orden = ({order, setStatusG, statusG, toggle}) => {
         try{
             await axios.put(`http://localhost:3001/orders/${order.id}?status=completa`)            
             setStatusG(!statusG);
+            getOrder(order.id);
         } catch(err) {
             console.log(err);              
         } 
@@ -53,6 +44,7 @@ const Orden = ({order, setStatusG, statusG, toggle}) => {
         try{
             await axios.put(`http://localhost:3001/orders/${order.id}?status=cancelada`)            
             setStatusG(!statusG);
+            getOrder(order.id);
         } catch(err) {
             console.log(err);              
         } 
