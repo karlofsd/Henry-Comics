@@ -11,6 +11,7 @@ import { getCarrito } from '../../../redux/carrito';
 export default function Carrito(){
 
     const carrito = useSelector(store => store.carritoState.carritoProducts);
+    const info = useSelector( store => store.carritoState.carritoInfo)
     const dispatch = useDispatch();
 
 
@@ -64,7 +65,9 @@ export default function Carrito(){
             return <Badge color="danger">{total}</Badge>
         }
     }
-
+    const handleBuy = async() => {
+        await axios.put(`http://localhost:3001/orders/${info.id}?status=creada`)
+    }
 
     return(
         <div className='cart'>
@@ -99,7 +102,7 @@ export default function Carrito(){
                                 <label>Total: {totalProduct()}</label>
                         </div>
                         <div className='buttons'>
-                            <Button className="btn btn-secondary btn-sm m-2 p-1">Comprar</Button>
+                            <Button className="btn btn-secondary btn-sm m-2 p-1" onClick={handleBuy}>Comprar</Button>
                         </div>
                     </CardBody>
                 </Card>
