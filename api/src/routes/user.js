@@ -11,6 +11,21 @@ User.findAll()
 })
 
 
+server.get('/login', (req, res, next)=>{
+  const {email, password} = req.query;
+  User.findOne({
+    where:{
+      email: email,
+      password: password
+    }
+  })
+      .then(users => {
+          res.json(users.id);
+      })
+      .catch(next);
+})
+
+
 
 server.post("/add", function (req, res) {
     var { firstname, lastname, username, email, password } = req.body;
@@ -24,6 +39,12 @@ server.post("/add", function (req, res) {
       }
     )
       .then(function (user) {
+       
+        Orden.create({
+          userId: user.id,
+          status:'carrito'
+        })
+
         res.status(200).json({ message: "Se creo correctamente el usuario", data: user });
       })
       .catch(function (err) {
