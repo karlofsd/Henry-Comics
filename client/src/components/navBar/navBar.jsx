@@ -97,7 +97,7 @@ const NavBar = ({/* categories, */}) => {
               </NavItem>
               
             </Nav>
-          <Buscar click={click} className="pl-5"/>
+          <Buscar /*click={click}*/ className="pl-5"/>
           </Collapse>
         </Navbar>
       </div>

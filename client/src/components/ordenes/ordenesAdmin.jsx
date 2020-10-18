@@ -1,38 +1,42 @@
 import React, {useState, useEffect} from 'react';
 import { ListGroup, ListGroupItem, Badge} from 'reactstrap';
-import Select from "react-select";
 import Orden from '../ordenes/orden';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import './ordenesAdmin.css'
+import './ordenesAdmin.css';
+
 
 const OrderTable = () => {
 
-  const [orders, setOrders ] = useState([]);
-  const [order, setOrder ] = useState();
-  const [status, setStatus] = useState();
-    
-  // const [modal, setModal] = useState(false);
-  const toggle = (order) => {
-    // setModal(!modal);
-    setOrder(order);
-  }
-
+  const [orders, setOrders] = useState([]);
+  const [order, setOrder] = useState();
+  const [status, setStatus] = useState(); 
+  const [statusG, setStatusG] = useState();
+ 
   useEffect(() => {
     getOrders(status)
-  }, [status]);
+  }, [status, statusG]);  
+  
+  const toggle = (order) => {     
+    setOrder(order);        
+  } 
   
   const getOrders = async (status) => {
     let query = '';
     if (status) {query = `?status=${status}`};
     const data = await axios.get(`http://localhost:3001/orders${query}`);   
-        
-    setOrders(data.data);
+    let filtered = data.data.filter(p => p.status !== 'carrito')   
+    setOrders(filtered);
   } 
+
+  const getOrder = async (id) => {
+    const data = await axios.get(`http://localhost:3001/orders/${id}`);              
+    setOrder(data.data[0]);
+  }
 
   const handleStatus = (e) => {       
     setStatus(e.target.value);
-    setOrder()
+    setOrder();  
   }
 
   return (
@@ -41,7 +45,7 @@ const OrderTable = () => {
         <div className='estados-select'>
           <div class="btn-group-vertical">
             <button type="button" class="btn btn-secondary" onClick={handleStatus}>Todas</button>
-            <button type="button" class="btn btn-secondary" value='carrito' onClick={handleStatus}>Carrito</button>
+            {/* <button type="button" class="btn btn-secondary" value='carrito' onClick={handleStatus}>Carrito</button> */}
             <button type="button" class="btn btn-secondary" value='creada' onClick={handleStatus}>Creada</button>
             <button type="button" class="btn btn-secondary" value='procesando' onClick={handleStatus}>Procesando</button>
             <button type="button" class="btn btn-secondary" value='completa' onClick={handleStatus}>Completa</button>
@@ -63,7 +67,7 @@ const OrderTable = () => {
         </div>
         <div className='detalle-orden'>
         { 
-          order && <Orden order={order} />              
+          order && <Orden order={order} setStatusG={setStatusG} statusG={statusG} getOrder={getOrder}/>              
         }
         </div>
       </div>

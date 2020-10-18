@@ -3,6 +3,7 @@ import axios from 'axios'
 //CONSTANTES
 
 const GET_LOGIN = 'GET_LOGIN';
+const GET_USERS = 'GET_USERS';
 
  //STATE
 
