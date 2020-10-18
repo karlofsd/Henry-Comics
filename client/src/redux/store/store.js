@@ -5,6 +5,7 @@ import categoryReducer from '../categorias'
 import carritoReducer from '../carrito'
 import userReducer from '../users'
 
+
 const rootReducer = combineReducers({
     productState: productReducer,
     categoryState: categoryReducer,

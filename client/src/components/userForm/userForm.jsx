@@ -3,11 +3,9 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import {FormGroup, Form, Button, Label, Input} from 'reactstrap';
 
-
 export default function UserForm() {
-
   const {register, errors, handleSubmit} = useForm();
-
+  
   const handleRegister = async (data) => {
     try{
     await axios.post('http://localhost:3001/user/add', data);
@@ -19,8 +17,6 @@ export default function UserForm() {
   // const onEnterKey = e => {
   //   if (e.key === 'Enter') handleRegister(e);
   // };
-
-
   // const handleSubmit =  e => {
   //   e.preventDefault();
   //   handleRegister();
@@ -28,14 +24,12 @@ export default function UserForm() {
   //     email:'',
   //     password:''
   //   })
-
   // }
-
+  
   const onSubmit = (data, e) =>{
     console.log(data)
     handleRegister(data);
     e.target.reset();
-
   }
 
   return (
