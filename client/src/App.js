@@ -18,6 +18,7 @@ function App() {
   // ---funciones Redux---
   const dispatch = useDispatch() 
   const products = useSelector( store => store.productState.products)
+  let onlyStock = products.filter(p => p.stock > 0)
   //const status = useSelector( store => store.productState.statusFilter)
   // const [products, setProducts] = useState(); // ELIMINAR
   // const [categories, setCategories] = useState(); // ELIMINAR
@@ -70,19 +71,19 @@ function App() {
       <Route
         exact
         path="/catalogo"
-        render={({location}) => <Catalog products={products} /* status={status} *//*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
+        render={() => <Catalog products={onlyStock} /* status={status} *//*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
       />
       <Route
         exact
         path="/catalogo/category/:id"
         render={({ match }) => {
-          return <Catalog id={Number(match.params.id)} products={products} /* status={status} *//* filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>
+          return <Catalog id={Number(match.params.id)} products={onlyStock} /* status={status} *//* filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>
         }}
       />
       <Route
         exact
         path="/catalogo/search"
-        render={({location}) => <Catalog products={products} /* status={status} */ search={location.search.split('=')[1]}/*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
+        render={({location}) => <Catalog products={onlyStock} /* status={status} */ search={location.search.split('=')[1]}/*  filterStatus={filterStatus} setFilterStatus={setFilterStatus} *//>}
       />
       <Route
         exact

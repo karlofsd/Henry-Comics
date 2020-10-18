@@ -3,21 +3,21 @@ import './productCard.css'
 import Product from './product'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
-import {  useDispatch } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 import { getCarrito, getLocalCarrito } from '../../redux/carrito';
 
 import axios from 'axios';
 
 
 export default function ProductCard({product, capitalize}) {
-    let user;
-    const dispatch = useDispatch()
 
+    const dispatch = useDispatch()
+    const user = useSelector(store => store.userState.userLogin)
     const addCart = async(body)=>{
-        if(user){
-            await axios.post(`http://localhost:3001/user/${1}/cart`, body)
+        if(user.id){
+            await axios.post(`http://localhost:3001/user/${user.id}/cart`, body)
             .then(res=>{
-                dispatch(getCarrito())
+                dispatch(getCarrito(user.i))
             })
             .catch(err=>{
                 console.log('err', err)

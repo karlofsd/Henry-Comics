@@ -1,34 +1,38 @@
-import React,{useState} from 'react'
+import React,{useReducer, useState} from 'react'
 import { UncontrolledCollapse, Button, CardBody, Card, Input } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faCartArrowDown, faSync } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 
-const CartProduct = ({name,quantity,id,price,carritoDelete, carritoGet, stock}) =>{
+const CartProduct = ({name,quantity,id,price,carritoDelete, carritoGet, stock,userId, newPrice}) =>{
 
     const [cantidad, setCantidad] = useState('');
-    
 
     const carritoPut = async (body) =>{
         try{
-            await axios.put(`http://localHost:3001/user/${1}/cart/`, body)
-            carritoGet();
+            await axios.put(`http://localHost:3001/user/${userId}/cart/`, body)
+            carritoGet(userId);
           }catch(err){
-  
+            console.log(err)
           }
     }
 
     const stockProduct = () =>{
 
         if(cantidad > stock){
-            
+            userId ? 
 
             carritoPut({id:id, quantity: stock})
+            :
+            newPrice({id:id,price:stock*price})
+          
         }else{
+            userId?
             carritoPut({id:id, quantity: cantidad})
-
+            :
+            newPrice({id:id,price:cantidad*price})
+            
         }
-        setCantidad('')
     }
 
     const handleInputChange = (e) =>{

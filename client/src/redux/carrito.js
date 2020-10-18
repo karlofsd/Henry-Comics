@@ -42,9 +42,9 @@ export default function carritoReducer (state = initialState, action){
 
 // // ACTIONS
 
-export const getCarrito = () => async(dispatch) => { 
+export const getCarrito = (userId) => async(dispatch) => { 
      try{
-        const {data} = await axios.get(`http://localhost:3001/user/${1}/cart`)
+        const {data} = await axios.get(`http://localhost:3001/user/${userId}/cart`)
         dispatch({
             type: GET_CARRITO,
             payload: data
