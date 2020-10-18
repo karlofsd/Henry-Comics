@@ -8,7 +8,7 @@ const GET_SELPRODUCT = 'GET_SELPRODUCT';
 const FILTER_CATEGORIES = 'FILTER_CATEGORIES';
 const FILTER_PRODUCTS = 'FILTER_PRODUCTS';
 const FIND_PRODUCTS = 'FIND_PRODUCTS';
-const CLEAN = 'CLEAN'
+const CLEAN = 'CLEAN';
 const url = 'http://localhost:3001/products';
 
 // STATE
@@ -75,10 +75,10 @@ export default function productReducer (state = initialState, action){
 export const getProducts = () => async(dispatch) => {
      try{
         const {data} = await axios.get(url)
-        let conStock = data.filter(e => e.stock > 0)
+        
         dispatch({
             type: GET_PRODUCTS,
-            payload: conStock
+            payload: data
         })
      }catch(error){
         console.log(error)

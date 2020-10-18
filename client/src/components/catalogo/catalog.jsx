@@ -23,8 +23,7 @@ export default function Catalog({products,id,/* status, */search}) {
     const classes = useStyles();
     const status = useSelector( store => store.productState.statusFilter)
     const dispatch = useDispatch()
-    
-    
+
     // -------PAGINACION-------
     const [page,setPage] = useState(1)
     const [paginated,setPaginated] = useState()

@@ -11,7 +11,7 @@ import { getCarrito,getLocalCarrito } from '../../../redux/carrito';
 
 export default function Carrito(){
     let history = useHistory()
-    const user = useSelector(store => store.userState.user)
+    const user = useSelector(store => store.userState.userLogin)
     const carrito = useSelector(store => store.carritoState.carritoProducts);
     const info = useSelector( store => store.carritoState.carritoInfo)
     const dispatch = useDispatch();
@@ -26,11 +26,11 @@ export default function Carrito(){
     // }
 
     const carritoDelete = async (id) =>{
-        if(info.id > 0){
+        if(user.id){
             try{
-                await axios.delete(`http://localHost:3001/user/${info.id}/cart/${id}`,)
+                await axios.delete(`http://localHost:3001/user/${user.id}/cart/${id}`,)
                 //carritoGet();
-                dispatch(getCarrito());
+                dispatch(getCarrito(user.id));
             }catch(err){
                 console.log(err)
             }
@@ -40,9 +40,11 @@ export default function Carrito(){
             dispatch(getLocalCarrito())  
         }
     }
+    
+    const [precioCantidad,setPrecioCantidad] = useState([])
 
     useEffect(() => {
-        if(user){
+        if(user.id){
             console.log('back')
             return dispatch(getCarrito())
         }
@@ -52,16 +54,31 @@ export default function Carrito(){
         }
     }, [])
 
-   
+    console.log(precioCantidad)
+    const agregarPrecio = (newPrice) => {
+        console.log('funct',newPrice)
+        let index = precioCantidad.findIndex((p) => p.id === newPrice.id)
+        console.log(index)
+        if(index !== -1){
+            
+            console.log('in')
+            let newArr = precioCantidad.splice(index,1,newPrice)
+            setPrecioCantidad(newArr)
+        } else {
+            setPrecioCantidad([...precioCantidad,newPrice])
+        }
+                
+        dispatch(getLocalCarrito())
+    }
 
     const totalProduct = () =>{
         let nuevo;
         let total;
         if(carrito[0]){
-            if(info.id > 0){
+            if(user.id){
                 nuevo =  carrito.map(cart => cart.price * cart.lineaDeOrden.quantity);
             }else{
-                nuevo = carrito.map(cart => cart.price)
+                nuevo = precioCantidad.map(cart => cart.price)
             }
             total = nuevo.reduce((a, b) => a + b,0);
         }
@@ -74,7 +91,7 @@ export default function Carrito(){
         let nuevo;
         let total;
         if(carrito[0]){
-            if(info.id > 0){
+            if(user.id){
                 nuevo =  carrito.map(cart => cart.lineaDeOrden.quantity)
                 total = nuevo.reduce((a, b) => a + b, 0);
             }else{
@@ -86,7 +103,7 @@ export default function Carrito(){
         }
     }
     const handleBuy = async() => {
-        if(info.id){
+        if(user.id){
             await axios.put(`http://localhost:3001/orders/${info.id}?status=creada`)
         }else{
             alert('Debe logearse, para seguir con su compra.')
@@ -112,11 +129,13 @@ export default function Carrito(){
                                             <CartProduct 
                                                 name={cart.name}
                                                 stock={cart.stock}
-                                                quantity={user ? cart.lineaDeOrden.quantity:1}
+                                                quantity={user.id ? cart.lineaDeOrden.quantity:1}
                                                 id={cart.id}
                                                 price={cart.price}
                                                 carritoDelete={carritoDelete}
                                                 carritoGet={() => dispatch(getCarrito())}
+                                                user={user.id}
+                                                newPrice={agregarPrecio}
                                             />
                                     </div>  
                                 ))}
