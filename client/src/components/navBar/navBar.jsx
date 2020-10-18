@@ -1,10 +1,18 @@
 import React, {useEffect, useState} from 'react'
 import Buscar from '../searchBar/searchBar'
 import {
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
+    Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  NavbarText
 } from 'reactstrap'
 import {Link} from 'react-router-dom'
 import logo from './img/logo.png'
@@ -24,45 +32,75 @@ const NavBar = ({/* categories, */}) => {
     },[])
 
     return(
+        <div>
+        <Navbar color="dark" light expand="md">
+          
+          <NavbarBrand href="/">
+              <div className="divlogo">
+                    <Link className="navbar-brand" to="/">
+                        <img src={logo} className="logo" />
+                    </Link>
+              </div>
+          </NavbarBrand>
 
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top fixed">
-            <div className="divlogo"><Link className="navbar-brand" to="/"><img src={logo} className="logo" /></Link></div>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav">
-                    <li className="nav-item active">
-                        <Link id="redtext" className="nav-link" to="/"> Home <span className="sr-only">(current)</span></Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/catalogo" onClick={()=> dispatch(getProducts())}>Catalogo</Link>
-                    </li>
-                    <UncontrolledDropdown nav inNavbar>
-                        <DropdownToggle nav caret>
-                            Categories
-                        </DropdownToggle>
-                        <DropdownMenu left>
-                            {categories && categories.map(c =>
-                            <Link to={`/catalogo/category/${c.id}`}>
-                                <DropdownItem>{c.name}</DropdownItem>
-                            </Link>)}
-                        </DropdownMenu>
-                    </UncontrolledDropdown>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/admin">Admin Panel</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/login">Iniciar Sesión</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/signup">¡Crea tu cuenta!</Link>
-                    </li>
-                </ul>
-                <div className="text-white font-weight-bold henryComics container d-flex justify-content-center col-md-2 footerBorder ml-30vw"><h3>HENRY COMICS</h3></div>
-                <Buscar/>
-            </div>
-        </nav>
+          <NavbarToggler onClick={toggle} />
+          <Collapse isOpen={isOpen} navbar>
+
+            <Nav className="mr-auto" navbar>
+              <NavItem>
+                <NavLink href="/" id="redtext">
+                    Home 
+                    <span className="sr-only">(current)</span>
+                </NavLink>
+              </NavItem>
+
+              <NavItem>
+              <NavLink href="/catalogo" onClick={()=> dispatch(getProducts())} className="text-light">
+                  Catalogo
+              </NavLink>
+              </NavItem>
+
+              <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret className="text-light">
+                        Categories
+                    </DropdownToggle>
+                    <DropdownMenu left>
+                        {categories && categories.map(c =>
+                        <Link to={`/catalogo/category/${c.id}`} /* onClick={()=> dispatch(filterCategory(c.id))} */>
+                        <DropdownItem>{c.name}</DropdownItem>
+                        </Link>)}
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+              
+              <NavItem>
+                    <NavLink href="/carrito" className="text-light">
+                    Carrito
+                    </NavLink>
+              </NavItem>
+
+              <NavItem>
+                    <NavLink href="/admin" className="text-light">
+                    Admin Panel
+                    </NavLink>
+              </NavItem>
+              
+              <NavItem>
+                    <NavLink href="/login" className="text-light">
+                    Iniciar Sesión
+                    </NavLink>
+              </NavItem>
+              
+              <NavItem>
+                    <NavLink href="/singup" className="text-light">
+                    ¡Crea tu cuenta!
+                    </NavLink>
+              </NavItem>
+              
+            </Nav>
+          <Buscar click={click} className="pl-5"/>
+          </Collapse>
+        </Navbar>
+      </div>
     )
 }
 
