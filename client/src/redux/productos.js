@@ -8,8 +8,8 @@ const GET_SELPRODUCT = 'GET_SELPRODUCT';
 const FILTER_CATEGORIES = 'FILTER_CATEGORIES';
 const FILTER_PRODUCTS = 'FILTER_PRODUCTS';
 const FIND_PRODUCTS = 'FIND_PRODUCTS';
-
-const url = 'http://localhost:3001/products/';
+const CLEAN = 'CLEAN'
+const url = 'http://localhost:3001/products';
 
 // STATE
 
@@ -54,39 +54,27 @@ export default function productReducer (state = initialState, action){
         case FIND_PRODUCTS:
             return {
                 products: action.payload,
-                statusFilter: 'search'
-            }        
+                statusFilter: false
+            }
+        case CLEAN:
+            return {
+                ...state,
+                statusFilter: false
+            }    
         default:
             return {
                 ...state,
                 selProduct: {},
-                statusFilter: false
+                statusFilter:false
             }        
     }
 }
 
 // ACTIONS
 
-let arrProducts;
-
-export const getAllProducts = () => async(dispatch) => {
-    try{
-       const {data} = await axios.get(url)
-
-       dispatch({
-           type: GET_ALLPRODUCTS,
-           payload: data
-       })
-    }catch(error){
-       console.log(error)
-    }
-}
-
 export const getProducts = () => async(dispatch) => {
      try{
         const {data} = await axios.get(url)
-        let conStock = data.filter(e => e.stock > 0)
-
         dispatch({
             type: GET_PRODUCTS,
             payload: conStock
@@ -98,7 +86,7 @@ export const getProducts = () => async(dispatch) => {
 
 export const selProduct = (id) => async(dispatch) => {
     try{
-        const {data} = await axios.get(`${url}${id}`)
+        const {data} = await axios.get(`${url}/${id}`)
         dispatch({
             type: GET_SELPRODUCT,
             payload: data
@@ -121,12 +109,10 @@ export const findProducts = (arg) => async(dispatch) => {
         console.log(error)
     }
 }
-//data.filter(e.stock > 0)
-export const filterProducts = (products,propiedad,arg) => async(dispatch) => {
+
+export const filterProducts = (products,propiedad,arg) => (dispatch) => {
     try{
         let data = products.filter(e => e[arg] === propiedad)
-        
-        console.log(propiedad,arg,arrProducts)
         dispatch({
             type: FILTER_PRODUCTS,
             payload: data
@@ -138,9 +124,7 @@ export const filterProducts = (products,propiedad,arg) => async(dispatch) => {
 
 export const filterCategory = (id) => async(dispatch) => {
     try{
-        const {data} = await axios.get(`${url}category/${id}`)
-        
-        console.log(data)
+        const {data} = await axios.get(`${url}/category/${id}`)
         dispatch({
             type: FILTER_CATEGORIES,
             payload: data
@@ -150,9 +134,8 @@ export const filterCategory = (id) => async(dispatch) => {
     }
 }
 
-export const clean = (id) => (dispatch) => {
-    
+export const clean = () => (dispatch) => {
     dispatch({
-        type:'CLEAN'
+        type:CLEAN
     })
 }

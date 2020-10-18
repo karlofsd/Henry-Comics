@@ -7,7 +7,7 @@ import {useDispatch} from 'react-redux'
 import {filterProducts as filter, clean} from '../../../redux/productos'
 
 
-const Filter = ({products,id/* ,filter,clean */,status}) => { 
+const Filter = ({products,id,page,status,pageStatus}) => { 
 
     const dispatch = useDispatch()
 
@@ -35,9 +35,9 @@ const Filter = ({products,id/* ,filter,clean */,status}) => {
 
 
     const getFilterList = () => {
-        let newCollections = products && products.map(p => p.collection)
-        let newSeries = products && products.map(p => p.serie)
-        let newAño = products && products.map(p => p.year)
+        let newCollections = products[0] && products.map(p => p.collection)
+        let newSeries = products[0] && products.map(p => p.serie)
+        let newAño = products[0] && products.map(p => p.year)
         setFiltros({
             ...filtros,
             collection: [...new Set(newCollections)],
@@ -45,7 +45,7 @@ const Filter = ({products,id/* ,filter,clean */,status}) => {
             año: [...new Set(newAño)]
         })
     }
-  
+
     useEffect(() => {        
         getFilterList()
     },[products])
@@ -54,7 +54,7 @@ const Filter = ({products,id/* ,filter,clean */,status}) => {
         <div className="filter-fixed ">
             <div className='filter-header'>
                 <h5 onClick={toggleF} className="cursor"><FontAwesomeIcon icon={faFilter} /> Filtros</h5>
-                {status && <button type='button' className='btn btn-danger' onClick={() => dispatch(clean(id))}><FontAwesomeIcon icon={faTrash} /></button>}  
+                {status && <button type='button' className='btn btn-danger' onClick={() => {dispatch(clean(id)); page(1); pageStatus(false)}}><FontAwesomeIcon icon={faTrash} /></button>}  
             </div>
             <Collapse isOpen={filtro}>
                 <Card>
@@ -64,7 +64,14 @@ const Filter = ({products,id/* ,filter,clean */,status}) => {
                         <Card>
                         <CardBody>
                             <ul className='filtro'>
-                                {filtros.collection[0] && filtros.collection.map(a => <li className='lista'><a name={a} type='button' onClick={()=>dispatch(filter(products,a,'collection'))}>{a}</a></li>)}
+                                {filtros.collection[0] && filtros.collection.map(a => 
+                                <li className='lista'>
+                                    <a name={a} type='button' onClick={()=>{
+                                        dispatch(filter(products,a,'collection'))
+                                        page(1)
+                                        }}>{a}
+                                    </a>
+                                </li>)}
                             </ul>
                         </CardBody>
                         </Card>
@@ -74,7 +81,7 @@ const Filter = ({products,id/* ,filter,clean */,status}) => {
                             <Card>
                             <CardBody>
                                 <ul className='filtro'>
-                                    {filtros.serie[0] &&filtros.serie.map(a => <li className='lista'><a name={a} type='button' onClick={()=>dispatch(filter(products,a,'serie'))}>{a}</a></li>)}
+                                    {filtros.serie[0] &&filtros.serie.map(a => <li className='lista'><a name={a} type='button' onClick={()=>{dispatch(filter(products,a,'serie')); page(1)}}>{a}</a></li>)}
                                 </ul>
                             </CardBody>
                             </Card>
@@ -84,7 +91,7 @@ const Filter = ({products,id/* ,filter,clean */,status}) => {
                         <Card>
                         <CardBody>
                             <ul className='filtro'>
-                                {filtros.año[0] && filtros.año.map(a => <li className='lista'><a name={a} type='button' onClick={()=>dispatch(filter(products,a,'year'))}>{a}</a></li>)}
+                                {filtros.año[0] && filtros.año.map(a => <li className='lista'><a name={a} type='button' onClick={()=>{dispatch(filter(products,a,'year'));page(1)}}>{a}</a></li>)}
                             </ul>
                         </CardBody>
                         </Card>

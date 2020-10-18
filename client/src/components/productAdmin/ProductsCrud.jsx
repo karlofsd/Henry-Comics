@@ -45,9 +45,7 @@ const ProductsCrud = (/*{get}*/) =>{
     // }
 
     useEffect(()=>{
-        dispatch(getAllProducts())
-        
-        
+        dispatch(getProducts())   
     },[])
 
 
@@ -92,7 +90,7 @@ const ProductsCrud = (/*{get}*/) =>{
                         </tr>
                     </thead>
                     <tbody>
-                        { productGet.map(ele=>(
+                        {productGet[0] && productGet.map(ele=>(
                             <tr>
                             <td>{ele.id}</td>
                             <td>{capitalize(ele.name)}</td>
