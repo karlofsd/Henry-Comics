@@ -1,7 +1,8 @@
 .orden{
     width: 100%;
     height: 60vh;
-    margin: auto
+    margin: auto;
+    border-radius: 10px
 }
 
 .orden .top{
@@ -18,10 +19,21 @@
     .orden table{
         width: 80%;
     }
+        .tO{
+            text-align: center;
+        }
+        .w-20{
+            width: 20%;
+        }
+        .w-15{
+            width: 15%;
+        }
     .orden .datos{
         display: flex;
-        flex-direction: column;
+        justify-content: space-around;
         align-items: center;
+        width: 80%;
+        padding-bottom: 10px;
     }
 .orden .bottom{
     background: rgba(0,0,0,0.7);
@@ -33,4 +45,5 @@
     padding: 5px;
     height: 30%;
     width: 100%;
+    border-radius: 0 0 10px 10px
 }

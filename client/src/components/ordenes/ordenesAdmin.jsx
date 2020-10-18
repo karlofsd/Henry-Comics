@@ -53,8 +53,9 @@ const OrderTable = () => {
           {
             orders && orders.map((order) => (
               <ListGroupItem tag="button" onClick={() => toggle(order)}>
-              <Badge pill>{order.id}</Badge>
-              {'   ' + order.status.toUpperCase()}        
+              <Badge pill>{order.status}</Badge>
+              {'Orden # '+ order.id}
+              <span>{order.createdAt.split('T')[0].replace(/-/gi,'/').replace(/(\w+)\/(\w+)\/(\w+)/,"$3/$2/$1")}</span>        
               </ListGroupItem>         
             ))
           }    
