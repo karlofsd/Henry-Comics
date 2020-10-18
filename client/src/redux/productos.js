@@ -75,6 +75,7 @@ export default function productReducer (state = initialState, action){
 export const getProducts = () => async(dispatch) => {
      try{
         const {data} = await axios.get(url)
+        let conStock = data.filter(e => e.stock > 0)
         dispatch({
             type: GET_PRODUCTS,
             payload: conStock

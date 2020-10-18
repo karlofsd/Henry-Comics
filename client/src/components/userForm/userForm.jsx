@@ -34,7 +34,7 @@ const handleSubmit =  e => {
   }
 };
 return (
-  <form onSubmit={handleSubmit()}>
+  <form onSubmit={()=>handleSubmit()}>
   <label>
     Email:
     <input type="email" name="email" value={setUserData.email} placeholder="Email" onChange={handleInputChange} onKeyPress={onEnterKey}/>
