@@ -3,14 +3,19 @@ import axios from 'axios'
 //CONSTANTES
 
 const GET_USERS = 'GET_USERS';
-
+const GET_LOGIN = 'GET_LOGIN';
 
 
 
  //STATE
 
 const initialState = {
+    user: "",
     users: [],
+    userLogin:{
+        id:null,
+        login: false
+    }
 }
 
  // REDUCER
@@ -21,6 +26,14 @@ export default function userReducer(state = initialState, action){
             return {
                 ...state, 
                 users: action.payload,
+            }
+        case GET_LOGIN:
+            return{
+                ...state,
+                userLogin:{
+                    id: action.payload,
+                    login: true
+                }
             }
         default:
             return{
@@ -43,3 +56,20 @@ export const getUsers = (id) => async(dispatch) => {
     }
     ;
 };
+
+// Buscara solo un usuario el logueado
+
+export const getLogin = (login) => async(dispatch) => {
+    console.log(login)
+    try{
+    const {data} = await axios.get('http://localhost:3001/user/login',{params:login})
+        dispatch({ 
+            type: GET_LOGIN, 
+            payload: data
+    })
+    }catch(error){
+        console.log(error)
+    }
+    ;
+};
+

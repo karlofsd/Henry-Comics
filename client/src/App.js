@@ -11,6 +11,7 @@ import Footer from "./components/footer/footer";
 import axios from "axios";
 import {useDispatch,useSelector} from 'react-redux'  //hooks
 import {getProducts} from './redux/productos'        //actions
+import Login from "./components/userForm/login";
 
 
 function App() {
@@ -102,7 +103,15 @@ function App() {
             <UserForm /> 
           </div>}
       />
+      <Route 
+        exact path="/login" 
+        render={() => 
+          <div>
+            <Login />
+          </div>}
+      />
     </Router>
+    
   );
 }
 
