@@ -10,17 +10,15 @@ const OrderTable = () => {
 
   const [orders, setOrders ] = useState([]);
   const [order, setOrder ] = useState();
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState(); 
     
-  // const [modal, setModal] = useState(false);
-  const toggle = (order) => {
-    // setModal(!modal);
-    setOrder(order);
-  }
-
   useEffect(() => {
     getOrders(status)
-  }, [status]);
+  }, [status]);  
+  
+  const toggle = (order) => {    
+    setOrder(order);        
+  } 
   
   const getOrders = async (status) => {
     let query = '';
@@ -63,7 +61,7 @@ const OrderTable = () => {
         </div>
         <div className='detalle-orden'>
         { 
-          order && <Orden order={order} />              
+          order && <Orden order={order} getOrders={getOrders}/>              
         }
         </div>
       </div>
