@@ -99,7 +99,7 @@ export default function UserForm() {
         ¡Operacion exitosa!
         </UncontrolledAlert> :
         <UncontrolledAlert className= 'alert col-4' color="danger" isOpen={visible} toggle={onDismiss} >
-        Error !!
+        Error !! Cuenta Existente
         </UncontrolledAlert>
       }      
     </Form>
