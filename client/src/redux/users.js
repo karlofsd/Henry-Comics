@@ -1,9 +1,12 @@
 import axios from 'axios'
+import { localToUser } from './carrito';
 
 //CONSTANTES
 
+
 const GET_LOGIN = 'GET_LOGIN';
 const GET_USERS = 'GET_USERS';
+
 
  //STATE
 
@@ -57,18 +60,25 @@ export const getUsers = (id) => async(dispatch) => {
 };
 
 // Buscara solo un usuario el logueado
+export let id;
 
 export const getLogin = (body) => async(dispatch) => {
     console.log('login', body)
     try{
-    const {data} = await axios.post('http://localhost:3001/user/login', body)      
-        dispatch({ 
+    const {data} = await axios.post('http://localhost:3001/user/login', body)
+  id = data.id
+        
+      dispatch({ 
             type: GET_LOGIN, 
             payload: data
-    })
+    },
+        window.alert(`Bienvenido ${data.email}`)
+    )
     }catch(error){
         console.log(error)
     }
     ;
 };
+
+
 

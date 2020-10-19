@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import {FormGroup, Form, Button, Label, Input} from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLogin } from '../../redux/users';
-import {localToUser} from '../../redux/carrito';
-import axios from 'axios';
+import {localToUser} from '../../redux/carrito'
+
 
 const Login =() =>{
 
@@ -15,14 +15,17 @@ const Login =() =>{
   
 
   const onSubmit = async (arg, e) =>{
-    dispatch(getLogin(arg));
-    e.target.reset();
     
-    const {data} = await axios.post('http://localhost:3001/user/', arg.email)
-    console.log(data);
-      
-    dispatch(localToUser(data.id))
-    localStorage.removeItem('carrito');
+    try{
+     await dispatch(getLogin(arg));
+     await dispatch(localToUser(carrito))
+      localStorage.removeItem('carrito');
+      e.target.reset();
+
+    }catch(err){
+      console.log(err)
+    }
+    
   }
 
     

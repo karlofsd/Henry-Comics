@@ -47,7 +47,6 @@ export default function Catalog({products,id,/* status, */search}) {
     // ---------------------------------------------
 
     useEffect(() => {
-        dispatch(getCarrito(user.id))
         // console.log('--------- render 1--------')
         if(!status){
             // console.log('status',status)
@@ -71,6 +70,10 @@ export default function Catalog({products,id,/* status, */search}) {
                 }
             }
             fetchData()
+            
+        }
+        if(user.login){
+            dispatch(getCarrito(user.id))
         }
        /*  paginator(page) */
         // console.log('----------------------------')
