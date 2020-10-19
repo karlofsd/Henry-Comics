@@ -30,7 +30,7 @@ export default function Catalog({products,id,/* status, */search}) {
     const [page,setPage] = useState(1)
     const [paginated,setPaginated] = useState()
     const [pageStatus, setPageStatus] = useState(false)
-    const limit = 2
+    const limit = 6
     const counter = Math.ceil(products.length/limit)
     
     const paginator = (e) => {
@@ -101,7 +101,7 @@ export default function Catalog({products,id,/* status, */search}) {
             <Filter products = {products} status={status} id={id} page={setPage} pageStatus={setPageStatus}/>
         </div>
         <div className='products'>
-            <div>
+            <div className='contenedor'>
                 {paginated  && paginated.map(p =><ProductCard product={p} capitalize={capitalize}/>)}
             </div>
             <div className={classes.root} id='pagination'>
