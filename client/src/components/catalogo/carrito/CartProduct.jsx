@@ -4,14 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faCartArrowDown, faSync } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 
-const CartProduct = ({name,quantity,id,price,carritoDelete, carritoGet, stock,userId, newPrice}) =>{
+const CartProduct = ({name,quantity,id,price,carritoDelete, carritoGet, stock,user, newPrice}) =>{
 
     const [cantidad, setCantidad] = useState('');
 
     const carritoPut = async (body) =>{
         try{
-            await axios.put(`http://localHost:3001/user/${userId}/cart/`, body)
-            carritoGet(userId);
+            await axios.put(`http://localHost:3001/user/${user}/cart/`, body)
+            carritoGet(user);
           }catch(err){
             console.log(err)
           }
@@ -20,17 +20,21 @@ const CartProduct = ({name,quantity,id,price,carritoDelete, carritoGet, stock,us
     const stockProduct = () =>{
 
         if(cantidad > stock){
-            userId ? 
-
-            carritoPut({id:id, quantity: stock})
-            :
-            newPrice({id:id,price:stock*price})
+           if(user){
+                carritoPut({id:id, quantity: stock})
+                setCantidad('')
+           } else{
+                newPrice({id:id,price:stock*price})
+           }
           
         }else{
-            userId?
-            carritoPut({id:id, quantity: cantidad})
-            :
-            newPrice({id:id,price:cantidad*price})
+            if(user){
+                carritoPut({id:id, quantity: cantidad})
+                setCantidad('')
+            }else{
+                newPrice({id:id,price:cantidad*price})
+            }
+            
             
         }
     }
