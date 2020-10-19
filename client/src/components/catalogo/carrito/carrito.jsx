@@ -37,6 +37,7 @@ export default function Carrito(){
         }else{
             let data = JSON.parse(localStorage.getItem('carrito')).filter(p => p.id !== id)
             localStorage.setItem('carrito',JSON.stringify(data))
+            agregarPrecio({id:id},true)
             dispatch(getLocalCarrito())  
         }
     }
@@ -54,20 +55,18 @@ export default function Carrito(){
         }
     }, [])
 
-    console.log(precioCantidad)
-    const agregarPrecio = (newPrice) => {
-        console.log('funct',newPrice)
+    const agregarPrecio = (newPrice,del) => {
         let index = precioCantidad.findIndex((p) => p.id === newPrice.id)
-        console.log(index)
+        if(del){
+            return precioCantidad.splice(index,1)
+        }
         if(index !== -1){
-            
             console.log('in')
-            let newArr = precioCantidad.splice(index,1,newPrice)
-            setPrecioCantidad(newArr)
+            console.log('estado',precioCantidad)
+            precioCantidad.splice(index,1,newPrice)
         } else {
             setPrecioCantidad([...precioCantidad,newPrice])
         }
-                
         dispatch(getLocalCarrito())
     }
 

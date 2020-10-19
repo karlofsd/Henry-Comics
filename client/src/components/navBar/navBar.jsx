@@ -71,12 +71,6 @@ const NavBar = ({/* categories, */}) => {
                         </Link>)}
                     </DropdownMenu>
                 </UncontrolledDropdown>
-              
-              <NavItem>
-                    <Link to="/carrito" className="text-light px-2">
-                    Carrito
-                    </Link>
-              </NavItem>
 
               <NavItem>
                     <Link to="/admin" className="text-light px-2">
