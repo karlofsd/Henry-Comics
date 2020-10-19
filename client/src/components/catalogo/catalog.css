@@ -13,9 +13,12 @@
 .products{
     width: 65%;
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
 }
+    .products-content{
+        display: flex;
+        flex-wrap: wrap;
+    }
 .carrito{
     display: flex;
     flex-direction: column;
