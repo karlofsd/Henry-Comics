@@ -46,23 +46,23 @@ const NavBar = ({/* categories, */}) => {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
 
-            <Nav className="mr-auto" navbar>
+            <Nav className="align-items-center mr-auto" navbar>
               <NavItem>
-                <NavLink href="/" id="redtext">
+                <Link to="/" id="redtext" className="px-2">
                     Home 
                     <span className="sr-only">(current)</span>
-                </NavLink>
+                </Link>
               </NavItem>
 
               <NavItem>
-              <NavLink href="/catalogo" onClick={()=> dispatch(getProducts())} className="text-light">
-                  Catalogo
-              </NavLink>
+              <Link to="/catalogo" onClick={()=> dispatch(getProducts())} className="text-light px-2">
+                  Catálogo
+              </Link>
               </NavItem>
 
               <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret className="text-light">
-                        Categories
+                    <DropdownToggle nav caret className="text-light px-2">
+                        Categorias
                     </DropdownToggle>
                     <DropdownMenu left>
                         {categories && categories.map(c =>
@@ -73,27 +73,27 @@ const NavBar = ({/* categories, */}) => {
                 </UncontrolledDropdown>
               
               <NavItem>
-                    <NavLink href="/carrito" className="text-light">
+                    <Link to="/carrito" className="text-light px-2">
                     Carrito
-                    </NavLink>
+                    </Link>
               </NavItem>
 
               <NavItem>
-                    <NavLink href="/admin" className="text-light">
+                    <Link to="/admin" className="text-light px-2">
                     Admin Panel
-                    </NavLink>
+                    </Link>
               </NavItem>
               
               <NavItem>
-                    <NavLink href="/login" className="text-light">
+                    <Link to="/login" className="text-light px-2">
                     Iniciar Sesión
-                    </NavLink>
+                    </Link>
               </NavItem>
               
               <NavItem>
-                    <NavLink href="/singup" className="text-light">
+                    <Link to="/signup" className="text-light px-2">
                     ¡Crea tu cuenta!
-                    </NavLink>
+                    </Link>
               </NavItem>
               
             </Nav>
