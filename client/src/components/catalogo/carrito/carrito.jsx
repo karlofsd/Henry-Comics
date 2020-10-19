@@ -9,13 +9,13 @@ import CartProduct from './CartProduct';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCarrito,getLocalCarrito } from '../../../redux/carrito';
 
-export default function Carrito(){
+export default function Carrito({user}){
     let history = useHistory()
-    const user = useSelector(store => store.userState.userLogin)
+    // const user = useSelector(store => store.userState.userLogin)
     const carrito = useSelector(store => store.carritoState.carritoProducts);
     const info = useSelector( store => store.carritoState.carritoInfo)
     const dispatch = useDispatch();
-
+    console.log(user);
 
     // const [localCarrito, setLocalCarrito] = useState([]);
 
@@ -45,9 +45,11 @@ export default function Carrito(){
     const [precioCantidad,setPrecioCantidad] = useState([])
 
     useEffect(() => {
-        if(user.id){
+        console.log(user);
+          
+        if(user.login){
             console.log('back')
-            return dispatch(getCarrito())
+            return dispatch(getCarrito(user.id))
         }
         if(localStorage.carrito){
             console.log('local')
@@ -90,8 +92,8 @@ export default function Carrito(){
         let nuevo;
         let total;
         if(carrito[0]){
-            if(user.id){
-                nuevo =  carrito.map(cart => cart.lineaDeOrden.quantity)
+            if(user.login){
+                nuevo =  carrito[0] && carrito.map(cart => cart.lineaDeOrden.quantity)
                 total = nuevo.reduce((a, b) => a + b, 0);
             }else{
                 total = carrito.length
@@ -104,6 +106,7 @@ export default function Carrito(){
     const handleBuy = async() => {
         if(user.id){
             await axios.put(`http://localhost:3001/orders/${info.id}?status=creada`)
+            // history.push('/admin')
         }else{
             alert('Debe logearse, para seguir con su compra.')
             history.push('/signup')

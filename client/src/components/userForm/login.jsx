@@ -1,19 +1,28 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import {FormGroup, Form, Button, Label, Input} from 'reactstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getLogin } from '../../redux/users';
+import {localToUser} from '../../redux/carrito';
+import axios from 'axios';
 
 const Login =() =>{
 
     const dispatch = useDispatch();
 
   const {register, errors, handleSubmit} = useForm();
+  const carrito =  useSelector(store => store.carritoState.carritoProducts);
+  
 
-  const onSubmit = (data, e) =>{
-    dispatch(getLogin(data));
+  const onSubmit = async (arg, e) =>{
+    dispatch(getLogin(arg));
     e.target.reset();
-
+    
+    const {data} = await axios.post('http://localhost:3001/user/', arg.email)
+    console.log(data);
+      
+    dispatch(localToUser(data.id))
+    localStorage.removeItem('carrito');
   }
 
     
