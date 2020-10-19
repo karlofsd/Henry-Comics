@@ -1,0 +1,10 @@
+- accion
+- superheroes
+- drama
+- horror
+- gore
+- aventura
+- militar
+- ciencia ficcion
+- sobrenatural
+- zombies
