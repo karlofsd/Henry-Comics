@@ -72,9 +72,7 @@ export default function Catalog({products,id,/* status, */search}) {
             fetchData()
             
         }
-        if(user.login){
-            dispatch(getCarrito(user.id))
-        }
+      
        /*  paginator(page) */
         // console.log('----------------------------')
     },[status,id,search])
