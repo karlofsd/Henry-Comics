@@ -62,10 +62,6 @@ export default function Carrito({user}){
         // }
     }, [])
 
-    useEffect(()=>{
-        console.log('segundo useEffect')
-        dispatch(getCarrito(user.id))
-    },[info])
 
     console.log(carrito, 'estado despues useEffect')
 
@@ -153,7 +149,7 @@ export default function Carrito({user}){
                                                 id={cart.id}
                                                 price={cart.price}
                                                 carritoDelete={carritoDelete}
-                                                carritoGet={() => dispatch(getCarrito())}
+                                                carritoGet={(id) => dispatch(getCarrito(id))}
                                                 user={user.id}
                                                 newPrice={agregarPrecio}
                                             />
