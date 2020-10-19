@@ -1,16 +1,20 @@
 import React from "react";
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import {FormGroup, Form, Button, Label, Input} from 'reactstrap';
+import {FormGroup, Form, Button, Label, Input, UncontrolledAlert} from 'reactstrap';
 
 export default function UserForm() {
   const {register, errors, handleSubmit} = useForm();
+
+  let usuarioCreado = false;
   
   const handleRegister = async (data) => {
-    try{
+    try {
     await axios.post('http://localhost:3001/user/add', data);
-    }catch(error){
+    usuarioCreado = true;
+    } catch (error) {
     console.log(error)
+    usuarioCreado = false;
     }
   };
 
@@ -32,8 +36,14 @@ export default function UserForm() {
     e.target.reset();
   }
 
+  const creadoOk = () => {
+    if (usuarioCreado) {
+      return <UncontrolledAlert className="col-4 mt-3">¡Usuario creado!</UncontrolledAlert>;
+    }
+  }
+
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)} className="col-sm-6 order-sm-2 offset-sm-1 mt-5">
       {/* <label>
         Email:
         <input type="email" name="email" value={userData && userData.email} placeholder="Email" onChange={handleInputChange} onKeyPress={onEnterKey}/>
@@ -43,17 +53,19 @@ export default function UserForm() {
       <input type="password" name="password"  value={userData && userData.password} placeholder="Contraseña" onChange={handleInputChange} onKeyPress={onEnterKey}/>
       </label>
       <button type="submit">Registrer</button> */}
+      <h4>Completa con tus datos para crear tu cuenta</h4>
+      <h6>¡Disfruta de los beneficios exclusivos de la comunidad Henry Comic!</h6>
       <FormGroup>
         <Label>Email</Label>
         <input 
           placeholder="ejemplo@email.com"
           name="email"
-          className="form-control"
+          className="form-control col-4"
           ref={register({
             required:"Email es requerido.",
             pattern:{
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: 'Favor ingresar email ejemplo@email.com'
+              message: 'Por favor ingresar email ejemplo@email.com'
             }
           })}
         />
@@ -67,7 +79,7 @@ export default function UserForm() {
           placeholder="Contraseña"
           name="password"
           type='password'
-          className="form-control"
+          className="form-control col-4"
           ref={register({
             required:{
               value:true,
@@ -81,6 +93,7 @@ export default function UserForm() {
       </FormGroup>
       
       <button type="submit" className="btn btn-primary">Crear cuenta</button>
+      {creadoOk()}
     </Form>
   )
 }

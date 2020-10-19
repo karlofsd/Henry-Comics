@@ -91,7 +91,7 @@ const NavBar = ({/* categories, */}) => {
               </NavItem>
               
               <NavItem>
-                    <NavLink href="/singup" className="text-light">
+                    <NavLink href="/signup" className="text-light">
                     ¡Crea tu cuenta!
                     </NavLink>
               </NavItem>
