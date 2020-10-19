@@ -15,9 +15,11 @@ export default function ProductCard({product, capitalize}) {
     const user = useSelector(store => store.userState.userLogin)
     const addCart = async(body)=>{
         if(user.id){
+            console.log('entro');
+              
             await axios.post(`http://localhost:3001/user/${user.id}/cart`, body)
             .then(res=>{
-                dispatch(getCarrito(user.i))
+                dispatch(getCarrito(user.id))
             })
             .catch(err=>{
                 console.log('err', err)
@@ -57,7 +59,7 @@ export default function ProductCard({product, capitalize}) {
                         <div>
                             <button onClick={()=> addCart(product)} className="btn btn-light pill-rounded" >
                                 <FontAwesomeIcon icon={faCartPlus}/>
-                                {console.log(product)}                              
+                                {/*{console.log(product)}*/ }                             
                             </button>
                         </div>
                     </div>
