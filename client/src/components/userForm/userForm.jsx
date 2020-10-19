@@ -1,20 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import {FormGroup, Form, Button, Label, Input, UncontrolledAlert} from 'reactstrap';
 
+
 export default function UserForm() {
   const {register, errors, handleSubmit} = useForm();
 
-  let usuarioCreado = false;
+  const [usuarioCreado, setUsuarioCreado]  = useState(false);
+  const [visible, setVisible] = useState(false);
+
   
   const handleRegister = async (data) => {
     try {
     await axios.post('http://localhost:3001/user/add', data);
-    usuarioCreado = true;
+    setUsuarioCreado(true);
+    setVisible(true)
     } catch (error) {
     console.log(error)
-    usuarioCreado = false;
+    setUsuarioCreado(false);
+    setVisible(true)
     }
   };
 
@@ -33,14 +38,10 @@ export default function UserForm() {
   const onSubmit = (data, e) =>{
     console.log(data)
     handleRegister(data);
-    e.target.reset();
+    e.target.reset();    
   }
 
-  const creadoOk = () => {
-    if (usuarioCreado) {
-      return <UncontrolledAlert className="col-4 mt-3">¡Usuario creado!</UncontrolledAlert>;
-    }
-  }
+  const onDismiss = () => setVisible(false);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="col-sm-6 order-sm-2 offset-sm-1 mt-5">
@@ -93,7 +94,14 @@ export default function UserForm() {
       </FormGroup>
       
       <button type="submit" className="btn btn-primary">Crear cuenta</button>
-      {creadoOk()}
+      {usuarioCreado ? 
+        <UncontrolledAlert className= 'alert col-4' color="success" isOpen={visible} toggle={onDismiss} >
+        ¡Operacion exitosa!
+        </UncontrolledAlert> :
+        <UncontrolledAlert className= 'alert col-4' color="danger" isOpen={visible} toggle={onDismiss} >
+        Error !!
+        </UncontrolledAlert>
+      }      
     </Form>
   )
 }
