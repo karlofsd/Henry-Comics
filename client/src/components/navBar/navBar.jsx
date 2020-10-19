@@ -35,7 +35,7 @@ const NavBar = ({/* categories, */}) => {
         <div>
         <Navbar color="dark" light expand="md">
           
-          <NavbarBrand href="/">
+          <NavbarBrand >
               <div className="divlogo">
                     <Link className="navbar-brand" to="/">
                         <img src={logo} className="logo" />

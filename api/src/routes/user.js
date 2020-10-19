@@ -11,18 +11,29 @@ User.findAll()
 })
 
 
-server.get('/login', (req, res, next)=>{
-  const {email, password} = req.query;
+server.post('/login', (req, res, next)=>{
+  const {email, password} = req.body;
+  console.log(req.body, 'body');
+  
   User.findOne({
     where:{
       email: email,
       password: password
     }
   })
-      .then(users => {
-          res.json(users.id);
+      .then(user => {
+        console.log(user, 'users');
+        
+          res.json({
+            id: user.id,
+            email: user.email
+            // isAdmin: user.isAdmin
+          });
       })
-      .catch(next);
+      .catch((err) => {
+        console.log(err);
+        
+      });
 })
 
 
@@ -263,5 +274,17 @@ server.get('/:id/orders', (req, res) => {
     res.status(404).json({message: err})
   })
 });
+
+server.post('/', (req, res) => {
+  const { email } = req.body;
+
+  User.findOne({where: {email}})
+    .then((user) => {
+      res.status(200).json(user)
+    })
+    .catch((err) => {
+      console.log(err);      
+    })
+})
 
   module.exports = server;

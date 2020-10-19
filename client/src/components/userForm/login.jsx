@@ -1,19 +1,31 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import {FormGroup, Form, Button, Label, Input} from 'reactstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getLogin } from '../../redux/users';
+import {localToUser} from '../../redux/carrito'
+
 
 const Login =() =>{
 
     const dispatch = useDispatch();
 
   const {register, errors, handleSubmit} = useForm();
+  const carrito =  useSelector(store => store.carritoState.carritoProducts);
+  
 
-  const onSubmit = (data, e) =>{
-    dispatch(getLogin(data));
-    e.target.reset();
+  const onSubmit = async (arg, e) =>{
+    
+    try{
+     await dispatch(getLogin(arg));
+     await dispatch(localToUser(carrito))
+      localStorage.removeItem('carrito');
+      e.target.reset();
 
+    }catch(err){
+      console.log(err)
+    }
+    
   }
 
     
