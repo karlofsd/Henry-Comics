@@ -91,6 +91,7 @@ const NavBar = ({/* categories, */}) => {
               </NavItem>
               
               <NavItem>
+
                     <Link to="/signup" className="text-light px-2">
                     ¡Crea tu cuenta!
                     </Link>

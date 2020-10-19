@@ -8,7 +8,6 @@ const Login =() =>{
 
     const dispatch = useDispatch();
 
-
   const {register, errors, handleSubmit} = useForm();
 
   const onSubmit = (data, e) =>{
@@ -20,13 +19,13 @@ const Login =() =>{
     
     return(
 
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} className="col-sm-6 order-sm-2 offset-sm-1 mt-5">
           <FormGroup>
             <Label>Email</Label>
             <input 
               placeholder="ejemplo@email.com"
               name="email"
-              className="form-control"
+              className="form-control col-4"
               ref={register({
                 required:"Email es requerido.",
                 pattern:{
@@ -45,7 +44,7 @@ const Login =() =>{
               placeholder="Contraseña"
               name="password"
               type='password'
-              className="form-control"
+              className="form-control col-4"
               ref={register({
                 required:{
                   value:true,
