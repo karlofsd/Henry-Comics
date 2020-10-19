@@ -62,10 +62,6 @@ export default function Carrito({user}){
         // }
     }, [])
 
-    useEffect(()=>{
-        console.log('segundo useEffect')
-        dispatch(getCarrito(user.id))
-    },[info])
 
     console.log(carrito, 'estado despues useEffect')
 
