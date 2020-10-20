@@ -1,6 +1,7 @@
 const server = require('express').Router();
 const { Product, Category } = require('../db.js');
-const {Sequelize:{Op}} = require('sequelize')
+const {Sequelize:{Op}, where} = require('sequelize');
+const Reviews = require('../models/Reviews.js');
 
 server.get('/', (req, res, next) => {
 	
@@ -160,5 +161,59 @@ server.delete("/:id", (req, res, next) => {
 	  }
 	});
   });
-  
+
+//S55: Modifica Review  
+server.put('/:id/review/:idReview', (req, res) =>{
+	const { id, idReview } = req.params;
+	Product.findByPk(id)
+		.then(res =>{
+			res.findByPk(idReview)
+				.then(reviews =>{
+					reviews.update({
+						comentarios: req.body.comentarios,
+						puntaje: req.body.puntaje
+					})
+					res.status(200)
+					.json({ message: 'Modificado'})
+				})
+		})
+		.catch(err =>{
+			res.status(404)
+			.json({ message: 'No se encuentra Review', err })
+		})
+});
+
+// GET a Review --> echar un ojo a la tabla
+server.get('/review', (req, res) =>{
+	Reviews.findAll()
+	.then(review =>{
+		res.status(200)
+		.json(review)
+	})
+	.catch(err =>{
+		res.status(400)
+		.json({ message: 'Algo Paso'})
+	})
+})
+
+//Post a Review Pruebas
+
+server.post('/:id/review' , (req , res) =>{
+	const { id } = req.params;
+	Product.findByPk(id)
+		.then(review =>{
+			review.update({
+				comentarios: req.body.comentarios,
+				puntaje: req.body.puntaje
+			})
+			res.status(200)
+			.json({ message: 'Creado' })
+		})
+		.catch(err =>{
+			res.status(400)
+			.json({ message: 'Falla Crear', err})
+		})
+})
+
+
 module.exports = server;
