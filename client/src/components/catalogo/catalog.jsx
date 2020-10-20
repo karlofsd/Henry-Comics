@@ -29,7 +29,7 @@ export default function Catalog({products,id,/* status, */search}) {
     const [page,setPage] = useState(1)
     const [paginated,setPaginated] = useState()
     const [pageStatus, setPageStatus] = useState(false)
-.
+
     const limit = 6
   
     const counter = Math.ceil(products.length/limit)

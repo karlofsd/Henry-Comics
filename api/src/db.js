@@ -45,6 +45,9 @@ Product.belongsToMany(Orden,{through: LineaDeOrden});
 //user---Orden 1--n
 Orden.belongsTo(User);
 
+User.findOrCreate({where: {username:"admin",email:"admin@mail.com",password:"admin",isAdmin:true},raw:true})
+.then(admin => console.log('\n----Super-user---- \n #username: ', admin[0].username, '\n #email: ', admin[0].email, '\n #password: ', admin[0].password, '\n -----------------\n'))
+.catch(err => console.log(err.message))
 
 
  
