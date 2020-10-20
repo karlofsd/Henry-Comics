@@ -21,4 +21,48 @@ server.post("/:id/user/:idUser", function (req, res) {
 	}));
       });
 
+//S55: Modifica Review
+// server.put('/:id/review/:idReview', (req, res) =>{
+//   const { id, idReview } = req.params;
+//   Product.findByPk(id)
+//       .then(res =>{
+//           res.findByPk(idReview)
+//               .then(reviews =>{
+//                   reviews.update({
+//                       comentarios: req.body.comentarios,
+//                       puntaje: req.body.puntaje
+//                   })
+//                   res.status(200)
+//                   .json({ message: 'Modificado'})
+//               })
+//       })
+//       .catch(err =>{
+//           res.status(404)
+//           .json({ message: 'No se encuentra Review', err })
+//       })
+// });
+
+server.put('/:id/review/:idReview', (req, res)=>{
+  const { id, idReview } = req.params;
+  Reviews.update({
+    comentarios: req.body.comentarios,
+    puntaje: req.body.puntaje
+  },
+  {
+    where: {
+      productId: id,
+      id: idReview
+    }
+  })
+  .then(resp =>{
+    res.status(200)
+    .json({ message: 'modificado'})
+  })
+  .catch(err =>{
+    res.status(404)
+    .json({ message: 'No existe', err})
+  })
+  
+})
+
 module.exports = server;

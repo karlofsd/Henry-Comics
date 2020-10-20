@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-const server = require('express').Router();
-const { Product, Category } = require('../db.js');
-const {Sequelize:{Op}, where} = require('sequelize');
-const Reviews = require('../models/Reviews.js');
-
-server.get('/', (req, res, next) => {
-	
-	Product.findAll({include: Category})
-		.then(products => {
-			res.send(products);
-		})
-		.catch(next)
-=======
 const server = require("express").Router();
 const { Product, Category, Reviews } = require("../db.js");
 const {
@@ -24,7 +10,6 @@ server.get("/", (req, res, next) => {
             res.send(products);
         })
         .catch(next);
->>>>>>> master
 });
 
 server.get("/category/:categoryId", (req, res) => {
@@ -182,73 +167,6 @@ server.put("/:id", (req, res, next) => {
 // Retorna 200 si se elimino con exito.
 
 server.delete("/:id", (req, res, next) => {
-<<<<<<< HEAD
-	const id = req.params.id;
-	Product.destroy({
-	  where: { id: id },
-	}).then((removed) => {
-	  if (removed) {
-		res.status(200).end();
-	  } else {
-		res.status(404).json({ message: "Not found" });
-	  }
-	});
-  });
-
-//S55: Modifica Review  
-server.put('/:id/review/:idReview', (req, res) =>{
-	const { id, idReview } = req.params;
-	Product.findByPk(id)
-		.then(res =>{
-			res.findByPk(idReview)
-				.then(reviews =>{
-					reviews.update({
-						comentarios: req.body.comentarios,
-						puntaje: req.body.puntaje
-					})
-					res.status(200)
-					.json({ message: 'Modificado'})
-				})
-		})
-		.catch(err =>{
-			res.status(404)
-			.json({ message: 'No se encuentra Review', err })
-		})
-});
-
-// GET a Review --> echar un ojo a la tabla
-server.get('/review', (req, res) =>{
-	Reviews.findAll()
-	.then(review =>{
-		res.status(200)
-		.json(review)
-	})
-	.catch(err =>{
-		res.status(400)
-		.json({ message: 'Algo Paso'})
-	})
-})
-
-//Post a Review Pruebas
-
-server.post('/:id/review' , (req , res) =>{
-	const { id } = req.params;
-	Product.findByPk(id)
-		.then(review =>{
-			review.update({
-				comentarios: req.body.comentarios,
-				puntaje: req.body.puntaje
-			})
-			res.status(200)
-			.json({ message: 'Creado' })
-		})
-		.catch(err =>{
-			res.status(400)
-			.json({ message: 'Falla Crear', err})
-		})
-})
-
-=======
     const id = req.params.id;
     Product.destroy({
         where: { id: id },
@@ -281,6 +199,6 @@ server.get("/:id/review", (req, res, next) => {
             res.sendStatus(400);
         });
 });
->>>>>>> master
+
 
 module.exports = server;
