@@ -22,7 +22,6 @@ const CartProduct = ({name,quantity,id,price,carritoDelete, carritoGet, stock,us
         if(cantidad > stock){
            if(user){
                 carritoPut({id:id, quantity: stock})
-                setCantidad('')
            } else{
                 newPrice({id:id,price:stock*price})
            }
@@ -30,7 +29,6 @@ const CartProduct = ({name,quantity,id,price,carritoDelete, carritoGet, stock,us
         }else{
             if(user){
                 carritoPut({id:id, quantity: cantidad})
-                setCantidad('')
             }else{
                 newPrice({id:id,price:cantidad*price})
             }
@@ -49,13 +47,13 @@ const CartProduct = ({name,quantity,id,price,carritoDelete, carritoGet, stock,us
             <li className='item-carrito'>
             <div className='lab-inp-but'>
                 <label>{name}</label>
-                <input className='inc-dec' name='quantity' type='number'  min='1' step='1' max={stock} value={cantidad}  placeholder={quantity} onChange = {handleInputChange} />
+                <input className='inc-dec' name='quantity' type='number'  min='1' step='1' max={stock} value={cantidad}  placeholder={quantity} onChange = {handleInputChange} onClick={()=> stockProduct()} />
                 <Button className="btn btn-dark btn-sm m-2 p-1" onClick={()=> carritoDelete(id)} >
                     <FontAwesomeIcon icon={faCartArrowDown}/>  
                 </Button>
-                <Button className="btn btn-secondary btn-sm m-2 p-1" onClick={()=> stockProduct()} >
+                {/* <Button className="btn btn-secondary btn-sm m-2 p-1" onClick={()=> stockProduct()} >
                     <FontAwesomeIcon icon={faSync}/>  
-                </Button>   
+                </Button>    */}
             </div>
             </li>
             <li className='item-carrito'>
