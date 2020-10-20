@@ -1,0 +1,17 @@
+.review-box{ 
+  width: 45% !important;  
+}
+
+.reviews{
+  margin-left: 10px
+}
+
+.input-review{
+  width: 100%;
+  height: 10vh;
+  overflow: auto;
+}
+
+.form-review{
+  padding: 0;
+}
