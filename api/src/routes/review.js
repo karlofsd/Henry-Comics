@@ -65,4 +65,22 @@ server.put('/:id/review/:idReview', (req, res)=>{
   
 })
 
+server.delete('/:idReview/product/:id', (req, res)=>{
+  const {id, idReview} = req.params;
+    
+  Reviews.destroy({
+      where:{
+          id:idReview,
+          productId: id,
+      }
+  })
+  .then(resp=>{
+      res.json({ message: "success"})
+  })
+  .catch(err=>{
+      res.status(400).json({message: err})
+  })
+})
+
+
 module.exports = server;
