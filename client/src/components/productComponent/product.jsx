@@ -1,7 +1,8 @@
-import Axios from 'axios';
+import axios from 'axios';
 import React,{useState} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import './product.css'
+import ReviewBox from './reviews/reviewsBox';
+import './product.css';
 
 
 export default function Product(props) {
@@ -18,8 +19,8 @@ export default function Product(props) {
         setCloseAll(true);
       }
 
-    let {className, modal, toggle, p, capitalize, addCart} = props;
-
+    let {className, modal, toggle, p, capitalize, addCart} = props;      
+        
     const handleAdd = (e)=>{
         toggle();
         addCart(e);
@@ -52,14 +53,18 @@ export default function Product(props) {
                 </div>
                 <hr/>
                 <Button color="danger" className='comments' onClick={toggleNested}>Ver Comentarios</Button>
-                <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined}>
+                
+
+                <ReviewBox productId={p.id}nestedModal={nestedModal} toggleNested={toggleNested} closeAll={closeAll} toggle={toggle} toggleAll={toggleAll}/>
+               
+                {/* <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined}>
                     <ModalHeader>Aqui va la lista de comentarios</ModalHeader>
                     <ModalBody>aqui va el input de comentario</ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={toggleNested}>enviar</Button>{' '}
                         <Button color="secondary" onClick={toggleAll}>cancelar</Button>
                     </ModalFooter>
-                </Modal>
+                </Modal> */}
             </ModalBody>           
         </Modal>
     );

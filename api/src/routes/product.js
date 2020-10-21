@@ -1,5 +1,5 @@
 const server = require("express").Router();
-const { Product, Category, Reviews } = require("../db.js");
+const { Product, Category, Reviews, User } = require("../db.js");
 const {
     Sequelize: { Op },
 } = require("sequelize");
@@ -189,6 +189,7 @@ server.get("/:id/review", (req, res, next) => {
         where: {
             productId: id,
         },
+        include: User
     })
         .then((reviews) => {
             res.send(reviews);

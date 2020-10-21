@@ -50,8 +50,11 @@ Orden.belongsTo(User);
 // User.hasMany(Reviews)
 // Reviews.belongsTo(User)
 
-Product.belongsToMany(User,{through: Reviews})
-User.belongsToMany(Product,{through: Reviews})
+Reviews.belongsTo(User);
+Product.hasMany(Reviews);
+
+// Product.belongsToMany(User,{through: Reviews, foreignKey:{model: User, unique: false, primaryKey: false}})
+// User.belongsToMany(Product,{through: Reviews, foreignKey:{model: Product, unique: false, primaryKey: false}})
 
 User.findOrCreate({where: {username:"admin",email:"admin@mail.com",password:"admin",isAdmin:true},raw:true})
 .then(admin => console.log('\n----Super-user---- \n #username: ', admin[0].username, '\n #email: ', admin[0].email, '\n #password: ', admin[0].password, '\n -----------------\n'))
