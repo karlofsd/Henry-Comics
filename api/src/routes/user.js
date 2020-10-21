@@ -1,6 +1,7 @@
 const server = require('express').Router();
 const { User, Orden, LineaDeOrden, Product } = require('../db');
-
+const bcrypt = require('bcrypt')
+const passport = require('passport')
 
 server.get('/', (req, res, next)=>{
 User.findAll()
@@ -11,16 +12,22 @@ User.findAll()
 })
 
 
-server.post('/login', (req, res, next)=>{
-  const {email, password} = req.body;
+server.post('/login',
+  passport.authenticate('local', { successRedirect: '/user', failureRedirect: '/login', failureFlash: true }),(req, res, next)=>{
+  //
+  console.log(req.user)
+  res.json(req.user)
+  
+  /* const {email, password} = req.body;
   console.log(req.body, 'body');
   
   User.findOne({
     where:{
       email: email,
-      password: password
+      password: bcrypt.hashSync(password,10)
     }
   })
+
       .then(user => {
         console.log(user, 'users');
         
@@ -33,7 +40,7 @@ server.post('/login', (req, res, next)=>{
       .catch((err) => {
         console.log(err);
         
-      });
+      }); */
 })
 
 
@@ -46,7 +53,7 @@ server.post("/add", function (req, res) {
         lastname: lastname,
         username: username,
         email: email,
-        password: password,
+        password: bcrypt.hashSync(password,10)
       }
     )
       .then(function (user) {

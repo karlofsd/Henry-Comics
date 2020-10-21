@@ -31,19 +31,25 @@ const Login =() =>{
     
     return(
 
-        <Form onSubmit={handleSubmit(onSubmit)} className="col-sm-6 order-sm-2 offset-sm-1 mt-5">
+        <Form
+        action="/login" 
+        method="post" 
+        onSubmit={handleSubmit(onSubmit)} 
+        className="col-sm-6 order-sm-2 offset-sm-1 mt-5">
           <FormGroup>
-            <Label>Email</Label>
+            <Label>Nombre de usuario</Label>
             <input 
-              placeholder="ejemplo@email.com"
-              name="email"
+              placeholder="nombre de usuario"
+              name="username"
               className="form-control col-4"
               ref={register({
-                required:"Email es requerido.",
-                pattern:{
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Favor ingresar email ejemplo@email.com'
-                }
+                required:{
+                  value:true,
+                  message:"Usuario es requerido."}
+                // pattern:{
+                //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                //   message: 'Favor ingresar email ejemplo@email.com'
+                // }
               })}
             />
             <span className="text-danger text-small d-block mb-2">

@@ -57,6 +57,18 @@ export default function UserForm() {
       <h4>Completa con tus datos para crear tu cuenta</h4>
       <h6>¡Disfruta de los beneficios exclusivos de la comunidad Henry Comic!</h6>
       <FormGroup>
+        <Label>Nombre de Usuario</Label>
+        <input 
+         placeholder="Nombre de usuario"
+         name="username"
+         className="form-control col-4"
+         ref={register({
+          required:{
+            value:true,
+            message:"Campo requerido"}
+         })}
+        />
+        
         <Label>Email</Label>
         <input 
           placeholder="ejemplo@email.com"
