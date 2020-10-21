@@ -30,6 +30,14 @@ module.exports = (sequelize) => {
     isAdmin:{
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    image:{
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    telefono:{
+      type: DataTypes.BIGINT,
+      allowNull: true
     }
   });
 }; 

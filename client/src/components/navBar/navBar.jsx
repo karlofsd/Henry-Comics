@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import Buscar from '../searchBar/searchBar'
 import {
     Collapse,
@@ -21,6 +21,7 @@ import {getProducts,filterCategory} from '../../redux/productos'
 import {getCategory} from '../../redux/categorias'
 
 const NavBar = ({/* categories, */}) => {
+    const user = useSelector(store => store.userState.userLogin)
     const categories = useSelector( store => store.categoryState.categories)
     const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false);
@@ -72,12 +73,13 @@ const NavBar = ({/* categories, */}) => {
                     </DropdownMenu>
                 </UncontrolledDropdown>
 
-              <NavItem>
+              {user.isAdmin && <NavItem>
                     <Link to="/admin" className="text-light px-2">
                     Admin Panel
                     </Link>
-              </NavItem>
+              </NavItem>}
               
+              {!user.id && <Fragment>
               <NavItem>
                     <Link to="/login" className="text-light px-2">
                     Iniciar Sesión
@@ -85,12 +87,26 @@ const NavBar = ({/* categories, */}) => {
               </NavItem>
               
               <NavItem>
-
                     <Link to="/signup" className="text-light px-2">
                     ¡Crea tu cuenta!
                     </Link>
               </NavItem>
-              
+              </Fragment>}
+              {(user.id && !user.isAdmin) && <Fragment>
+              <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret className="text-light px-2">
+                        User
+                    </DropdownToggle>
+                    <DropdownMenu left>
+                        <Link to='/user'>
+                        <DropdownItem>Perfil</DropdownItem>
+                        </Link>
+                        <Link to='/login'>
+                        <DropdownItem>Cerrar sesión</DropdownItem>
+                        </Link>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+              </Fragment>}
             </Nav>
           <Buscar /*click={click}*/ className="pl-5"/>
           </Collapse>

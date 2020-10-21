@@ -1,5 +1,6 @@
 const server = require('express').Router();
 const {Orden, LineaDeOrden, Product, User} = require('../db.js');
+const {Sequelize:{Op}} = require('sequelize')
 
 server.get('/:id',(req,res) => {
     let {id} = req.params
@@ -18,14 +19,11 @@ server.put('/:id',(req,res) => {
 
 //S44 ruta que devuelve todas las ordenes 
 server.get('/', (req, res) => {
-  const { status } = req.query;
-
+  const { status,userId } = req.query;
   if (status) {
     Orden.findAll(
       {
-        where: {
-          status: status
-        },
+        where: {status},
         include: [Product, User]  
       }
     )
@@ -38,6 +36,39 @@ server.get('/', (req, res) => {
   } else {
     Orden.findAll(
       {        
+        include: [Product, User]        
+      }
+    )
+    .then((orders) => {
+        res.status(200).json(orders);
+    })
+    .catch((err) => {
+      res.status(404).json({message: err})
+    })
+  }
+});
+
+// ordenes para un usuario especifico
+server.get('/user/:userId', (req, res) => {
+  const { status} = req.query;
+  let {userId} = req.params
+  if (status) {
+    Orden.findAll(
+      {
+        where: {status,userId},
+        include: [Product, User]  
+      }
+    )
+    .then((orders) => {
+        res.status(200).json(orders);
+    })
+    .catch((err) => {
+      res.status(404).json({message: err})
+    })
+  } else {
+    Orden.findAll(
+      { 
+        where: {userId},    
         include: [Product, User]        
       }
     )
