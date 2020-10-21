@@ -15,3 +15,9 @@
 .form-review{
   padding: 0;
 }
+
+.allReviews {
+  max-height: 25vh;
+  overflow: auto;
+  margin-bottom: 10px;
+}

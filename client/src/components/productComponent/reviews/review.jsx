@@ -1,11 +1,15 @@
 import React from 'react';
-import StarRating from './rating/rating';
+import RenderStarRating from './rating/renderStarRating';
+import './review.css';
 
-export default function Review () {
+export default function Review ({comentario, puntaje, user}) {
 
-  //recibo el comentario y el puntaje por pros y pongo las estrellitas readonly
   return (
-    <StarRating/>
-    //texto
+    <div className='review-content'>
+      <p id='user'>{user}</p>
+      <p id='comentario'>{comentario}</p>
+      <RenderStarRating size='small' puntaje={puntaje}/>
+      <hr/>
+    </div>  
   )
 }
