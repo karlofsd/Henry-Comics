@@ -34,6 +34,7 @@ export default function userReducer(state = initialState, action){
                 userLogin:{
                     id: action.payload.id,
                     email: action.payload.email,
+                    isAdmin: action.payload.isAdmin,
                     login: true
                 }
             }
@@ -66,7 +67,8 @@ export const getLogin = (body) => async(dispatch) => {
     console.log('login', body)
     try{
     const {data} = await axios.post('http://localhost:3001/user/login', body)
-  id = data.id
+    console.log(data)
+    id = data.id
         
       dispatch({ 
             type: GET_LOGIN, 

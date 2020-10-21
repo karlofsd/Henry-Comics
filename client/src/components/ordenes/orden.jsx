@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 
-const Orden = ({order, setStatusG, statusG, getOrder}) => {    
+const Orden = ({order, setStatusG, statusG, getOrder,user}) => {    
     
     const [total, setTotal ] = useState(0);
     const [status, setStatus ] = useState();    
@@ -49,6 +49,12 @@ const Orden = ({order, setStatusG, statusG, getOrder}) => {
             console.log(err);              
         } 
     }
+
+    const handleRemove = async(product,orden) => {
+        await axios.delete(`http://localhost:3001/user/order/${orden}/product/${product}`)
+        setStatusG(!statusG);
+        getOrder(order.id);
+    }
           
     return(
         <div className="shadow orden">
@@ -70,6 +76,7 @@ const Orden = ({order, setStatusG, statusG, getOrder}) => {
                             <td className='tO'>${p.price}</td>
                             <td className='tO'>{p.lineaDeOrden.quantity}</td>
                             <td className='tO'>${p.price * p.lineaDeOrden.quantity}</td>
+                            {user && <button className='btn btn-danger' onClick={()=>handleRemove(p.id,order.id)}>X</button>}
                             </tr>                     
                         )
                         )}
@@ -86,7 +93,7 @@ const Orden = ({order, setStatusG, statusG, getOrder}) => {
                     <div className="details">
                     <p className='priceproductcard' >${total}</p>
                     </div>
-                    {   status === 'creada' ?
+                    {!user && (status === 'creada' ?
                     <button className="btn btn-light pill-rounded" onClick={() => handleProcess(order)} >Procesar</button> 
                     :
                         status === 'procesando' ?
@@ -96,7 +103,7 @@ const Orden = ({order, setStatusG, statusG, getOrder}) => {
                     <h3><span className="badge badge-success" >Completa</span> </h3>
                     :
                     <h3><span className="badge badge-danger">Cancelada</span></h3>
-                    }
+                    )}
                     <button className="btn btn-danger pill-rounded" onClick={() => handleCancel(order)} >Cancelar</button>
                 </div>
             </div>

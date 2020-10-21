@@ -8,6 +8,7 @@ import Admin from "./components/admin/admin";
 import UserForm from "./components/userForm/userForm";
 import LandingCarrousel from "./components/carrousel/carrousel";
 import Footer from "./components/footer/footer";
+import User from "./components/userPanel/userPanel"
 import axios from "axios";
 import {useDispatch,useSelector} from 'react-redux'  //hooks
 import {getProducts} from './redux/productos'        //actions
@@ -113,6 +114,11 @@ function App() {
           <div>
             <Login />
           </div>}
+      />
+
+      <Route
+        exact path='/user'
+        render={()=> <User/>}
       />
     </Router>
     

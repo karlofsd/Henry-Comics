@@ -26,8 +26,8 @@ server.post('/login', (req, res, next)=>{
         
           res.json({
             id: user.id,
-            email: user.email
-            // isAdmin: user.isAdmin
+            email: user.email,
+            isAdmin: user.isAdmin
           });
       })
       .catch((err) => {
@@ -64,14 +64,17 @@ server.post("/add", function (req, res) {
   });
 
   server.put("/:id/", function (req, res) {
-    const { id, firstname, lastname, username, email, password } = req.body;
+    let {id} = req.params
+    const { firstname, lastname, username, email, password, image, telefono} = req.body;
     User.update(
       {
         firstname: firstname,
         username: username,
         lastname: lastname,
         email: email,
-        password: password
+        password: password,
+        image: image,
+        telefono: telefono
       },
       {
         where: {
@@ -131,11 +134,11 @@ server.post("/add", function (req, res) {
 
 server.delete('/:idUser/cart/:idProduct',(req, res)=>{
   const {idUser, idProduct} = req.params;
-
+  
   Orden.findAll({
     where: {
       userId: idUser,
-      status:'carrito'
+      status: 'carrito'
     }
     })
     .then(carrito=>{
@@ -286,5 +289,17 @@ server.post('/', (req, res) => {
       console.log(err);      
     })
 })
-
+// conseguir un usuario
+server.get('/:id',(req,res) => {
+  User.findByPk(req.params.id)
+  .then(user => res.status(200).json(user))
+  .catch(err => res.status(404).json(err))
+})
+// eliminar producto desde una orden ya comprada
+server.delete('/order/:ordenId/product/:productId',(req,res) => {
+  let {ordenId,productId} = req.params
+  LineaDeOrden.destroy({where:{ordenId,productId}})
+  .then(eliminado => res.status(200).json({message:'se elimino el producto',eliminado}))
+  .catch(err => res.status(404).json(err))
+})
   module.exports = server;
