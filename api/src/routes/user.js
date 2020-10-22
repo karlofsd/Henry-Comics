@@ -2,7 +2,6 @@ const server = require('express').Router();
 const { User, Orden, LineaDeOrden, Product } = require('../db');
 const bcrypt = require('bcrypt')
 const passport = require('passport');
-const router = require('.');
 
 server.get('/', (req, res, next)=>{
 User.findAll()
