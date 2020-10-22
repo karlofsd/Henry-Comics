@@ -5,6 +5,7 @@ const path = require('path');
 const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
+const bcrypt = require('bcrypt')
 
 
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/development`, {
@@ -56,7 +57,7 @@ Product.hasMany(Reviews);
 // Product.belongsToMany(User,{through: Reviews, foreignKey:{model: User, unique: false, primaryKey: false}})
 // User.belongsToMany(Product,{through: Reviews, foreignKey:{model: Product, unique: false, primaryKey: false}})
 
-User.findOrCreate({where: {username:"admin",email:"admin@mail.com",password:"admin",isAdmin:true},raw:true})
+User.findOrCreate({where: {username:"admin",email:"admin@mail.com",password: bcrypt.hashSync("admin", 10),isAdmin:true},raw:true})
 .then(admin => console.log('\n----Super-user---- \n #username: ', admin[0].username, '\n #email: ', admin[0].email, '\n #password: ', admin[0].password, '\n -----------------\n'))
 .catch(err => console.log(err.message))
  
