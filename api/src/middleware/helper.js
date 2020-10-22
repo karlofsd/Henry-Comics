@@ -25,6 +25,7 @@ console.log(req.isAuthenticated())
     }
 }
 
+
 module.exports ={
 
     isAdmin,
