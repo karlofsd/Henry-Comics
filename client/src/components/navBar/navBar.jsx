@@ -34,7 +34,7 @@ const NavBar = ({/* categories, */}) => {
     },[])
 
     const logOut = async() => {
-      await Axios.get(`http://localhost:3001/auth/logout`)
+      await Axios.get(`http://localhost:3001/user/logout`)
     }
 
     return(
