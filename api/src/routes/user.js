@@ -12,9 +12,26 @@ User.findAll()
 })
 
 
-server.post('/login',
-  passport.authenticate('local'),(req, res, next)=>{
-  res.json(req.user)
+server.post('/login',(req, res, next)=>{
+  passport.authenticate('local',{session:true},(err, user, info)=>{
+    if(err){
+      res.status(500).json({message:'error'})
+      return;
+    }
+    if(!user){
+      res.status(401).json({message:'user'})
+      return;
+    }
+
+    req.login(user,(error)=>{
+      if(error){
+        res.status(500).json({message:'no guardado'})
+        return;
+      }
+      //console.log(req.user, 'user!!!')
+      res.status(200).json({errors:false, user:user})
+    })
+  })(req, res, next)
 })
 
 // server.post('/login',
