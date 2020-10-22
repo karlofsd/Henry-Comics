@@ -13,35 +13,40 @@ User.findAll()
 
 
 server.post('/login',
-  passport.authenticate('local', { successRedirect: '/user', failureRedirect: '/login', failureFlash: true }),(req, res, next)=>{
-  //
-  console.log(req.user)
+  passport.authenticate('local'),(req, res, next)=>{
   res.json(req.user)
-  
-  /* const {email, password} = req.body;
-  console.log(req.body, 'body');
-  
-  User.findOne({
-    where:{
-      email: email,
-      password: bcrypt.hashSync(password,10)
-    }
-  })
-
-      .then(user => {
-        console.log(user, 'users');
-        
-          res.json({
-            id: user.id,
-            email: user.email,
-            isAdmin: user.isAdmin
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        
-      }); */
 })
+
+// server.post('/login',
+//   passport.authenticate('local', { successRedirect: '/user', failureRedirect: '/login', failureFlash: true }),(req, res, next)=>{
+//   //
+//   console.log(req.user)
+//   res.json(req.user)
+  
+//   /* const {email, password} = req.body;
+//   console.log(req.body, 'body');
+  
+//   User.findOne({
+//     where:{
+//       email: email,
+//       password: bcrypt.hashSync(password,10)
+//     }
+//   })
+
+//       .then(user => {
+//         console.log(user, 'users');
+        
+//           res.json({
+//             id: user.id,
+//             email: user.email,
+//             isAdmin: user.isAdmin
+//           });
+//       })
+//       .catch((err) => {
+//         console.log(err);
+        
+//       }); */
+// })
 
 
 
