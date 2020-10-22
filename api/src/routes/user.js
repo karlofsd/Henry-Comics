@@ -309,4 +309,23 @@ server.delete('/order/:ordenId/product/:productId',(req,res) => {
   .then(eliminado => res.status(200).json({message:'se elimino el producto',eliminado}))
   .catch(err => res.status(404).json(err))
 })
+
+//70 Resetear un Password
+server.post('/:id/passwordReset', (req, res) =>{
+  const { id } = req.params;
+  const { password } = req.body;
+  User.findByPk(id)
+  .then(user =>{
+    console.log(user);
+    user.update({
+      password: password
+    })
+    res.status(200)
+    .json({message: 'Password Receteada'})
+  })
+  .catch(err=>{
+    res.status(404)
+    .json({message: 'Not Found', err})
+  })
+})
   module.exports = server;
