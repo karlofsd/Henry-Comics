@@ -19,9 +19,7 @@ module.exports = function (passport) {
             }
           })
         })
-        
-
-
+      
       //   (err, user) => {
       //   if (err) throw err;
       //   if (!user) return done(null, false);
