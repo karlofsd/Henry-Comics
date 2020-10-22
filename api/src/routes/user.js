@@ -310,7 +310,7 @@ server.delete('/order/:ordenId/product/:productId',(req,res) => {
   .catch(err => res.status(404).json(err))
 })
 
-//70 Resetear un Password
+//70 Resetear un Password y bcrypt el password
 server.post('/:id/passwordReset', (req, res) =>{
   const { id } = req.params;
   const { password } = req.body;
