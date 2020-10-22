@@ -46,8 +46,14 @@ server.use(
 
 server.use(passport.initialize());
 server.use(passport.session());
-require("./middleware/passport-config")(passport);
+require("./middleware/passport-config");
 //-----------------------------------------------------//
+server.use((req,res,next)=>{
+  console.log(req.user)
+  console.log(req.session)
+
+  next();
+})
 
 server.use('/', routes);
 
