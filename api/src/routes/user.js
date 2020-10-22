@@ -318,7 +318,7 @@ server.post('/:id/passwordReset', (req, res) =>{
   .then(user =>{
     console.log(user);
     user.update({
-      password: password
+      password: bcrypt.hashSync(password, 10)
     })
     res.status(200)
     .json({message: 'Password Receteada'})
