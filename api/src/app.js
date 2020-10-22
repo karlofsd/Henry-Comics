@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
-//-------------------------------------------------------//
+//-----------------PASSPORTjs---------------------------//
 const passport = require('passport');
 const session = require('express-session')
 //const LocalStrategy = require('passport-local').Strategy;
@@ -34,9 +34,7 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
 });
-
-
-
+//-----------------PASSPORTjs---------------------------//
 server.use(
   session({
     cookie:{expires:false},
@@ -48,14 +46,8 @@ server.use(
 
 server.use(passport.initialize());
 server.use(passport.session());
-require("./middleware/passport-config");
-
-
-server.use((req, res, next)=>{
-  console.log(req.user)
-  console.log(req.session)
-  next();
-});
+require("./middleware/passport-config")(passport);
+//-----------------------------------------------------//
 
 server.use('/', routes);
 
