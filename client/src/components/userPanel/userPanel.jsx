@@ -7,9 +7,11 @@ import {useSelector} from 'react-redux'
 import Orden from '../ordenes/orden.jsx'
 import { ListGroup, ListGroupItem, Badge} from 'reactstrap';
 import avatar from './image/avatar.webp'
+import {useDispatch} from 'react-redux'
+import {verifyLogin} from '../../redux/users'
 
 const User = () => {
-
+    const dispatch = useDispatch()
     const user = useSelector(store => store.userState.userLogin)
     const [orders,setOrders] = useState()
     const [order,setOrder] = useState()
@@ -90,6 +92,7 @@ const User = () => {
             if(e.target.name === 'guardar'){
                 console.log('guardar',activeForm,info.telefono)
                 await axios.put(`http://localhost:3001/user/${user.id}`,info, { withCredentials: true })
+                dispatch(verifyLogin())
                 getUser()
             }else{
                 console.log('cancelar',activeForm,e.target.name)
@@ -197,7 +200,7 @@ const User = () => {
                                 Username:
                             </label>
                             {!activeForm ? <p>{info.username}</p> : 
-                            <input type='text' name='username' value={info.username} onChange={handleChange}/>}
+                            <input type='text' name='username' value={info.username} onChange={handleChange} disabled/>}
                         </div>
                         <div>
                             <label>

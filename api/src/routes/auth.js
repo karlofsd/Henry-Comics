@@ -1,6 +1,6 @@
 const server = require('express').Router();
 const { User } = require('../db.js');
-const {verifyAuth,verifyAdmin} = require('../middleware/verifyAuth')
+const {isAuthenticated} = require('../middleware/helper')
 
 server.post('/promote/:id', (req, res) => {
   const { id } = req.params;
@@ -22,8 +22,11 @@ server.post('/promote/:id', (req, res) => {
   })
 })
 
-server.get('/me',verifyAuth,(req,res) => {
-  res.status(200).json(req.user)
+server.get('/me',isAuthenticated,(req,res) => {
+  
+    console.log('auth/me',req.user)
+    res.status(200).json(req.user)
+  
 })
 
 module.exports = server;
