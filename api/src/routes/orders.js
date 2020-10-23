@@ -1,6 +1,7 @@
 const server = require('express').Router();
 const {Orden, LineaDeOrden, Product, User} = require('../db.js');
 const {Sequelize:{Op}} = require('sequelize')
+const {isAdmin, isAuthenticated} =require('../middleware/helper');
 
 server.get('/:id',(req,res) => {
     let {id} = req.params
@@ -49,7 +50,7 @@ server.get('/', (req, res) => {
 });
 
 // ordenes para un usuario especifico
-server.get('/user/:userId', (req, res) => {
+server.get('/user/:userId', isAuthenticated, (req, res) => {
   const { status} = req.query;
   let {userId} = req.params
   if (status) {

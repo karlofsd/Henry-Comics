@@ -4,6 +4,8 @@ const {
     Sequelize: { Op },
 } = require("sequelize");
 
+const {isAdmin, isAuthenticated} =require('../middleware/helper');
+
 server.get("/", (req, res, next) => {
     Product.findAll({ include: Category })
         .then((products) => {
@@ -58,7 +60,7 @@ server.get("/search", (req, res) => {
         );
 });
 
-server.post("/create", (req, res) => {
+server.post("/create", isAdmin, (req, res) => {
     let data = req.body;
     Product.create(data)
         .then((newProduct) =>
@@ -77,7 +79,7 @@ server.post("/create", (req, res) => {
 
 //S17 - POST /products/:idProducto/category/:idCategoria
 //Agrega la categoria al producto.
-server.post("/:idProduct/category/:idCategory", (req, res) => {
+server.post("/:idProduct/category/:idCategory", isAdmin, (req, res) => {
     const { idProduct, idCategory } = req.params;
 
     Product.findByPk(idProduct)
@@ -96,7 +98,7 @@ server.post("/:idProduct/category/:idCategory", (req, res) => {
 
 // S17 - DELETE /products/:idProducto/category/:idCategoria
 // Elimina la categoria al producto.
-server.delete("/:idProduct/category/:idCategory", (req, res) => {
+server.delete("/:idProduct/category/:idCategory", isAdmin, (req, res) => {
     const { idProduct, idCategory } = req.params;
 
     Product.findByPk(idProduct)
@@ -130,7 +132,7 @@ server.get("/:id", (req, res) => {
 // Retorna 200 si se modificó con exito,
 // y retorna los datos del producto modificado.
 
-server.put("/:id", (req, res, next) => {
+server.put("/:id", isAdmin, (req, res, next) => {
     const id = req.params.id;
 
     Product.update(
@@ -166,7 +168,7 @@ server.put("/:id", (req, res, next) => {
 // DELETE /products/:id
 // Retorna 200 si se elimino con exito.
 
-server.delete("/:id", (req, res, next) => {
+server.delete("/:id", isAdmin, (req, res, next) => {
     const id = req.params.id;
     Product.destroy({
         where: { id: id },
