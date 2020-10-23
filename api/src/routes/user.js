@@ -65,10 +65,14 @@ server.post('/login',(req, res, next)=>{
 //       }); */
 // })
 
-server.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/')
-  res.send({ success: true })
+server.get('/logout',(req, res)=>{
+  req.logOut();
+  res.status(200).clearCookie('connect.sid', {
+    path: '/',
+    secure: false,
+    httpOnly: false,
+  });
+  req.session.destroy();
 })
 
 server.post("/add", function (req, res) {

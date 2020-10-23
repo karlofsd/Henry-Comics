@@ -17,7 +17,7 @@ export default function ProductCard({product, capitalize}) {
         if(user.id){
             console.log('entro');
               
-            await axios.post(`http://localhost:3001/user/${user.id}/cart`, body)
+            await axios.post(`http://localhost:3001/user/${user.id}/cart`, body, { withCredentials: true })
             .then(res=>{
                 dispatch(getCarrito(user.id))
             })

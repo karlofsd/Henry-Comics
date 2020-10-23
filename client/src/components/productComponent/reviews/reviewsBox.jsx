@@ -40,7 +40,7 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
   const postReview = async () => {
     try{
       if(user.id){
-        await axios.post(`http://localhost:3001/reviews/${productId}/user/${user.id}`, review)
+        await axios.post(`http://localhost:3001/reviews/${productId}/user/${user.id}`, review, { withCredentials: true })
         setReview({
           comentarios: '',
           puntaje: 0
@@ -57,7 +57,7 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
 
   const getReviews = async () => {
     try{
-      const {data} = await axios.get(`http://localhost:3001/products/${productId}/review`) 
+      const {data} = await axios.get(`http://localhost:3001/products/${productId}/review`, { withCredentials: true }) 
       setReviews(data);  
     }catch(err) {
       console.log(err);    
