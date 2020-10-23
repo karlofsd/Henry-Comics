@@ -72,9 +72,21 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
     return (sum.puntaje/reviews.length || 0);
   };
 
+
+  //tengo que meter el put en otra funcion, que primero me traiga la review a los values de los inputs, 
+  // y despues poder hacer la request con eso
+  const modifyReview = async (productId, reviewId) => {
+    await axios.put(`http://localhost:3001/reviews/${productId}/review/${reviewId}`, review);
+    getReviews();
+  }
+
+  const deleteReview = async (productId, reviewId) => {
+    await axios.delete(`http://localhost:3001/reviews/${reviewId}/product/${productId}`);
+    getReviews();
+  }
+
   const onSubmit = () => {
-    postReview();
-    // toggleNested();
+    postReview();    
   };
 
   return (
@@ -89,7 +101,7 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
         <div className='reviews'>
           <div>Opiniones sobre el producto</div>            
             <div className='rating-box'>
-              <h1> {rating.toFixed(1)} </h1> {/*sacar del get, un reduce y despues lo paso al render*/}
+              <h1> {rating.toFixed(1)} </h1>
               <RenderStarRating puntaje={rating} size='medium'/>
             </div>         
         </div>          
@@ -101,9 +113,13 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
               comentario={r.comentarios} 
               puntaje={r.puntaje}
               user={r.user.email}
+              userId={r.user.id}
+              id={r.id}  
+              productId={productId}
+              deleteReview={deleteReview}            
               key= {i}                
                 />          
-            ))
+          ))
           }                
         </div>
         <textarea 
@@ -114,8 +130,9 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
           />
         <label>Click to Rate</label>
         <StarRating handleInputChange={handleInputChange}/>          
-      <ModalFooter>
+      <ModalFooter>        
         <Button color="primary" onClick={onSubmit}>Enviar</Button>
+   
         <Button color="secondary" onClick={toggleNested}>Cerrar</Button>
       </ModalFooter>
       </ModalBody>

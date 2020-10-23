@@ -1,11 +1,23 @@
 #user{
   font-style: oblique;
   font-weight: 300;
-
 }
 
 #comentario{
   font-style: italic;
   font-size: 20px;
   font-weight: 500;
+}
+
+.review-content{
+  display: inline-block;
+  width: 80%;
+  /* display: flex; */
+  /* flex-direction: column; */
+}
+
+.buttons{
+  display: inline-block;
+  /* justify-content: flex-end; */
+  width: 20%;
 }
