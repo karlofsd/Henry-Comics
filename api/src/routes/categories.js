@@ -1,9 +1,9 @@
 const server = require('express').Router();
 const { Category } = require('../db.js');
-const {isAuthenticated} = require('../middleware/helper')
+const {isAdmin} = require('../middleware/helper')
 //S18: Crear ruta para crear/agregar Categoria
 // res 201 Created. El request se ha competado y se a creado un nuevo recurso
-server.post('/', isAuthenticated, (req, res) => {
+server.post('/', isAdmin, (req, res) => {
     const { name, description} = req.body
     Category.create({name, description})
         .then((category) => {

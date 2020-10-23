@@ -40,7 +40,7 @@ const url = 'http://localhost:3001/products';
 
     const postCategoriProduct = async (idProduct) => {
         await selectedOption.forEach(ele => {
-            axios.post(`${url}/${idProduct}/category/${ele.id}`)
+            axios.post(`${url}/${idProduct}/category/${ele.id}`, null, { withCredentials: true })
             .then(response => {
                 get()
             })
@@ -51,20 +51,20 @@ const url = 'http://localhost:3001/products';
 
     const deleteCategoriProduct = async () => {
         await selectedDelete.forEach(ele => {
-            axios.delete(`${url}/${product.id}/category/${ele.id}`)
+            axios.delete(`${url}/${product.id}/category/${ele.id}`, { withCredentials: true })
         })
         get()
     }
 
     const peticionPut = async() => {
-        const {data} = await axios.put(`${url}/${product.id}`, product)
+        const {data} = await axios.put(`${url}/${product.id}`, product, { withCredentials: true })
         console.log(data)
         setInsertarProducto(false);
         get()
     }
 
     const producDelete = async() => {
-        await axios.delete(`${url}/${idProduct}`)
+        await axios.delete(`${url}/${idProduct}`, { withCredentials: true })
         .then(response=>{
             //setProductGet(productGet.filter(producto=>producto.id!==idProduct));
             get();

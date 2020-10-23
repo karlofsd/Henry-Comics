@@ -18,6 +18,7 @@ const server = express();
 
 server.use(cors({
   credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   origin: "http://localhost:3000"
 }));
 
@@ -37,10 +38,9 @@ server.use((req, res, next) => {
 //-----------------PASSPORTjs---------------------------//
 server.use(
   session({
-    cookie:{expires:false},
     secret: "secretcode",
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
   })
 );
 
@@ -54,6 +54,7 @@ server.use((req,res,next)=>{
 
   next();
 })
+
 
 server.use('/', routes);
 

@@ -33,7 +33,7 @@ const User = () => {
 
     const getUser = async() => {
         
-        const {data} = await axios.get(`http://localhost:3001/user/${user.id}`)
+        const {data} = await axios.get(`http://localhost:3001/user/${user.id}`, { withCredentials: true })
         
         await setInfo(data)
     }
@@ -53,13 +53,13 @@ const User = () => {
       const getOrders = async (status) => {
         let query = '';
         if (status) {query = `?status=${status}`};
-        const data = await axios.get(`http://localhost:3001/orders/user/${user.id}${query}`);   
+        const data = await axios.get(`http://localhost:3001/orders/user/${user.id}${query}`, { withCredentials: true });   
         let filtered = data.data.filter(p => p.status !== 'carrito')   
         setOrders(filtered);
       }
     
       const getOrder = async (id) => {
-        const data = await axios.get(`http://localhost:3001/orders/${id}`);              
+        const data = await axios.get(`http://localhost:3001/orders/${id}`, { withCredentials: true });              
         setOrder(data.data[0]);
       }
     
@@ -89,7 +89,7 @@ const User = () => {
         }else{
             if(e.target.name === 'guardar'){
                 console.log('guardar',activeForm,info.telefono)
-                await axios.put(`http://localhost:3001/user/${user.id}`,info)
+                await axios.put(`http://localhost:3001/user/${user.id}`,info, { withCredentials: true })
                 getUser()
             }else{
                 console.log('cancelar',activeForm,e.target.name)

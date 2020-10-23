@@ -43,7 +43,7 @@ const AgregarCategorias = ({/* newCat,categories,getCat */}) =>{
     //------------CRUD----------------------
     const postCategorie = async() =>{ // ------------> CREAR CATEGORIA
         try{
-            await axios.post(url, categorie)
+            await axios.post(url, categorie, { withCredentials: true })
             setSuccessPost(true)
             setVisible(true)
             dispatch(getCategory())          
@@ -56,7 +56,7 @@ const AgregarCategorias = ({/* newCat,categories,getCat */}) =>{
 
     const handleChangeDelete = async(e) => { // --------> ELIMINAR CATEGORIA
         try{
-            await axios.delete(`http://localhost:3001/category/${e}`)
+            await axios.delete(`http://localhost:3001/category/${e}`, { withCredentials: true })
             setSuccessPost(true)
             setVisible(true);        
         }
@@ -68,7 +68,7 @@ const AgregarCategorias = ({/* newCat,categories,getCat */}) =>{
     }
 
     const handleSave = async()=> { // -------------> EDITAR CATEGORIA
-        await axios.put(`http://localhost:3001/category/${categorie.id}`,categorie)
+        await axios.put(`http://localhost:3001/category/${categorie.id}`,categorie, { withCredentials: true })
         dispatch(getCategory())
     }
 
