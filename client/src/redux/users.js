@@ -66,15 +66,15 @@ export let id;
 export const getLogin = (body) => async(dispatch) => {
     console.log('login', body)
     try{
-    const {data} = await axios.post('http://localhost:3001/user/login', body)
-    console.log(data)
-    id = data.id
+    const {data} = await axios.post('http://localhost:3001/user/login', body, { withCredentials: true })
+    console.log(data.user)
+    id = data.user.id
         
       dispatch({ 
             type: GET_LOGIN, 
-            payload: data
+            payload: data.user
     },
-        window.alert(`Bienvenido ${data.email}`)
+        window.alert(`Bienvenido ${data.user.email}`)
     )
     }catch(error){
         console.log(error)
