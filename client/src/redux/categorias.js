@@ -32,7 +32,7 @@ export default function categoryReducer (state = initialState, action){
 
 export const getCategory = () => async(dispatch) => { 
      try{
-        const {data} = await axios.get('http://localhost:3001/category/')
+        const {data} = await axios.get('http://localhost:3001/category/', { withCredentials: true })
         dispatch({
             type: GET_CATEGORY,
             payload: data

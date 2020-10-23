@@ -11,7 +11,7 @@ const Users = () => {
   }, [])
 
   const getUsers = async () => {
-    const {data} = await axios.get('http://localhost:3001/user')
+    const {data} = await axios.get('http://localhost:3001/user', { withCredentials: true })
     data.sort((a, b) => {
       if (a.id > b.id) {
         return 1;
@@ -25,12 +25,12 @@ const Users = () => {
   }
 
   const promoteUser = async (id) => {
-    await axios.post(`http://localhost:3001/auth/promote/${id}`)
+    await axios.post(`http://localhost:3001/auth/promote/${id}`,null , { withCredentials: true })
     getUsers();
   }
 
   const deleteUser = async (id) => {
-    await axios.delete(`http://localhost:3001/user/${id}`)
+    await axios.delete(`http://localhost:3001/user/${id}`, { withCredentials: true })
     getUsers();
   }
 

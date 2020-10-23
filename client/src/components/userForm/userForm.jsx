@@ -13,7 +13,7 @@ export default function UserForm() {
   
   const handleRegister = async (data) => {
     try {
-    await axios.post('http://localhost:3001/user/add', data);
+    await axios.post('http://localhost:3001/user/add', data, { withCredentials: true });
     setUsuarioCreado(true);
     setVisible(true)
     } catch (error) {

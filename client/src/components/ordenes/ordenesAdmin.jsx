@@ -24,13 +24,13 @@ const OrderTable = () => {
   const getOrders = async (status) => {
     let query = '';
     if (status) {query = `?status=${status}`};
-    const data = await axios.get(`http://localhost:3001/orders${query}`);   
+    const data = await axios.get(`http://localhost:3001/orders${query}`, { withCredentials: true });   
     let filtered = data.data.filter(p => p.status !== 'carrito')   
     setOrders(filtered);
   } 
 
   const getOrder = async (id) => {
-    const data = await axios.get(`http://localhost:3001/orders/${id}`);              
+    const data = await axios.get(`http://localhost:3001/orders/${id}`, { withCredentials: true });              
     setOrder(data.data[0]);
   }
 

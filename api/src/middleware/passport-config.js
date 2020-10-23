@@ -26,10 +26,10 @@ const passport = require('passport')
     cb(null, user.id);
   });
 
-  passport.deserializeUser((id, cb) => {
+  passport.deserializeUser( async (id, cb) => {
     console.log(id,"holaaaa")
     
-    User.findOne({where:{id:id}})
+    await User.findOne({where:{id:id}})
      .then(user=>{
        cb(null, user)
      })

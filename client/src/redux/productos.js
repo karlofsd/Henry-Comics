@@ -74,7 +74,7 @@ export default function productReducer (state = initialState, action){
 
 export const getProducts = () => async(dispatch) => {
      try{
-        const {data} = await axios.get(url)
+        const {data} = await axios.get(url, { withCredentials: true })
         
         dispatch({
             type: GET_PRODUCTS,
@@ -87,7 +87,7 @@ export const getProducts = () => async(dispatch) => {
 
 export const selProduct = (id) => async(dispatch) => {
     try{
-        const {data} = await axios.get(`${url}/${id}`)
+        const {data} = await axios.get(`${url}/${id}`, { withCredentials: true })
         dispatch({
             type: GET_SELPRODUCT,
             payload: data
@@ -100,7 +100,7 @@ export const selProduct = (id) => async(dispatch) => {
 export const findProducts = (arg) => async(dispatch) => {
     try{
         const { data } = await axios.get(
-            `http://localhost:3001/products/search?text=${arg}`
+            `http://localhost:3001/products/search?text=${arg}`, { withCredentials: true }
         );
         dispatch({
             type: FIND_PRODUCTS,
@@ -125,7 +125,7 @@ export const filterProducts = (products,propiedad,arg) => (dispatch) => {
 
 export const filterCategory = (id) => async(dispatch) => {
     try{
-        const {data} = await axios.get(`${url}/category/${id}`)
+        const {data} = await axios.get(`${url}/category/${id}`, { withCredentials: true })
         dispatch({
             type: FILTER_CATEGORIES,
             payload: data

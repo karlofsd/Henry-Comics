@@ -49,7 +49,7 @@ export default function userReducer(state = initialState, action){
 
 export const getUsers = (id) => async(dispatch) => {
     try{
-    const {data} = await axios.get(`'http://localhost:3001/users/${id}'`)
+    const {data} = await axios.get(`http://localhost:3001/users/${id}`, { withCredentials: true })
         dispatch({ 
             type: GET_USERS, 
             payload: data
