@@ -21,7 +21,7 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
   const user = useSelector(store => store.userState.userLogin);
   
   let history = useHistory();
-                            
+          
   useEffect(() => {
     getReviews();
   }, []);
@@ -36,6 +36,10 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
       [e.target.name]: e.target.value
     })
   };   
+
+  const handleEdit = (review) => {
+    setReview(review);
+  };
 
   const postReview = async () => {
     try{
@@ -72,18 +76,15 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
     return (sum.puntaje/reviews.length || 0);
   };
 
-
-  //tengo que meter el put en otra funcion, que primero me traiga la review a los values de los inputs, 
-  // y despues poder hacer la request con eso
   const modifyReview = async (productId, reviewId) => {
-    await axios.put(`http://localhost:3001/reviews/${productId}/review/${reviewId}`, review);
+    await axios.put(`http://localhost:3001/reviews/${productId}/review/${reviewId}`, review, {withCredentials: true});
     getReviews();
-  }
+  };
 
   const deleteReview = async (productId, reviewId) => {
     await axios.delete(`http://localhost:3001/reviews/${reviewId}/product/${productId}`);
     getReviews();
-  }
+  };
 
   const onSubmit = () => {
     postReview();    
@@ -109,13 +110,12 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
       <ModalBody contentClassName='form-review'>
         <div className='allReviews'>
           {reviews[0] && reviews.map((r, i) => (
-            <Review 
-              comentario={r.comentarios} 
-              puntaje={r.puntaje}
+            <Review
+              review={r}    
               user={r.user.email}
-              userId={r.user.id}
-              id={r.id}  
+              userId={r.user.id}                
               productId={productId}
+              handleEdit={handleEdit}
               deleteReview={deleteReview}            
               key= {i}                
                 />          
@@ -130,9 +130,12 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
           />
         <label>Click to Rate</label>
         <StarRating handleInputChange={handleInputChange}/>          
-      <ModalFooter>        
+      <ModalFooter>  
+
         <Button color="primary" onClick={onSubmit}>Enviar</Button>
-   
+        { review.id &&
+          <Button color="primary" onClick={modifyReview(productId, review.id)}>Enviar</Button>
+        }
         <Button color="secondary" onClick={toggleNested}>Cerrar</Button>
       </ModalFooter>
       </ModalBody>
