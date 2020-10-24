@@ -7,8 +7,9 @@ import Product from "./components/productComponent/product";
 import Admin from "./components/admin/admin";
 import UserForm from "./components/userForm/userForm";
 import LandingCarrousel from "./components/carrousel/carrousel";
+import News from "./components/newsgrid/newsgrid";
 import Footer from "./components/footer/footer";
-import User from "./components/userPanel/userPanel"
+import User from "./components/userPanel/userPanel";
 import axios from "axios";
 import {useDispatch,useSelector} from 'react-redux'  //hooks
 import {getProducts} from './redux/productos'        //actions
@@ -68,6 +69,11 @@ function App() {
         exact
         path="/"
         render={() => <LandingCarrousel />}
+      />
+       <Route
+        exact
+        path="/"
+        render={() => <News />}
       />
       <Route
         exact

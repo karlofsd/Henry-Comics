@@ -65,7 +65,7 @@ const LandingCarrousel = (props) => {
     });
   
     return (
-    <div class="d-block w-100 carrousel">
+    <div class="d-block w-100 carrousel bg-dark">
         <Carousel
         activeIndex={activeIndex}
         next={next}
