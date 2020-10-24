@@ -6,19 +6,19 @@ import {
     Carousel,
     CarouselItem,
     CarouselControl,
-    CarouselIndicators
+    CarouselIndicators,
+    CarouselCaption
   } from 'reactstrap';
 
   const items = [
     {
       src: Slide1,
-      altText: 'Slide 1',
-      caption: 'Slide 1'
+      altText: 'Bienvenidos',
     },
     {
       src: Slide2,
-      altText: 'Slide 2',
-      caption: 'Slide 2'
+      altText: 'Henry Comics',
+
     }
   ];
 
@@ -58,7 +58,8 @@ const LandingCarrousel = (props) => {
           key={item.src}
         >
           <img className="imgcarrousel" src={item.src} alt={item.altText} />
-          
+    
+          <CarouselCaption/>
         </CarouselItem>
       );
     });
