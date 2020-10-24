@@ -1,8 +1,8 @@
 const server = require('express').Router();
 const { User } = require('../db.js');
-const {verifyAuth,verifyAdmin} = require('../middleware/verifyAuth')
+const {isAdmin, isAuthenticated} =require('../middleware/helper')
 
-server.post('/promote/:id', (req, res) => {
+server.post('/promote/:id',isAuthenticated, isAdmin, (req, res) => {
   const { id } = req.params;
   User.update(
         {
@@ -22,7 +22,7 @@ server.post('/promote/:id', (req, res) => {
   })
 })
 
-server.get('/me',verifyAuth,(req,res) => {
+server.get('/me',isAuthenticated,(req,res) => {
   res.status(200).json(req.user)
 })
 

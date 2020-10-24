@@ -2,8 +2,9 @@ const server = require('express').Router();
 const { User, Orden, LineaDeOrden, Product } = require('../db');
 const bcrypt = require('bcrypt')
 const passport = require('passport');
+const {isAdmin, isAuthenticated} =require('../middleware/helper');
 
-server.get('/', (req, res, next)=>{
+server.get('/', isAdmin,  (req, res, next)=>{
 User.findAll()
     .then(users => {
         res.send(users);
@@ -100,7 +101,7 @@ server.post("/add", function (req, res) {
       });
   });
 
-  server.put("/:id/", function (req, res) {
+  server.put("/:id/", isAuthenticated, function (req, res) {
     let {id} = req.params
     const { firstname, lastname, username, email, password, image, telefono} = req.body;
     User.update(
@@ -130,7 +131,7 @@ server.post("/add", function (req, res) {
     )
   });
 
-  server.delete("/:id", (req, res, next) => {
+  server.delete("/:id", isAuthenticated, (req, res, next) => {
     const id = req.params.id;
     User.destroy({
       where: { id: id },
@@ -327,7 +328,7 @@ server.post('/', (req, res) => {
     })
 })
 // conseguir un usuario
-server.get('/:id',(req,res) => {
+server.get('/:id', isAuthenticated,(req,res) => {
   User.findByPk(req.params.id)
   .then(user => res.status(200).json(user))
   .catch(err => res.status(404).json(err))
@@ -341,7 +342,7 @@ server.delete('/order/:ordenId/product/:productId',(req,res) => {
 })
 
 //70 Resetear un Password y bcrypt el password
-server.post('/:id/passwordReset', (req, res) =>{
+server.post('/:id/passwordReset',  isAuthenticated, (req, res) =>{
   const { id } = req.params;
   const { password } = req.body;
   User.findByPk(id)
