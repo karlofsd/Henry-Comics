@@ -365,4 +365,29 @@ server.post('/:id/passwordReset',  isAuthenticated, (req, res) =>{
     .json({message: 'Not Found', err})
   })
 })
+
+// vaciar carrito
+server.delete('/:idUser/cart/',(req, res)=>{
+  const {idUser} = req.params;
+  
+  Orden.findAll({
+    where: {
+      userId: idUser,
+      status: 'carrito'
+    }
+    })
+    .then(carrito=>{
+      LineaDeOrden.destroy({
+        where: {
+          ordenId:carrito[0].id}
+        })
+        .then(resp=>{
+          res.status(200).json({ message: "success" });
+        })
+    })
+    .catch(error=>{
+      res.status(404).json({ message: "Not found" });
+    });
+});
+
   module.exports = server;

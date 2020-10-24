@@ -76,7 +76,7 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
                             <td className='tO'>${p.price}</td>
                             <td className='tO'>{p.lineaDeOrden.quantity}</td>
                             <td className='tO'>${p.price * p.lineaDeOrden.quantity}</td>
-                            {user && <button className='btn btn-danger' onClick={()=>handleRemove(p.id,order.id)}>X</button>}
+                            {(user && order.status !== 'cancelada') && <button className='btn btn-danger' onClick={()=>handleRemove(p.id,order.id)}>X</button>}
                             </tr>                     
                         )
                         )}
@@ -88,7 +88,7 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
                 </div>
             </div>
             <div className="bottom">
-                <h4>Usuario: {order.user.email}</h4>
+                {user ? <h4>Precio Total:</h4> : <h4>Usuario: {order.user.email}</h4>}
                 <div className="left">
                     <div className="details">
                     <p className='priceproductcard' >${total}</p>
@@ -104,7 +104,7 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
                     :
                     <h3><span className="badge badge-danger">Cancelada</span></h3>
                     )}
-                    <button className="btn btn-danger pill-rounded" onClick={() => handleCancel(order)} >Cancelar</button>
+                    {status !== 'cancelada' && <button className="btn btn-danger pill-rounded" onClick={() => handleCancel(order)} >Cancelar</button>}
                 </div>
             </div>
         </div>

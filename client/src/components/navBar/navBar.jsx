@@ -92,9 +92,9 @@ const NavBar = ({/* categories, */}) => {
                         <Link to='/admin'>
                         <DropdownItem>Panel</DropdownItem>
                         </Link>
-                        <button type='button' onClick={handleLogOut}>
+                        <Link type='button' onClick={handleLogOut}>
                         <DropdownItem>Cerrar sesión</DropdownItem>
-                        </button>
+                        </Link>
                     </DropdownMenu>
                 </UncontrolledDropdown>
               </Fragment>}
