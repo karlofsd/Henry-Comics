@@ -1,4 +1,12 @@
 /*----------- NAVBAR -----------*/
+.saludo{
+  background: linear-gradient(to right,red 2.5em,white 0);
+  margin: auto;
+  font-weight: 600;
+  font-size: larger;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .fixed {
  height: 60px
 }

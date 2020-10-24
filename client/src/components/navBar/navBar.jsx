@@ -14,14 +14,16 @@ import {
   DropdownItem,
   NavbarText
 } from 'reactstrap'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import logo from './img/logo.png'
 import {useDispatch, useSelector} from 'react-redux'
 import {getProducts,filterCategory} from '../../redux/productos'
 import {getCategory} from '../../redux/categorias'
+import {logOut} from '../../redux/users'
 import Axios from 'axios'
 
 const NavBar = ({/* categories, */}) => {
+    const history = useHistory()
     const user = useSelector(store => store.userState.userLogin)
     const categories = useSelector( store => store.categoryState.categories)
     const dispatch = useDispatch()
@@ -33,8 +35,11 @@ const NavBar = ({/* categories, */}) => {
         dispatch(getCategory()) 
     },[])
 
-    const logOut = async() => {
-      await Axios.get(`http://localhost:3001/user/logout`, { withCredentials: true })
+    const handleLogOut = async() => {
+      const {data} = await Axios.get(`http://localhost:3001/user/logout`, { withCredentials: true })
+      console.log('deslogueo',data)
+      dispatch(logOut())
+      return history.push('/')
     }
 
     return(
@@ -87,9 +92,9 @@ const NavBar = ({/* categories, */}) => {
                         <Link to='/admin'>
                         <DropdownItem>Panel</DropdownItem>
                         </Link>
-                        <Link type='button' onClick={logOut}>
+                        <button type='button' onClick={handleLogOut}>
                         <DropdownItem>Cerrar sesión</DropdownItem>
-                        </Link>
+                        </button>
                     </DropdownMenu>
                 </UncontrolledDropdown>
               </Fragment>}
@@ -116,13 +121,14 @@ const NavBar = ({/* categories, */}) => {
                         <Link to='/user'>
                         <DropdownItem>Perfil</DropdownItem>
                         </Link>
-                        <Link type='button' onClick={logOut}>
+                        <Link type='button' onClick={handleLogOut}>
                         <DropdownItem>Cerrar sesión</DropdownItem>
                         </Link>
                     </DropdownMenu>
                 </UncontrolledDropdown>
               </Fragment>}
             </Nav>
+              {user.id && <div className='saludo'>Hola, {user.name || user.username}!</div>}
           <Buscar /*click={click}*/ className="pl-5"/>
           </Collapse>
         </Navbar>
