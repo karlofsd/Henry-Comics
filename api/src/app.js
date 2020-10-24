@@ -49,8 +49,8 @@ server.use(passport.session());
 require("./middleware/passport-config");
 //-----------------------------------------------------//
 server.use((req,res,next)=>{
-  console.log(req.user)
-  console.log(req.session)
+  // console.log(req.user)
+  // console.log(req.session)
 
   next();
 })

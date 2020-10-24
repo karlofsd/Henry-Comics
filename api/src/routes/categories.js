@@ -1,6 +1,7 @@
 const server = require('express').Router();
 const { Category } = require('../db.js');
-const {isAdmin} = require('../middleware/helper')
+const {isAdmin, isAuthenticated} =require('../middleware/helper');
+
 //S18: Crear ruta para crear/agregar Categoria
 // res 201 Created. El request se ha competado y se a creado un nuevo recurso
 server.post('/', isAdmin, (req, res) => {
@@ -16,7 +17,7 @@ server.post('/', isAdmin, (req, res) => {
 //S19: Crear Ruta para eliminar Categoria
 // res 200 OK. res Correcto
 // res 404 Not Found. 
-server.delete('/:id', (req, res) =>{
+server.delete('/:id', isAdmin, (req, res) =>{
     const id  =  req.params.id;
     Category.destroy({
         where: {
@@ -35,7 +36,7 @@ server.delete('/:id', (req, res) =>{
 //S20: Crear ruta para Modificar Categoria
 // res 200 OK. res Correcto
 // res 404 Not Found. 
-server.put('/:id', (req, res) =>{
+server.put('/:id', isAdmin, (req, res) =>{
     const id = req.params.id;
     const { name, description, price, stock, image} = req.body
     Category.update({

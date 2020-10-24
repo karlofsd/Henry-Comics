@@ -6,7 +6,8 @@ import { localToUser } from './carrito';
 
 const GET_LOGIN = 'GET_LOGIN';
 const GET_USERS = 'GET_USERS';
-
+const VERIFY = 'VERIFY'
+const LOGOUT = 'LOGOUT'
 
  //STATE
 
@@ -33,9 +34,31 @@ export default function userReducer(state = initialState, action){
                 ...state,
                 userLogin:{
                     id: action.payload.id,
+                    name: action.payload.firstname,
+                    username: action.payload.username,
                     email: action.payload.email,
                     isAdmin: action.payload.isAdmin,
                     login: true
+                }
+            }
+        case VERIFY:
+            return{
+                ...state,
+                userLogin:{
+                    id: action.payload.id,
+                    name: action.payload.firstname,
+                    username: action.payload.username,
+                    email: action.payload.email,
+                    isAdmin: action.payload.isAdmin,
+                    login: true
+                }
+            }
+        case LOGOUT:
+            return {
+                ...state,
+                userLogin:{
+                    id:null,
+                    login: false
                 }
             }
         default:
@@ -67,7 +90,6 @@ export const getLogin = (body) => async(dispatch) => {
     console.log('login', body)
     try{
     const {data} = await axios.post('http://localhost:3001/user/login', body, { withCredentials: true })
-    console.log(data.user)
     id = data.user.id
         
       dispatch({ 
@@ -82,5 +104,22 @@ export const getLogin = (body) => async(dispatch) => {
     ;
 };
 
+export const verifyLogin = () => async(dispatch) => {
+    try{
+        const {data} = await axios.get('http://localhost:3001/auth/me',{ withCredentials: true })
+        console.log('auth/me',data)
+        dispatch({
+            type: VERIFY,
+            payload: data
+        })
+    }catch(err){
+        console.log(err)
+    }
+}
 
+export const logOut = () => (dispatch) => {
+    dispatch({
+        type: LOGOUT
+    })
+}
 
