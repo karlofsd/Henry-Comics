@@ -19,7 +19,8 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
   const [rating, setRating] = useState(0);
 
   const user = useSelector(store => store.userState.userLogin);
-  
+  console.log(review);
+    
   let history = useHistory();
           
   useEffect(() => {
@@ -76,10 +77,10 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
     return (sum.puntaje/reviews.length || 0);
   };
 
-  const modifyReview = async (productId, reviewId) => {
-    await axios.put(`http://localhost:3001/reviews/${productId}/review/${reviewId}`, review, {withCredentials: true});
-    getReviews();
-  };
+  // const modifyReview = async (productId, reviewId) => {
+  //   await axios.put(`http://localhost:3001/reviews/${productId}/review/${reviewId}`, review, {withCredentials: true});
+  //   getReviews();
+  // }; poner las funciones en el componente review, ver toda la logica de editar ahi
 
   const deleteReview = async (productId, reviewId) => {
     await axios.delete(`http://localhost:3001/reviews/${reviewId}/product/${productId}`);
@@ -115,7 +116,7 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
               user={r.user.email}
               userId={r.user.id}                
               productId={productId}
-              handleEdit={handleEdit}
+              get={getReviews}
               deleteReview={deleteReview}            
               key= {i}                
                 />          
@@ -127,6 +128,7 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
           name='comentarios' 
           placeholder='Ingrese Comentario' 
           onChange={handleInputChange}
+          value={review.comentarios}
           />
         <label>Click to Rate</label>
         <StarRating handleInputChange={handleInputChange}/>          
@@ -134,7 +136,7 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
 
         <Button color="primary" onClick={onSubmit}>Enviar</Button>
         { review.id &&
-          <Button color="primary" onClick={modifyReview(productId, review.id)}>Enviar</Button>
+          <Button color="primary" >Editar</Button>
         }
         <Button color="secondary" onClick={toggleNested}>Cerrar</Button>
       </ModalFooter>

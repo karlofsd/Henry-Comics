@@ -1,12 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import RenderStarRating from './rating/renderStarRating';
+import axios from 'axios';
 import './review.css';
 
-export default function Review ({review, user, userId, productId, deleteReview, handleEdit}) {
+export default function Review ({getReviews, review, user, userId, productId, deleteReview, handleEdit}) {
 
   const { comentarios, puntaje, id } = review
   const userReviewId = userId; 
+
+  const modifyReview = async (productId, reviewId) => {
+    await axios.put(`http://localhost:3001/reviews/${productId}/review/${reviewId}`, review, {withCredentials: true});
+    getReviews();
+  };
 
   const userLogin = useSelector(store => store.userState.userLogin)
 
@@ -19,7 +25,7 @@ export default function Review ({review, user, userId, productId, deleteReview, 
         {
           userReviewId === userLogin.id ?
           <div className='buttons'>
-            <button onClick={() => handleEdit(review)}>Editar</button>
+            <button onClick={() => modifyReview(productId, id)}>Editar</button>
             <button onClick={() => deleteReview(productId, id)}>X</button>           
           </div> :
           <p></p>      
