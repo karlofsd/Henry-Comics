@@ -1,5 +1,6 @@
 import React from 'react';
-import './newsgrid.css'
+import './newsgrid.css';
+
 
 const NewProduct = (props) => {
   return (

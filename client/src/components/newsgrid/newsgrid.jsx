@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../../redux/productos';
 import NewProduct from './newproduct';
-import './newsgrid.css'
+import './newsgrid.css';
+import { Link } from 'react-router-dom';
+
 
 
 export default function News() {
@@ -27,7 +29,7 @@ export default function News() {
     <div className="container-fluid grid">
         <h2 className="text-md-left font-weight-bold estrenos">ESTRENOS</h2>
         <div className="row">
-            {nuevosProductos.map(p =><div className="col-4"><NewProduct product={p}/></div>)}
+            {nuevosProductos.map(p =><Link to={'/catalogo'}><div className="col-4"><NewProduct product={p}/></div></Link>)}
             </div>
         </div>
     
