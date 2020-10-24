@@ -1,5 +1,6 @@
 const server = require('express').Router();
 const { User } = require('../db.js');
+
 const {isAdmin, isAuthenticated} =require('../middleware/helper')
 
 server.post('/promote/:id',isAuthenticated, isAdmin, (req, res) => {

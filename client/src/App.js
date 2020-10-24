@@ -13,11 +13,13 @@ import axios from "axios";
 import {useDispatch,useSelector} from 'react-redux'  //hooks
 import {getProducts} from './redux/productos'        //actions
 import Login from "./components/userForm/login";
+import { verifyLogin } from "./redux/users";
 
 
 function App() {
   // ---funciones Redux---
   const dispatch = useDispatch() 
+  const user = useSelector(store => store.userState.userLogin)
   const products = useSelector( store => store.productState.products)
   let onlyStock = products.filter(p => p.stock > 0)
   //const status = useSelector( store => store.productState.statusFilter)
@@ -25,11 +27,14 @@ function App() {
   // const [categories, setCategories] = useState(); // ELIMINAR
   // const [filterStatus, setFilterStatus] = useState(false) //ELIMINAR
 
-  // useEffect(() => {
-  //   /* dispatch(getProducts())
-  //   getCategories(); */
-  //   console.log('app render')
-  // },[]);
+  useEffect(() => {
+    /* dispatch(getProducts())
+    getCategories(); */
+    console.log('app render')
+    if(!user.login){
+      dispatch(verifyLogin())
+    }
+  },[user]);
 
   //---ELIMINAR---
   // const getProducts = async () => {
@@ -93,10 +98,15 @@ function App() {
       />
       <Route 
         exact path="/admin" 
-        render={() => 
+        render={() => (user.login && user.isAdmin) ? 
           <div>
             <Admin /* newCat={getCategories}  get={getProducts} /* getCat={getCategories} *//*  categories={categories} *//> 
-          </div>}
+          </div>
+          :
+          <di>
+            <h2>Acceso Negado!</h2>
+          </di>
+        }
       />
                                             
       <Route 
@@ -118,7 +128,9 @@ function App() {
 
       <Route
         exact path='/user'
-        render={()=> <User/>}
+        render={()=> user.login ?
+          <User/> : <div><h2>Acceso Denegado</h2></div>
+        }
       />
     </Router>
     

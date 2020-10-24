@@ -67,13 +67,19 @@ server.post('/login',(req, res, next)=>{
 // })
 
 server.get('/logout',(req, res)=>{
-  req.logOut();
-  res.status(200).clearCookie('connect.sid', {
-    path: '/',
-    secure: false,
-    httpOnly: false,
-  });
-  req.session.destroy();
+    req.logOut();
+    console.log('paso logout')
+    res.status(200).clearCookie('connect.sid', {
+      path: '/',
+      secure: false,
+      httpOnly: false,
+    });
+    console.log('paso clearcookies')
+    req.session.destroy();
+    console.log('paso destroy session')
+    res.send('deslogueado')
+    
+    console.log('nexxt')
 })
 
 server.post("/add", function (req, res) {
