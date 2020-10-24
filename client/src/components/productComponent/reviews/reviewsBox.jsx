@@ -83,7 +83,7 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
   // }; poner las funciones en el componente review, ver toda la logica de editar ahi
 
   const deleteReview = async (productId, reviewId) => {
-    await axios.delete(`http://localhost:3001/reviews/${reviewId}/product/${productId}`);
+    await axios.delete(`http://localhost:3001/reviews/${reviewId}/product/${productId}`, {withCredentials: true});
     getReviews();
   };
 

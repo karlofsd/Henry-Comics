@@ -19,22 +19,22 @@ export default function Review ({getReviews, review, user, userId, productId, de
    return (
     <div className='review-content'>
       <div className='review-data'>
-        <p id='user'>{user}</p>
-        <p id='comentario'>{comentarios}</p>
+      <p id='user'>{user}</p>
+      <p id='comentario'>{comentarios}</p>
         {/* <div className='buttons'> */}
           {/* {
             userReviewId === userLogin.id &&
             <label type='button' onClick={() => modifyReview(productId, id)}>Editar</label> 
           } */}
-          { userLogin.isAdmin ?
-            (
-              <label className= 'eliminarLabel' type='button' onClick={() => deleteReview(productId, id)}>Eliminar</label>              
-              )
-              :
-              (userReviewId === userLogin.id) &&
-              <label className= 'eliminarLabel' type='button' onClick={() => deleteReview(productId, id)}>Eliminar</label> 
-            }      
-        <RenderStarRating size='small' puntaje={puntaje}/>
+      <RenderStarRating size='small' puntaje={puntaje}/>
+        { userLogin.isAdmin ?
+          (
+          <button className= 'eliminarLabel' onClick={() => deleteReview(productId, id)}>Eliminar</button>              
+          )
+          :
+          (userReviewId === userLogin.id) &&
+          <button className= 'eliminarLabel' onClick={() => deleteReview(productId, id)}>Eliminar</button> 
+        }      
         {/* </div>  */}
       </div>
       <hr/>
