@@ -57,7 +57,7 @@ export default function carritoReducer (state = initialState, action){
 
 export const getCarrito = (userId) => async(dispatch) => { 
      try{
-        const {data} = await axios.get(`http://localhost:3001/user/${userId}/cart`)
+        const {data} = await axios.get(`http://localhost:3001/user/${userId}/cart`, { withCredentials: true })
         dispatch({
             type: GET_CARRITO,
             payload: data
@@ -85,7 +85,7 @@ export const localToUser = (carrito) => async (dispatch) => {
         //const {data} = await axios.post('http://localhost:3001/user/',)
 
         carrito.map(async (p) => {
-            await axios.post(`http://localhost:3001/user/${id}/cart`, p)
+            await axios.post(`http://localhost:3001/user/${id}/cart`, p, { withCredentials: true })
         })
         
 

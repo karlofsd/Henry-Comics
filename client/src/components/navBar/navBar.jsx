@@ -19,6 +19,7 @@ import logo from './img/logo.png'
 import {useDispatch, useSelector} from 'react-redux'
 import {getProducts,filterCategory} from '../../redux/productos'
 import {getCategory} from '../../redux/categorias'
+import Axios from 'axios'
 
 const NavBar = ({/* categories, */}) => {
     const user = useSelector(store => store.userState.userLogin)
@@ -31,6 +32,10 @@ const NavBar = ({/* categories, */}) => {
     useEffect(()=> {
         dispatch(getCategory()) 
     },[])
+
+    const logOut = async() => {
+      await Axios.get(`http://localhost:3001/user/logout`, { withCredentials: true })
+    }
 
     return(
         <div>
@@ -73,11 +78,21 @@ const NavBar = ({/* categories, */}) => {
                     </DropdownMenu>
                 </UncontrolledDropdown>
 
-              {user.isAdmin && <NavItem>
-                    <Link to="/admin" className="text-light px-2">
-                    Admin Panel
-                    </Link>
-              </NavItem>}
+              {user.isAdmin && <Fragment>
+              <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret className="text-light px-2">
+                        Admin
+                    </DropdownToggle>
+                    <DropdownMenu left>
+                        <Link to='/admin'>
+                        <DropdownItem>Panel</DropdownItem>
+                        </Link>
+                        <Link type='button' onClick={logOut}>
+                        <DropdownItem>Cerrar sesión</DropdownItem>
+                        </Link>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+              </Fragment>}
               
               {!user.id && <Fragment>
               <NavItem>
@@ -101,7 +116,7 @@ const NavBar = ({/* categories, */}) => {
                         <Link to='/user'>
                         <DropdownItem>Perfil</DropdownItem>
                         </Link>
-                        <Link to='/login'>
+                        <Link type='button' onClick={logOut}>
                         <DropdownItem>Cerrar sesión</DropdownItem>
                         </Link>
                     </DropdownMenu>

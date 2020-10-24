@@ -28,7 +28,7 @@ export default function Carrito({user}){
     const carritoDelete = async (id) =>{
         if(user.id){
             try{
-                await axios.delete(`http://localHost:3001/user/${user.id}/cart/${id}`,)
+                await axios.delete(`http://localHost:3001/user/${user.id}/cart/${id}`,{ withCredentials: true })
                 //carritoGet();
                 dispatch(getCarrito(user.id));
             }catch(err){

@@ -22,7 +22,7 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
     
     const handleProcess = async (order) => {
         try{
-            await axios.put(`http://localhost:3001/orders/${order.id}?status=procesando`)            
+            await axios.put(`http://localhost:3001/orders/${order.id}?status=procesando`, null, { withCredentials: true })            
             setStatusG(!statusG);  
             getOrder(order.id);
         } catch(err) {
@@ -32,7 +32,7 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
 
     const handleComplete = async (order) => {
         try{
-            await axios.put(`http://localhost:3001/orders/${order.id}?status=completa`)            
+            await axios.put(`http://localhost:3001/orders/${order.id}?status=completa`, null, { withCredentials: true })            
             setStatusG(!statusG);
             getOrder(order.id);
         } catch(err) {
@@ -42,7 +42,7 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
 
     const handleCancel = async (order) => {
         try{
-            await axios.put(`http://localhost:3001/orders/${order.id}?status=cancelada`)            
+            await axios.put(`http://localhost:3001/orders/${order.id}?status=cancelada`, null, { withCredentials: true })            
             setStatusG(!statusG);
             getOrder(order.id);
         } catch(err) {
@@ -51,7 +51,7 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
     }
 
     const handleRemove = async(product,orden) => {
-        await axios.delete(`http://localhost:3001/user/order/${orden}/product/${product}`)
+        await axios.delete(`http://localhost:3001/user/order/${orden}/product/${product}`, { withCredentials: true })
         setStatusG(!statusG);
         getOrder(order.id);
     }

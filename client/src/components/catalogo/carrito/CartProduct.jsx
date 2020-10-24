@@ -10,7 +10,7 @@ const CartProduct = ({name,quantity,id,price,carritoDelete, carritoGet, stock,us
 
     const carritoPut = async (body) =>{
         try{
-            await axios.put(`http://localHost:3001/user/${user}/cart/`, body)
+            await axios.put(`http://localHost:3001/user/${user}/cart/`, body, { withCredentials: true })
             carritoGet(user);
           }catch(err){
             console.log(err)

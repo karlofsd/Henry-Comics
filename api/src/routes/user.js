@@ -12,9 +12,26 @@ User.findAll()
 })
 
 
-server.post('/login',
-  passport.authenticate('local'),(req, res, next)=>{
-  res.json(req.user)
+server.post('/login',(req, res, next)=>{
+  passport.authenticate('local',{session:true},(err, user, info)=>{
+    if(err){
+      res.status(500).json({message:'error'})
+      return;
+    }
+    if(!user){
+      res.status(401).json({message:'user'})
+      return;
+    }
+
+    req.login(user,(error)=>{
+      if(error){
+        res.status(500).json({message:'no guardado'})
+        return;
+      }
+      //console.log(req.user, 'user!!!')
+      res.status(200).json({errors:false, user:user})
+    })
+  })(req, res, next)
 })
 
 // server.post('/login',
@@ -48,10 +65,14 @@ server.post('/login',
 //       }); */
 // })
 
-server.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/')
-  res.send({ success: true })
+server.get('/logout',(req, res)=>{
+  req.logOut();
+  res.status(200).clearCookie('connect.sid', {
+    path: '/',
+    secure: false,
+    httpOnly: false,
+  });
+  req.session.destroy();
 })
 
 server.post("/add", function (req, res) {
@@ -317,5 +338,24 @@ server.delete('/order/:ordenId/product/:productId',(req,res) => {
   LineaDeOrden.destroy({where:{ordenId,productId}})
   .then(eliminado => res.status(200).json({message:'se elimino el producto',eliminado}))
   .catch(err => res.status(404).json(err))
+})
+
+//70 Resetear un Password y bcrypt el password
+server.post('/:id/passwordReset', (req, res) =>{
+  const { id } = req.params;
+  const { password } = req.body;
+  User.findByPk(id)
+  .then(user =>{
+    console.log(user);
+    user.update({
+      password: bcrypt.hashSync(password, 10)
+    })
+    res.status(200)
+    .json({message: 'Password Receteada'})
+  })
+  .catch(err=>{
+    res.status(404)
+    .json({message: 'Not Found', err})
+  })
 })
   module.exports = server;
