@@ -21,3 +21,8 @@
   /* justify-content: flex-end; */
   width: 20%;
 }
+
+.eliminarLabel{
+  font-weight: 100;
+  font-size: 15px;
+}
