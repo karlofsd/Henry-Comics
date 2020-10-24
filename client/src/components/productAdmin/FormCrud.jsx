@@ -25,7 +25,7 @@ const url = 'http://localhost:3001/products';
             description: product.description.toLowerCase(),
             serie: product.serie.toLowerCase()
         }
-        await axios.post(`${url}/create`, body)
+        await axios.post(`${url}/create`, body, { withCredentials: true })
         .then(response=>{
             postCategoriProduct(response.data.newProduct.id);
             setSuccessPost(true);
