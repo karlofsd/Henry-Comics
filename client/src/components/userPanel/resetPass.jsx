@@ -53,8 +53,8 @@ const ResetPass = (props) => {
       <Row form>
         <Col md={6}>
             <FormGroup>
-                <Label for="examplePassword">Nueva Password</Label>
-                <Input type="password" name="actual" placeholder="Pass Actual"
+                <Label for="examplePassword">Contraseña Actual</Label>
+                <Input type="password" name="actual" placeholder="Contraseña actual ..."
                     value={password.actual}
                     onChange={handlerChange}
                 />
@@ -62,8 +62,8 @@ const ResetPass = (props) => {
         </Col>
         <Col md={6}>
             <FormGroup>
-                <Label for="examplePassword">Confirmar Password</Label>
-                <Input type="password" name="new" placeholder="Nueva Pass"
+                <Label for="examplePassword">Contraseña Nueva</Label>
+                <Input type="password" name="new" placeholder="Nueva contraseña ..."
                 value={password.new}
                 onChange={handlerChange}
                 />
