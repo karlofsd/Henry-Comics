@@ -265,7 +265,7 @@ const User = () => {
             </div>
           </TabPane>
           <TabPane tabId="3">
-              { info.username && 
+              { info && 
               <ResetPass user={info}/>
               }
           </TabPane>
