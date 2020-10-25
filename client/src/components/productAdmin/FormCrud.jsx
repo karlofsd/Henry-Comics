@@ -9,8 +9,8 @@ const url = 'http://localhost:3001/products';
 
  const FormCrud=({get, editCategory, editIsOpen, deleteIsOpen, tipoAccion, product, setProducto, category , idProduct, productGet, setInsertarProducto, setEliminarProducto})=>{
     
-    let opcion =[];
-    let opcionEliminar =[];
+    let opcion = [];
+    let opcionEliminar = [];
 
     const [selectedOption, setSelectedOption] = useState([]);
     const [visible, setVisible] = useState(false);
@@ -144,39 +144,51 @@ const url = 'http://localhost:3001/products';
         <div>            
             <Modal isOpen={editIsOpen}>
                 <ModalHeader>
-                    <form className="form-group" onSubmit={onSubmit}>
+                    <form className="form-group form-prod" onSubmit={onSubmit}>
                         <ModalBody>
                             <div><p>Completá los datos correspondientes al nuevo producto.</p></div>
-                            <label>Nombre:</label><br />
-                            <input type='text' name='name' onChange={handleInputChange} value={product && product.name}/>
-                            <br />
-                            <label>Autor:</label><br />
-                            <input type='text' name='author' onChange={handleInputChange} value={product && product.author}/>
-                            <br />
-                            <label>Collección:</label><br />
-                            <input type='text' name='collection' onChange={handleInputChange} value={product && product.collection}/>
-                            <br />
-                            <label>Año:</label><br />
-                            <input type='text' name='year' onChange={handleInputChange} value={product && product.year}/>
-                            <br />
-                            <label>Serie:</label><br />
-                            <input type='text' name='serie' onChange={handleInputChange} value={product && product.serie}/>
-                            <br />
-                            <label>Precio:</label><br />
-                            <input type='text' name='price' onChange={handleInputChange} value={product && product.price}/>
-                            <br />
-                            <label>Stock:</label><br />
-                            <input type='text' name='stock' onChange={handleInputChange} value={product && product.stock}/>
-                            <br />
-                            <label>Descripción:</label><br />
-                            <textarea name='description' onChange={handleInputChange} value={product && product.description}/>
-                            <br />
-                            <label>Imagen:</label>
-                            <input type='file' /* accept='image/*' */ name='image' onChange={uploadImage} />
-                            <label>Agregar categoría:</label>
-                            {select}
+                            <div className='input-form'>
+                                <label>Nombre:</label>
+                                <input type='text' name='name' onChange={handleInputChange} value={product && product.name}/>
+                            </div>
+                            <div className='input-form'>
+                                <label>Autor:</label>
+                                <input type='text' name='author' onChange={handleInputChange} value={product && product.author}/>
+                            </div>
+                            <div className='input-form'>
+                                <label>Collección:</label>
+                                <input type='text' name='collection' onChange={handleInputChange} value={product && product.collection}/>
+                            </div>
+                            <div className='input-form'>
+                                <label>Año:</label>
+                                <input type='number' name='year' onChange={handleInputChange} value={product && product.year}/>
+                            </div>
+                            <div className='input-form'>
+                                <label>Serie:</label>
+                                <input type='text' name='serie' onChange={handleInputChange} value={product && product.serie}/>
+                            </div>
+                            <div className='input-form'>
+                                <label>Precio:</label>
+                                <input type='number' name='price' min='0' onChange={handleInputChange} value={product && product.price}/>
+                            </div>
+                            <div className='input-form'>
+                                <label>Stock:</label>
+                                <input type='number' name='stock' min='0' onChange={handleInputChange} value={product && product.stock}/>
+                            </div>
+                            <div className='desc-form'>
+                                <label>Descripción:</label>
+                                <textarea name='description' onChange={handleInputChange} value={product && product.description}/>
+                            </div>
+                            <div className='input-form'>
+                                <label>Imagen:</label>
+                                <input type='file' /* accept='image/*' */ name='image' onChange={uploadImage} />
+                            </div>
+                            <div className='cate-form'>
+                                <label>Agregar categoría:</label>
+                                {select}
+                            </div>
                             {tipoAccion !== 'agregar'&&
-                                <div>
+                            <div className='cate-form'>
                                     <label>Eliminar categoría:</label>
                                         <Select
                                             isMulti
@@ -186,8 +198,7 @@ const url = 'http://localhost:3001/products';
                                             classNamePrefix="select"
                                             onChange={setSelectedDelete}
                                         />
-                                </div>
-                            }
+                            </div>}  
                         </ModalBody>
                         <ModalFooter>
                             {tipoAccion === 'agregar'?

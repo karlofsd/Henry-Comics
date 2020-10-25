@@ -28,7 +28,7 @@ export default function News() {
     return (   
     <div className="container-fluid grid">
         <h2 className="text-md-left font-weight-bold estrenos">ESTRENOS</h2>
-        <div className="row">
+        <div className="row" id='estren'>
             {nuevosProductos.map(p =><Link to={'/catalogo'}><div className="col-4"><NewProduct product={p}/></div></Link>)}
             </div>
         </div>
