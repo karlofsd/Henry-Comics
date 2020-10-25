@@ -365,7 +365,7 @@ server.post('/:id/passwordReset',  isAuthenticated, (req, res) =>{
     .json({message: 'Not Found', err})
   })
 })
-// validar Passwod
+// Validar Passwod para poder Resetear
 server.post('/:id/password', (req, res )=>{
   const { id } = req.params;
   let  { password }  = req.body;
