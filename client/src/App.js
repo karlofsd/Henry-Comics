@@ -7,14 +7,15 @@ import Product from "./components/productComponent/product";
 import Admin from "./components/admin/admin";
 import UserForm from "./components/userForm/userForm";
 import LandingCarrousel from "./components/carrousel/carrousel";
+import News from "./components/newsgrid/newsgrid";
 import Footer from "./components/footer/footer";
-import User from "./components/userPanel/userPanel"
+import User from "./components/userPanel/userPanel";
 import axios from "axios";
 import {useDispatch,useSelector} from 'react-redux'  //hooks
 import {getProducts} from './redux/productos'        //actions
 import Login from "./components/userForm/login";
 import { verifyLogin } from "./redux/users";
-
+import denegado from './403.png'
 
 function App() {
   // ---funciones Redux---
@@ -69,6 +70,11 @@ function App() {
         path="/"
         render={() => <LandingCarrousel />}
       />
+       <Route
+        exact
+        path="/"
+        render={() => <News />}
+      />
       <Route
         exact
         path="/"
@@ -103,9 +109,9 @@ function App() {
             <Admin /* newCat={getCategories}  get={getProducts} /* getCat={getCategories} *//*  categories={categories} *//> 
           </div>
           :
-          <di>
-            <h2>Acceso Negado!</h2>
-          </di>
+          <div className='denied'>
+            <img src={denegado} atl='403'/>
+          </div>
         }
       />
                                             
@@ -129,7 +135,11 @@ function App() {
       <Route
         exact path='/user'
         render={()=> user.login ?
-          <User/> : <div><h2>Acceso Denegado</h2></div>
+          <User/>
+          :
+          <div className='denied'>
+            <img src={denegado} atl='403'/>
+          </div>
         }
       />
     </Router>

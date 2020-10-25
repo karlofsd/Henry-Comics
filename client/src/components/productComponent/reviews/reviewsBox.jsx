@@ -9,14 +9,13 @@ import StarRating from './rating/rating';
 import Review from './review';
 import './reviewsBox.css';
 
-export default function ReviewBox ({productId, nestedModal, toggleNested, closeAll, toggle, toggleAll}) {
+export default function ReviewBox ({productId, nestedModal, toggleNested, closeAll, toggle, toggleAll, rating, setRating}) {
 
   const [reviews, setReviews] = useState([]);
   const [review, setReview] = useState({
                               comentarios: '',
                               puntaje: 0
                             });
-  const [rating, setRating] = useState(0);
 
   const user = useSelector(store => store.userState.userLogin);
   

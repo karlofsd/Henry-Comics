@@ -29,18 +29,16 @@
   width: 50px;
   height: 50px;
 }
-.henryComics {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  margin-top: 10px;
-}
+
 /*----------- CARRUSEL -----------*/
+.carrousel {
+  height: 480px;
+  width: 100%;
+}
 .imgcarrousel {
   object-fit: cover;
   width: 100%;
-}
-.carrousel {
-  height: 550px;
-  width: 100%;
+  height: 100%;
 }
 /*-------------------------------*/
 
@@ -73,4 +71,11 @@
   width: 100%;
   display: flex !important;
   flex-direction: row;
+}
+
+.denied{
+  margin-top: 15vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
