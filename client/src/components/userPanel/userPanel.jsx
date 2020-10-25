@@ -10,6 +10,8 @@ import avatar from './image/avatar.webp'
 import {useDispatch} from 'react-redux'
 import {verifyLogin} from '../../redux/users'
 
+import ResetPass from './resetPass'
+
 const User = () => {
     const dispatch = useDispatch()
     const user = useSelector(store => store.userState.userLogin)
@@ -263,7 +265,9 @@ const User = () => {
             </div>
           </TabPane>
           <TabPane tabId="3">
-            
+              { info.username && 
+              <ResetPass user={info}/>
+              }
           </TabPane>
         </TabContent>
       </div> 
