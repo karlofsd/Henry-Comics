@@ -4,12 +4,12 @@ import {FormGroup, Form, Button, Label, Input} from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLogin } from '../../redux/users';
 import {localToUser} from '../../redux/carrito'
-
+import {useHistory} from 'react-router-dom'
 
 const Login =() =>{
 
-    const dispatch = useDispatch();
-
+  const dispatch = useDispatch();
+  const history = useHistory()
   const {register, errors, handleSubmit} = useForm();
   const carrito =  useSelector(store => store.carritoState.carritoProducts);
   
@@ -17,11 +17,11 @@ const Login =() =>{
   const onSubmit = async (arg, e) =>{
     
     try{
-     await dispatch(getLogin(arg));
-     await dispatch(localToUser(carrito))
+      await dispatch(getLogin(arg));
+      await dispatch(localToUser(carrito))
       localStorage.removeItem('carrito');
       e.target.reset();
-
+      history.push('/')
     }catch(err){
       console.log(err)
     }
