@@ -63,7 +63,6 @@ export default function Carrito({user}){
         // }
     }, [user])
 
-
     console.log(carrito, 'estado despues useEffect')
 
     const agregarPrecio = (newPrice,del) => {
@@ -81,9 +80,11 @@ export default function Carrito({user}){
         dispatch(getLocalCarrito())
     }
 
+    
     const totalProduct = () =>{
         let nuevo;
         let total;
+        console.log('total',total)
         if(carrito[0]){
             if(user.id){
                 nuevo =  carrito.map(cart => cart.price * cart.lineaDeOrden.quantity);
@@ -137,6 +138,7 @@ export default function Carrito({user}){
         else if(localStorage.carrito){
             localStorage.setItem('carrito',JSON.stringify([]))
             console.log('local')
+            setPrecioCantidad([])
              dispatch(getLocalCarrito())
         }
     }
