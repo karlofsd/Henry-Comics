@@ -366,6 +366,24 @@ server.post('/:id/passwordReset',  isAuthenticated, (req, res) =>{
   })
 })
 
+// Validar Passwod para poder Resetear
+server.post('/:id/password', (req, res )=>{
+  const { id } = req.params;
+  let  { password }  = req.body;
+  password = password.toString();
+  User.findByPk(id)
+  .then(response=>{
+    bcrypt.compare(password, response.password)
+    .then(adentro =>{
+      res.status(200).send(adentro);
+    })
+  })
+  .catch(err=> {
+    res.status(404).json({message: 'Paso algo',  err})
+  })
+})
+
+
 // vaciar carrito
 server.delete('/:idUser/cart/',(req, res)=>{
   const {idUser} = req.params;
@@ -389,5 +407,6 @@ server.delete('/:idUser/cart/',(req, res)=>{
       res.status(404).json({ message: "Not found" });
     });
 });
+
 
   module.exports = server;
