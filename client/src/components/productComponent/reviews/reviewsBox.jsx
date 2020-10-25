@@ -113,10 +113,11 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
           className="border input-review" 
           name='comentarios' 
           placeholder='Ingrese Comentario' 
+          value={review.comentarios}
           onChange={handleInputChange}
           />
         <label>Click to Rate</label>
-        <StarRating handleInputChange={handleInputChange}/>          
+        <StarRating handleInputChange={handleInputChange} valueInicial={review.puntaje}/>       
       <ModalFooter>
         <Button color="primary" onClick={onSubmit}>Enviar</Button>
         <Button color="secondary" onClick={toggleNested}>Cerrar</Button>

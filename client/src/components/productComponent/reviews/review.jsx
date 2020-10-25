@@ -18,6 +18,7 @@ export default function Review ({comentario, puntaje, user, userId, getReviews, 
     <div className='review-content'>
       <p id='user'>{user}</p>
       <p id='comentario'><i>"{comentario}"</i></p>
+      <div className='edit'>
       <RenderStarRating size='small' puntaje={puntaje}/>
       <div className='buttons'>
           {/* {
@@ -26,13 +27,14 @@ export default function Review ({comentario, puntaje, user, userId, getReviews, 
           } */}
           { userLogin.isAdmin ?
             (
-            <button onClick={() => deleteReview(productId, id)}>X</button>              
+            <button className='btn eliminar' onClick={() => deleteReview(productId, id)}>Eliminar</button>              
             )
             :
             (userId === userLogin.id) &&
-            <button onClick={() => deleteReview(productId, id)}>X</button> 
+            <a className='btn eliminar' onClick={() => deleteReview(productId, id)}>Eliminar</a> 
           }      
         </div> 
+      </div>
       <hr/>
     </div>  
   )
