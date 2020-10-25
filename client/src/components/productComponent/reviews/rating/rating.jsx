@@ -1,10 +1,15 @@
 import React from 'react';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
+import { useEffect } from 'react';
 
-export default function StarRating({handleInputChange}) {
+export default function StarRating({handleInputChange, valueInicial}) {
+  
+  const [value, setValue] = React.useState(valueInicial);      
 
-  const [value, setValue] = React.useState(0);      
+  useEffect(() => {
+    setValue(valueInicial)
+  }, [valueInicial])
 
   return (
     <div>

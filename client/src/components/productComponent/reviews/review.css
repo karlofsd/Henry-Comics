@@ -9,3 +9,12 @@
   font-size: 20px;
   font-weight: 500;
 }
+
+.edit{
+  display: flex;
+  justify-content: space-between;
+}
+
+.eliminar{
+  border-radius: 10px;
+}
