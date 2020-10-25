@@ -20,8 +20,6 @@ const ResetPass = (props) => {
     }
 
     const handleSubmit = (e)=>{
-        console.log('Datos del Submit',e)
-        console.log('password', password)
         e.preventDefault();
     }
 
@@ -65,7 +63,7 @@ const ResetPass = (props) => {
         <Col md={6}>
             <FormGroup>
                 <Label for="examplePassword">Confirmar Password</Label>
-                <Input type="text" name="new" placeholder="Nueva Pass"
+                <Input type="password" name="new" placeholder="Nueva Pass"
                 value={password.new}
                 onChange={handlerChange}
                 />
