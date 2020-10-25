@@ -7,7 +7,7 @@ export default function Review ({comentario, puntaje, user}) {
   return (
     <div className='review-content'>
       <p id='user'>{user}</p>
-      <p id='comentario'>{comentario}</p>
+      <p id='comentario'><i>"{comentario}"</i></p>
       <RenderStarRating size='small' puntaje={puntaje}/>
       <hr/>
     </div>  

@@ -39,7 +39,7 @@ const NavBar = ({/* categories, */}) => {
       const {data} = await Axios.get(`http://localhost:3001/user/logout`, { withCredentials: true })
       console.log('deslogueo',data)
       dispatch(logOut())
-      return history.push('/')
+      return history.push('/login')
     }
 
     return(
@@ -57,7 +57,7 @@ const NavBar = ({/* categories, */}) => {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
 
-            <Nav className="align-items-center mr-auto" navbar>
+            <Nav className={"align-items-center " + (!user.login && "mr-auto")} navbar>
               <NavItem>
                 <Link to="/" id="redtext" className="px-2">
                     Home 
@@ -92,9 +92,9 @@ const NavBar = ({/* categories, */}) => {
                         <Link to='/admin'>
                         <DropdownItem>Panel</DropdownItem>
                         </Link>
-                        <button type='button' onClick={handleLogOut}>
+                        <Link type='button' onClick={handleLogOut}>
                         <DropdownItem>Cerrar sesión</DropdownItem>
-                        </button>
+                        </Link>
                     </DropdownMenu>
                 </UncontrolledDropdown>
               </Fragment>}

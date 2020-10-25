@@ -2,11 +2,11 @@ import React, {useState} from "react";
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import {FormGroup, Form, Button, Label, Input, UncontrolledAlert} from 'reactstrap';
-
+import {useHistory} from 'react-router-dom'
 
 export default function UserForm() {
   const {register, errors, handleSubmit} = useForm();
-
+  const history = useHistory()
   const [usuarioCreado, setUsuarioCreado]  = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -38,7 +38,8 @@ export default function UserForm() {
   const onSubmit = (data, e) =>{
     console.log(data)
     handleRegister(data);
-    e.target.reset();    
+    e.target.reset();
+    history.push('/login')
   }
 
   const onDismiss = () => setVisible(false);

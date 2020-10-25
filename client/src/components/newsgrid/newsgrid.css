@@ -13,7 +13,7 @@
     
 }
 
-.wrapper{
+.wrapper-index{
     width: 400px;
     height: 250px;
     background: white;
@@ -25,17 +25,22 @@
     transition: box-shadow 0.5s, transform 0.5s;
   }
  
-  .wrapper:hover .description {
+  .wrapper-index:hover .description-index {
     visibility: visible;
     opacity: 1;
   }
-
-    .img{
-        height: 100%;
-        object-fit: cover;
+/* modificar estos ----*/
+  .cont-img{
+    width: 100%;
+    overflow: hidden;
+  }
+    .img-index{
+        width: 100%;
+        object-fit: cover
       }
+/*----------------------*/
 
-    .description{
+    .description-index{
       background: rgba(0,0,0,0.7);
       color: white;
       display: flex;

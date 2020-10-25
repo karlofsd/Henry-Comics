@@ -15,7 +15,7 @@ import {useDispatch,useSelector} from 'react-redux'  //hooks
 import {getProducts} from './redux/productos'        //actions
 import Login from "./components/userForm/login";
 import { verifyLogin } from "./redux/users";
-
+import denegado from './403.png'
 
 function App() {
   // ---funciones Redux---
@@ -109,9 +109,9 @@ function App() {
             <Admin /* newCat={getCategories}  get={getProducts} /* getCat={getCategories} *//*  categories={categories} *//> 
           </div>
           :
-          <di>
-            <h2>Acceso Negado!</h2>
-          </di>
+          <div className='denied'>
+            <img src={denegado} atl='403'/>
+          </div>
         }
       />
                                             
@@ -135,7 +135,11 @@ function App() {
       <Route
         exact path='/user'
         render={()=> user.login ?
-          <User/> : <div><h2>Acceso Denegado</h2></div>
+          <User/>
+          :
+          <div className='denied'>
+            <img src={denegado} atl='403'/>
+          </div>
         }
       />
     </Router>

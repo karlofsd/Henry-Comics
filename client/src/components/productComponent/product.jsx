@@ -9,7 +9,7 @@ export default function Product(props) {
     
     const [nestedModal, setNestedModal] = useState(false);
     const [closeAll, setCloseAll] = useState(false);
-    
+    const [rating, setRating] = useState(0);
     const toggleNested = () => {
         setNestedModal(!nestedModal);
         setCloseAll(false);
@@ -19,7 +19,7 @@ export default function Product(props) {
         setCloseAll(true);
       }
 
-    let {className, modal, toggle, p, capitalize, addCart} = props;      
+    let {className, modal, toggle, p, capitalize, addCart, cart} = props;      
         
     const handleAdd = (e)=>{
         toggle();
@@ -40,14 +40,14 @@ export default function Product(props) {
                         <label className="info-label"><b>Autor:</b> {capitalize(p.author)}</label>
                         <label className="info-label"><b>Año:</b> {p.year}</label>
                         <label className="info-label"><b>Serie:</b> {capitalize(p.serie)}</label>
-                        <label className="info-label"><b>Calificación:</b> ""</label>
+                        <label className="info-label"><b>Calificación: </b>{rating}/5</label>
                         <div>
                             <label className="info-label"><b>Descripcion:</b> </label>
                             <p className='description-body'>"{p.description=p.description[0].toUpperCase()+p.description.slice(1)}"</p>
                         </div>
                         <div className='price-cart'>
                             <h3 className='h3-price'>${p.price}</h3>
-                            <Button color="dark" onClick={()=>handleAdd(p)}>Agregar a carrito</Button>
+                            {!cart && <Button color="dark" onClick={()=>handleAdd(p)}>Agregar a carrito</Button>}
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@ export default function Product(props) {
                 <Button color="danger" className='comments' onClick={toggleNested}>Ver Comentarios</Button>
                 
 
-                <ReviewBox productId={p.id}nestedModal={nestedModal} toggleNested={toggleNested} closeAll={closeAll} toggle={toggle} toggleAll={toggleAll}/>
+                <ReviewBox productId={p.id}nestedModal={nestedModal} toggleNested={toggleNested} closeAll={closeAll} toggle={toggle} toggleAll={toggleAll} rating={rating} setRating={setRating}/>
                
                 {/* <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined}>
                     <ModalHeader>Aqui va la lista de comentarios</ModalHeader>

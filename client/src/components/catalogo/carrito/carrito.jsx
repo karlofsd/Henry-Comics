@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import {useHistory} from 'react-router-dom'
 import { UncontrolledCollapse, Button, CardBody, Card, Badge } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +8,7 @@ import axios from 'axios';
 import CartProduct from './CartProduct';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCarrito,getLocalCarrito, cleanCart } from '../../../redux/carrito';
+import empty from './empty_cart.png'
 
 export default function Carrito({user}){
     let history = useHistory()
@@ -60,7 +61,7 @@ export default function Carrito({user}){
         //     dispatch(getCarrito(user.id));
         //     dispatch(getLocalCarrito());
         // }
-    }, [])
+    }, [user])
 
 
     console.log(carrito, 'estado despues useEffect')
@@ -127,6 +128,19 @@ export default function Carrito({user}){
         }
     }
 
+    const handleClean = async() => {
+        if(user.login){
+            await axios.delete(`http://localhost:3001/user/${user.id}/cart`)
+            console.log('back')
+             dispatch(getCarrito(user.id))
+        }
+        else if(localStorage.carrito){
+            localStorage.setItem('carrito',JSON.stringify([]))
+            console.log('local')
+             dispatch(getLocalCarrito())
+        }
+    }
+
     return(
         <div className='cart'>
             
@@ -134,26 +148,25 @@ export default function Carrito({user}){
                 <FontAwesomeIcon icon={faShoppingCart}/>  {cantProduct()}
             </Button>
             <UncontrolledCollapse toggler='#toggler'>
-                <Card>
+                <Card id='card-cart'>
                     <CardBody>
                         <h3 className='title-carrito'>Carrito</h3>
-                        <hr />
+                        {carrito[0] ? <Fragment>
                         <div className='body1'>
                             <ul className='list-carrito'>
                                 {carrito && carrito.map(cart=>(
-                                    <div>
-                                            <CartProduct 
-                                                name={cart.name}
-                                                stock={cart.stock}
-                                                quantity={user.id ? cart.lineaDeOrden.quantity:1}
-                                                id={cart.id}
-                                                price={cart.price}
-                                                carritoDelete={carritoDelete}
-                                                carritoGet={(id) => dispatch(getCarrito(id))}
-                                                user={user.id}
-                                                newPrice={agregarPrecio}
-                                            />
-                                    </div>  
+                                    <CartProduct 
+                                        name={cart.name}
+                                        stock={cart.stock}
+                                        quantity={user.id ? cart.lineaDeOrden.quantity:1}
+                                        id={cart.id}
+                                        price={cart.price}
+                                        carritoDelete={carritoDelete}
+                                        carritoGet={(id) => dispatch(getCarrito(id))}
+                                        user={user.id}
+                                        newPrice={agregarPrecio}
+                                        product={cart}
+                                    />
                                 ))}
                             </ul>
                         </div>
@@ -162,7 +175,17 @@ export default function Carrito({user}){
                         </div>
                         <div className='buttons'>
                             <Button className="btn btn-secondary btn-sm m-2 p-1" onClick={handleBuy}>Comprar</Button>
+                            <Button className="btn btn-secondary btn-sm m-2 p-1" onClick={handleClean}>Vaciar</Button>
                         </div>
+                        </Fragment>
+                        :
+                        <Fragment>
+                        <div classN17vwame='body1'>
+                            <img src={empty} alt='empty-cart' style={{width:'16vw'}}/>
+                        </div>
+                        <h5 style={{padding:'5px',textAlign:'center'}}>Tu carrito esta vacío!</h5>
+                        </Fragment>
+                        }
                     </CardBody>
                 </Card>
             </UncontrolledCollapse>
