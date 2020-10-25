@@ -99,7 +99,11 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
             <Review 
               comentario={r.comentarios} 
               puntaje={r.puntaje}
+              id={r.id}
               user={r.user.email}
+              userId={r.user.id}
+              getReviews={getReviews}
+              productId={productId}
               key= {i}                
                 />          
             ))
