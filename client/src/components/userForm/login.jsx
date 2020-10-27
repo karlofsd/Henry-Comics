@@ -74,7 +74,8 @@ const Login =() =>{
             </span>
           </FormGroup>
           
-          <button type="submit" className="btn btn-primary">Iniciar sesión</button>     
+          <button type="submit" className="btn btn-primary">Iniciar sesión</button> 
+          <hr />  
           <a href='http://localhost:3001/auth/google'>
             <GoogleButton type='light'/>
           </a>
