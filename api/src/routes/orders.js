@@ -1,11 +1,12 @@
 const server = require('express').Router();
-const {Orden, LineaDeOrden, Product, User} = require('../db.js');
+const {Orden, LineaDeOrden, Product, User, Checkout} = require('../db.js');
 const {Sequelize:{Op}} = require('sequelize')
 const {isAdmin, isAuthenticated} =require('../middleware/helper');
+const { reset } = require('nodemon');
 
 server.get('/:id',(req,res) => {
     let {id} = req.params
-    Orden.findAll({where: {id}, include: [Product, User]})
+    Orden.findAll({where: {id}, include: [Product, User, Checkout]})
     .then(order => res.status(200).json(order))
     .catch(err => res.status(404).json(err))
 })
@@ -25,10 +26,11 @@ server.get('/', (req, res) => {
     Orden.findAll(
       {
         where: {status},
-        include: [Product, User]  
+        include: [Product, User,Checkout]  
       }
     )
     .then((orders) => {
+      console.log('ordenes',orders)
         res.status(200).json(orders);
     })
     .catch((err) => {
@@ -37,10 +39,11 @@ server.get('/', (req, res) => {
   } else {
     Orden.findAll(
       {        
-        include: [Product, User]        
+        include: [Product, User, Checkout]        
       }
     )
     .then((orders) => {
+      console.log('ordenes',orders[0].checkouts)
         res.status(200).json(orders);
     })
     .catch((err) => {
@@ -57,7 +60,7 @@ server.get('/user/:userId', isAuthenticated, (req, res) => {
     Orden.findAll(
       {
         where: {status,userId},
-        include: [Product, User]  
+        include: [Product, User, Checkout]  
       }
     )
     .then((orders) => {
@@ -70,7 +73,7 @@ server.get('/user/:userId', isAuthenticated, (req, res) => {
     Orden.findAll(
       { 
         where: {userId},    
-        include: [Product, User]        
+        include: [Product, User, Checkout]        
       }
     )
     .then((orders) => {
@@ -81,5 +84,34 @@ server.get('/user/:userId', isAuthenticated, (req, res) => {
     })
   }
 });
+
+// CHECKOUT
+
+server.post('/:id/checkout',(req,res) => {
+  let body = req.body
+  let {id} = req.params
+  console.log('body',body)
+  Checkout.create(body)
+  .then(check => {
+    console.log('checkout',check)
+    Orden.findByPk(id)
+    .then(order => { 
+      console.log('orden',order)
+      order.addCheckouts(check.id)
+      .then( response =>{
+        console.log('respuesta',response)
+        res.status(201).json({message:'Compra Exitosa!',response})
+      })
+    })
+  })
+  .catch(err => res.status(400).json(err))
+})
+
+// server.get('/checkout/:id',(req,res) => {
+//   let {id} = req.params
+//   Checkout.findByPk(id,{include: Orden})
+//   .then(check => res.status(200).json(check))
+//   .catch(err => res.status.json(err))
+// })
 
 module.exports = server;

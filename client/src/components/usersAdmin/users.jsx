@@ -24,8 +24,10 @@ const Users = () => {
     setUsers(data);
   }
 
-  const promoteUser = async (id) => {
-    await axios.post(`http://localhost:3001/auth/promote/${id}`,null , { withCredentials: true })
+  const promoteUser = async (id,status) => {
+
+    await axios.post(`http://localhost:3001/auth/promote/${id}?status=${status}`,null , { withCredentials: true })
+
     getUsers();
   }
 
@@ -48,19 +50,20 @@ const Users = () => {
           </tr>
         </thead>
         <tbody>
-          {users[0] && users.map(user=>(
-            <tr>
+          {users[0] && users.map(user=>{
+            let status = !user.isAdmin
+            return <tr>
             <td>{user.id}</td>
             <td>{user.username}</td>
             <td>{user.email}</td>
             <td>{user.isAdmin ? "Administrador" : "Usuario"}</td>
             <td className='table w-auto table-hover'>
-              <button className="btn btn-secondary btn-sm m-2 p-1" onClick={() => promoteUser(user.id)}>Promover</button>
+              <button className="btn btn-secondary btn-sm m-2 p-1" onClick={() => promoteUser(user.id,status)}>{status ? 'Promover' : 'Revocar'}</button>
               <button className="btn btn-secondary btn-sm m-2 p-1" >Ordenes</button>
               <button className="btn btn-dark btn-sm m-2 p-1" onClick={() => deleteUser(user.id)}>Eliminar</button>
             </td>
             </tr>
-          ))}
+          })}
         </tbody>
       </table>
     </div>

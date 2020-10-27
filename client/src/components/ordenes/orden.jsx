@@ -3,7 +3,7 @@ import { Table } from 'reactstrap';
 import './orden.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const Orden = ({order, setStatusG, statusG, getOrder,user}) => {    
     
@@ -55,7 +55,10 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
         setStatusG(!statusG);
         getOrder(order.id);
     }
-          
+
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+
     return(
         <div className="shadow orden">
             <div className="top">
@@ -105,8 +108,36 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
                     <h3><span className="badge badge-danger">Cancelada</span></h3>
                     )}
                     {status !== 'cancelada' && <button className="btn btn-danger pill-rounded" onClick={() => handleCancel(order)} >Cancelar</button>}
+                    {order.checkouts[0] && <button className="btn btn-success pill-rounded" onClick={toggle}>Datos de envío</button>}
                 </div>
             </div>
+            {/*----------------------------------------*/}
+            <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle} className='box-title check-orden'>
+                    
+                        <ModalBody style={{fontWeight:'normal'}}>
+                            <h3 style={{textAlign:'center',width:'100%'}}>Datos de envío</h3>
+                            <div /* className='cate-form' */>
+                                <label><b>Provincia:</b> {order.checkouts[0] && order.checkouts[0].provincia}</label>
+                            </div>
+                            <div /* className='cate-form' */>
+                                <label><b>Departamento:</b> {order.checkouts[0] && order.checkouts[0].departamento}</label>
+                            </div>
+                            <div /* className='cate-form' */>
+                                <label><b>Localidad:</b> {order.checkouts[0] && order.checkouts[0].localidad}</label>
+                            </div>
+                            <div /* className='input-form' */>
+                                <label><b>Dirección:</b> {order.checkouts[0] && order.checkouts[0].direccion}</label>
+                            </div>
+                            <div /* className='input-form' */>
+                                <label><b>Email:</b> {order.checkouts[0] && order.checkouts[0].email}</label>
+                            </div>
+                            <div /* className='input-form' */>
+                                <label><b>Teléfono:</b> {order.checkouts[0] && order.checkouts[0].telefono}</label>
+                            </div>
+                        </ModalBody>
+                </ModalHeader>
+            </Modal>
         </div>
     )
 }
