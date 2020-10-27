@@ -6,9 +6,10 @@ const {isAdmin, isAuthenticated} =require('../middleware/helper')
 
 server.post('/promote/:id',isAuthenticated, isAdmin, (req, res) => {
   const { id } = req.params;
+  let {status} = req.query
   User.update(
         {
-        isAdmin: true
+        isAdmin: status
         },
         {
           where: 

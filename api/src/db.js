@@ -32,7 +32,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Product, Category, User, Orden, LineaDeOrden, Reviews } = sequelize.models;
+const { Product, Category, User, Orden, LineaDeOrden, Reviews, Checkout } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
@@ -56,6 +56,11 @@ Product.hasMany(Reviews);
 
 // Product.belongsToMany(User,{through: Reviews, foreignKey:{model: User, unique: false, primaryKey: false}})
 // User.belongsToMany(Product,{through: Reviews, foreignKey:{model: Product, unique: false, primaryKey: false}})
+
+// checkout
+
+Orden.hasMany(Checkout)
+Checkout.belongsTo(Orden)
 
 User.findOrCreate({where: {username:"admin",email:"admin@mail.com",password: bcrypt.hashSync("admin", 10),isAdmin:true},raw:true})
 .then(admin => console.log('\n----Super-user---- \n #username: ', admin[0].username, '\n #email: ', admin[0].email, '\n #password: ', admin[0].password, '\n -----------------\n'))

@@ -1,3 +1,7 @@
+.check-form{
+  padding-bottom:0;
+}
+
 .form-prod{
   margin: 0;
 }
@@ -56,4 +60,7 @@
   }
   .cate-form .css-2b097c-container{
     width: 60%;
+  }
+  .cate-form select{
+    width: 70%;
   }

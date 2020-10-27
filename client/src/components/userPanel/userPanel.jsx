@@ -49,7 +49,7 @@ const User = () => {
     useEffect(() => {
         getOrders(status)
       }, [status, statusG]);
-
+    console.log('orden',order)
     const change = (order) => {     
         setOrder(order);        
       } 
