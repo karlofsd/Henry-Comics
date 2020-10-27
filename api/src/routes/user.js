@@ -294,7 +294,7 @@ server.get('/:idUser/cart',(req,res)=>{
 
     Orden.findOne({
         where:{userId:idUser, status:'carrito'},
-        include:Product
+        include: Product
     })
     .then(ress=>{
         res.json(ress)

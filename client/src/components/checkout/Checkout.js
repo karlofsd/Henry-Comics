@@ -3,11 +3,12 @@ import axios from 'axios'
 import {useSelector, useDispatch} from 'react-redux'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {cleanCart} from '../../redux/carrito'
+import {Link} from 'react-router-dom'
 
-const Checkout = ({modal, toggle, id}) => {
+const Checkout = ({modal, toggle, id, link}) => {
+    console.log(link)
     //const user = useSelector(store => store.userState.userLogin)
     const dispatch = useDispatch()
-
     const [location,setLocation] = useState({
         provincias:[],
         departamentos:[],
@@ -107,6 +108,16 @@ const Checkout = ({modal, toggle, id}) => {
         //await dispatch(getCarrito(user.id))
         //history.push('/admin'
     }
+    
+    // const linkPago = async() => {
+    //     let body = {
+    //         title: 'My Productos',
+    //         unit_price: 1500,
+    //         quantity: 10
+    //     }
+    //     const {data} = await axios.post(`http://localhost:3001/orders/api/v1/mercadopago`,body)
+    //     dir = data.init_point
+    // }
 
     const handleSubmit = (e) => {
         setInput({
@@ -159,7 +170,7 @@ const Checkout = ({modal, toggle, id}) => {
                             </div>
                             <div className='input-form'>
                                 <label>Email:</label>
-                                <input type='email' name='email' onChange={handleInputChange} value={input.email}
+                                <input type='text' name='email' onChange={handleInputChange} value={input.email}
                                 />  
                             </div>
                             <div className='input-form'>
@@ -169,7 +180,7 @@ const Checkout = ({modal, toggle, id}) => {
                         </ModalBody>
                         <ModalFooter>
                             <button type='button' className="btn btn-secondary" onClick={confirmBuy}>Confirmar compra</button>
-                            {/* <button type='button' className="btn btn-secondary" onClick={}>Cancelar</button> */}
+                            <a className="btn btn-secondary" href={link} target='_blank'>MP</a>
                         </ModalFooter>
                     </form>
                 </ModalHeader>

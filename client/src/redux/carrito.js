@@ -58,6 +58,7 @@ export default function carritoReducer (state = initialState, action){
 export const getCarrito = (userId) => async(dispatch) => { 
      try{
         const {data} = await axios.get(`http://localhost:3001/user/${userId}/cart`, { withCredentials: true })
+        console.log(data)
         dispatch({
             type: GET_CARRITO,
             payload: data

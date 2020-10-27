@@ -2,7 +2,8 @@ const server = require('express').Router();
 const {Orden, LineaDeOrden, Product, User, Checkout} = require('../db.js');
 const {Sequelize:{Op}} = require('sequelize')
 const {isAdmin, isAuthenticated} =require('../middleware/helper');
-const { reset } = require('nodemon');
+const linkPago = require('../middleware/mercadopago');
+
 
 server.get('/:id',(req,res) => {
     let {id} = req.params
@@ -113,5 +114,16 @@ server.post('/:id/checkout',(req,res) => {
 //   .then(check => res.status(200).json(check))
 //   .catch(err => res.status.json(err))
 // })
+
+// Mercado Pago
+
+server.post('/api/v1/mercadopago',linkPago,(req,res) => {
+  try{
+    res.send(req.response)
+  }catch(err){
+    res.json(err)
+  }
+})
+
 
 module.exports = server;

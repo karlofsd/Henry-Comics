@@ -16,6 +16,7 @@ import {getProducts} from './redux/productos'        //actions
 import Login from "./components/userForm/login";
 import { verifyLogin } from "./redux/users";
 import denegado from './403.png'
+import Payment from "./components/checkout/paymentCard";
 
 function App() {
   // ---funciones Redux---
@@ -141,6 +142,11 @@ function App() {
             <img src={denegado} atl='403'/>
           </div>
         }
+      />
+
+      <Route
+        exact path='/payment'
+        component={Payment}
       />
     </Router>
     
