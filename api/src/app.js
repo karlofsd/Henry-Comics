@@ -45,6 +45,7 @@ server.use(
 
 server.use(passport.initialize());
 server.use(passport.session());
+require("./middleware/passport-facebook")
 require("./middleware/passport-google");
 require("./middleware/passport-config");
 //-----------------------------------------------------//

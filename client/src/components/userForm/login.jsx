@@ -6,6 +6,7 @@ import { getLogin } from '../../redux/users';
 import {localToUser} from '../../redux/carrito'
 import {useHistory} from 'react-router-dom'
 import GoogleButton from 'react-google-button'
+import { FacebookLoginButton } from "react-social-login-buttons";
 import Axios from 'axios';
 
 const Login =() =>{
@@ -29,7 +30,7 @@ const Login =() =>{
     }   
   }   
     return(
-
+      <div>
         <Form
         action="/login" 
         method="post" 
@@ -75,11 +76,15 @@ const Login =() =>{
           </FormGroup>
           
           <button type="submit" className="btn btn-primary">Iniciar sesión</button> 
-          <hr />  
+          <hr />    
           <a href='http://localhost:3001/auth/google'>
             <GoogleButton type='light'/>
           </a>
         </Form>
+        <a href='http://localhost:3001/auth/facebook'>
+            <FacebookLoginButton />
+          </a>
+      </div>
     )
 }
 

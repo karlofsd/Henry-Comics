@@ -37,4 +37,8 @@ server.get('/google/callback',
   passport.authenticate('google', { successRedirect: 'http://localhost:3000'})
 );
 
+server.get('/facebook', passport.authenticate('facebook'))
+
+
+server.get('/facebook/callback', passport.authenticate('facebook', {successRedirect:'http://localhost:3000'}))
 module.exports = server;
