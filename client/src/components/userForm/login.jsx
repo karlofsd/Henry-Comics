@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getLogin } from '../../redux/users';
 import {localToUser} from '../../redux/carrito'
 import {useHistory} from 'react-router-dom'
+import GoogleButton from 'react-google-button'
+import Axios from 'axios';
 
 const Login =() =>{
 
@@ -24,11 +26,8 @@ const Login =() =>{
       history.push('/')
     }catch(err){
       console.log(err)
-    }
-    
-  }
-
-    
+    }   
+  }   
     return(
 
         <Form
@@ -75,7 +74,10 @@ const Login =() =>{
             </span>
           </FormGroup>
           
-          <button type="submit" className="btn btn-primary">Iniciar sesión</button>
+          <button type="submit" className="btn btn-primary">Iniciar sesión</button>     
+          <a href='http://localhost:3001/auth/google'>
+            <GoogleButton type='light'/>
+          </a>
         </Form>
     )
 }
