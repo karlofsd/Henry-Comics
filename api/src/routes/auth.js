@@ -1,4 +1,5 @@
 const server = require('express').Router();
+const passport = require('passport');
 const { User } = require('../db.js');
 
 const {isAdmin, isAuthenticated} =require('../middleware/helper')
@@ -26,5 +27,13 @@ server.post('/promote/:id',isAuthenticated, isAdmin, (req, res) => {
 server.get('/me',isAuthenticated,(req,res) => {
   res.status(200).json(req.user)
 })
+
+server.get('/google', passport.authenticate('google', {
+  scope:['email', 'profile']
+}));
+
+server.get('/google/callback',
+  passport.authenticate('google', { successRedirect: 'http://localhost:3000'})
+);
 
 module.exports = server;
