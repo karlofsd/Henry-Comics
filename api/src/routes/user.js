@@ -3,6 +3,26 @@ const { User, Orden, LineaDeOrden, Product } = require('../db');
 const bcrypt = require('bcrypt')
 const passport = require('passport');
 const {isAdmin, isAuthenticated} =require('../middleware/helper');
+const {
+  API_KEY, DOMAIN
+} = process.env;
+//---------------------Nodemailer-----------------
+const nodemailer = require('nodemailer');
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user:'henrycomicsarg@gmail.com',
+    pass: 'ecommerceg8'
+  }
+})
+
+// let mailOptions = {
+//   from: 'henrycomicsarg@gmail.com',
+//   to: 'nzozez@gmail.com',
+//   subject: 'Esta es la vencida',
+//   text: 'llego?'
+// };
 
 server.get('/', isAdmin,  (req, res, next)=>{
 User.findAll()
@@ -34,37 +54,6 @@ server.post('/login',(req, res, next)=>{
     })
   })(req, res, next)
 })
-
-// server.post('/login',
-//   passport.authenticate('local', { successRedirect: '/user', failureRedirect: '/login', failureFlash: true }),(req, res, next)=>{
-//   //
-//   console.log(req.user)
-//   res.json(req.user)
-  
-//   /* const {email, password} = req.body;
-//   console.log(req.body, 'body');
-  
-//   User.findOne({
-//     where:{
-//       email: email,
-//       password: bcrypt.hashSync(password,10)
-//     }
-//   })
-
-//       .then(user => {
-//         console.log(user, 'users');
-        
-//           res.json({
-//             id: user.id,
-//             email: user.email,
-//             isAdmin: user.isAdmin
-//           });
-//       })
-//       .catch((err) => {
-//         console.log(err);
-        
-//       }); */
-// })
 
 server.get('/logout',(req, res)=>{
     req.logOut();
@@ -101,6 +90,23 @@ server.post("/add", function (req, res) {
         })
 
         res.status(200).json({ message: "Se creo correctamente el usuario", data: user });
+      })
+      .then(emailsaliendo =>{
+        let mailOptions = {
+          from: 'henrycomicsarg@gmail.com',
+          to: req.body.email,
+          subject: 'Esta es la vencida',
+          text: 'llego?'
+        };
+        console.log(emailsaliendo)
+              transporter.sendMail(mailOptions, (err, data)=>{
+                if(err){
+                  console.log('error', err);
+                }else{
+                  console.log('Enviado');
+                }
+              });
+
       })
       .catch(function (err) {
         res.status(404).json({ err: "No se pudo crear el usuario", data: err });
