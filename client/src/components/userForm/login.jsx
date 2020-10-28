@@ -7,7 +7,7 @@ import {localToUser} from '../../redux/carrito'
 import {useHistory} from 'react-router-dom'
 import GoogleButton from 'react-google-button'
 import { FacebookLoginButton } from "react-social-login-buttons";
-import Axios from 'axios';
+import './login.css'
 
 const Login =() =>{
 
@@ -30,12 +30,13 @@ const Login =() =>{
     }   
   }   
     return(
-      <div>
+      <div className="col-sm-6 order-sm-2 offset-sm-1 mt-5">
+        <h3>Iniciar sesión</h3>
         <Form
         action="/login" 
         method="post" 
         onSubmit={handleSubmit(onSubmit)} 
-        className="col-sm-6 order-sm-2 offset-sm-1 mt-5">
+        >
           <FormGroup>
             <Label>Nombre de usuario</Label>
             <input 
@@ -53,7 +54,7 @@ const Login =() =>{
               })}
             />
             <span className="text-danger text-small d-block mb-2">
-              {errors?.email?.message}
+              {errors?.username?.message}
             </span>
           </FormGroup>
           <FormGroup>
@@ -76,13 +77,13 @@ const Login =() =>{
           </FormGroup>
           
           <button type="submit" className="btn btn-primary">Iniciar sesión</button> 
-          <hr />    
-          <a href='http://localhost:3001/auth/google'>
+        </Form>
+        <hr />    
+          <a href='http://localhost:3001/auth/google' className='link'>
             <GoogleButton type='light'/>
           </a>
-        </Form>
-        <a href='http://localhost:3001/auth/facebook'>
-            <FacebookLoginButton />
+        <a href='http://localhost:3001/auth/facebook' className='link'>
+            <FacebookLoginButton className='facebook'/>
           </a>
       </div>
     )
