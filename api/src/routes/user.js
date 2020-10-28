@@ -6,8 +6,11 @@ const {isAdmin, isAuthenticated} =require('../middleware/helper');
 const {
   API_KEY, DOMAIN
 } = process.env;
+
 //---------------------Nodemailer-----------------
 const nodemailer = require('nodemailer');
+const path = require('path');
+const hbs = require('nodemailer-express-handlebars');
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -17,12 +20,21 @@ let transporter = nodemailer.createTransport({
   }
 })
 
-// let mailOptions = {
-//   from: 'henrycomicsarg@gmail.com',
-//   to: 'nzozez@gmail.com',
-//   subject: 'Esta es la vencida',
-//   text: 'llego?'
-// };
+const handlebarOptions = {
+  viewEngine: {
+    extName: ".handlebars",
+    partialsDir: path.resolve(__dirname, "views"),
+    defaultLayout: false,
+  },
+  viewPath: path.resolve(__dirname, "views"),
+  extName: ".handlebars",
+};
+
+transporter.use(
+  "compile",
+  hbs(handlebarOptions)
+);
+
 
 server.get('/', isAdmin,  (req, res, next)=>{
 User.findAll()
@@ -31,7 +43,6 @@ User.findAll()
     })
     .catch(next);
 })
-
 
 server.post('/login',(req, res, next)=>{
   passport.authenticate('local',{session:true},(err, user, info)=>{
@@ -80,25 +91,27 @@ server.post("/add", function (req, res) {
         username: username,
         email: email,
         password: bcrypt.hashSync(password,10)
-      }
-    )
+      })
       .then(function (user) {
-       
         Orden.create({
           userId: user.id,
           status:'carrito'
         })
-
         res.status(200).json({ message: "Se creo correctamente el usuario", data: user });
       })
+      //--- ESTO ES
       .then(emailsaliendo =>{
-        let mailOptions = {
-          from: 'henrycomicsarg@gmail.com',
-          to: req.body.email,
-          subject: 'Esta es la vencida',
-          text: 'llego?'
-        };
         console.log(emailsaliendo)
+              let mailOptions = {
+              from: 'henrycomicsarg@gmail.com',
+                to: req.body.email,
+                subject: 'Henry Comics',
+                text: 'Bienvenido',
+                template: 'welcom',
+                context:{
+                  nombre: req.body.username
+                }
+              };
               transporter.sendMail(mailOptions, (err, data)=>{
                 if(err){
                   console.log('error', err);
@@ -106,12 +119,13 @@ server.post("/add", function (req, res) {
                   console.log('Enviado');
                 }
               });
-
       })
+      //---------
       .catch(function (err) {
         res.status(404).json({ err: "No se pudo crear el usuario", data: err });
       });
   });
+
 
   server.put("/:id/", isAuthenticated, function (req, res) {
     let {id} = req.params
@@ -155,6 +169,7 @@ server.post("/add", function (req, res) {
       }
     });
     });
+  
     
   // server.post("/login", function (req, res) {
   //   var { email, password } = req.body;
