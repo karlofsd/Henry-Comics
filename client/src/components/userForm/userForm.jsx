@@ -69,7 +69,9 @@ export default function UserForm() {
             message:"Campo requerido"}
          })}
         />
-        
+        <span className="text-danger text-small d-block mb-2">
+          {errors?.username?.message}
+        </span>
         <Label>Email</Label>
         <input 
           placeholder="ejemplo@email.com"
