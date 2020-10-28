@@ -108,6 +108,13 @@ server.post('/:id/checkout',(req,res) => {
   .catch(err => res.status(400).json(err))
 })
 
+server.delete('/checkout/:id',(req,res) => {
+  let {id} = req.params
+  Checkout.destroy({where: {id}})
+  .then(deleted => res.status(200).json({message:'checkout eliminado',deleted}))
+  .catch(err => res.status(404).json(err))
+})
+
 // server.get('/checkout/:id',(req,res) => {
 //   let {id} = req.params
 //   Checkout.findByPk(id,{include: Orden})
@@ -119,11 +126,18 @@ server.post('/:id/checkout',(req,res) => {
 
 server.post('/api/v1/mercadopago',linkPago,(req,res) => {
   try{
-    res.send(req.response)
+    res.send('ok')
   }catch(err){
     res.json(err)
   }
 })
 
+server.put('/payment/:id',(req,res) => {
+  let {status} = req.query
+  let {id} = req.params
+  Checkout.update({status:status},{where:{id}})
+  .then(check => res.status(200).json({message:'operación exitosa',check}))
+  .catch(err => res.status(404).json(err))
+})
 
 module.exports = server;

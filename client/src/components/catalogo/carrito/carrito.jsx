@@ -118,9 +118,6 @@ export default function Carrito({user}){
     const [link,setLink] = useState("")
     const handleBuy = async() => {
         if(user.id){
-            const {data} = await axios.post(`http://localhost:3001/orders/api/v1/mercadopago`,carrito)
-            console.log(data)
-            setLink(data.init_point)
             toggle()
         }else{
             alert('Debe logearse, para seguir con su compra.')
@@ -193,7 +190,7 @@ export default function Carrito({user}){
                     </CardBody>
                 </Card>
             </UncontrolledCollapse>
-            <Checkout modal={modal} toggle={toggle} id={info} user={user} link={link}/>
+            <Checkout modal={modal} toggle={toggle} id={info} user={user} link={link} items={carrito}/>
         </div>
     );
 };

@@ -9,29 +9,81 @@ mercadopago.configure({
 
 const linkPago = async(req,res,done) =>{
         
-        let arrItems = req.body.map(p => ({
+        let arrItems = req.body.items.map(p => ({
             title: p.name,
             unit_price: p.price,
             quantity: p.lineaDeOrden.quantity
         }))
 
-        let preference = {
+        let name = () => {
+          if(req.body.payer.firstname){return req.body.payer.firstname}
+          else return ""
+        }
+
+        let surname = () => {
+          if(req.body.payer.surname){return req.body.payer.surname}
+          else return ""
+        }
+
+        let phone = () => {
+          if(req.body.payer.telefono){ return Number(req.body.payer.telefono)}
+          else return ""
+        }
+
+        let direccion = () => {
+          if(req.body.payer.direccion){ return req.body.payer.direccion}
+          else return ""
+        }
+
+        var payer = {
+            name: name(),
+            surname: surname(),
+            email: req.body.payer.email,
+            date_created: req.body.payer.createdAt,
+            phone: {
+              area_code: "",
+              number: phone()
+            },
+             
+            identification: {
+              type: "",
+              number: ""
+            },
+            
+            address: {
+              street_name: direccion(),
+              street_number: 0,
+              zip_code: ""
+            }
+          }
+        let preference = {}
+        preference = {
           items: arrItems,
+          payer: payer,
           back_urls: {
             // declaramos las urls de redireccionamiento
-                    success: "https://localhost:3000/payment?status=success", 
+                    success: "http://localhost:3000/payment?status=Pagado", 
             // url a la que va a redireccionar si sale todo bien
-                    pending: "https://localhost:3000.com/payment?status=pending",
+                    pending: "http://localhost:3000/payment?status=Pendiente",
             // url a la que va a redireccionar si decide pagar en efectivo por ejemplo
-                    failure: "https://localhost:3000.com/payment?status=failure"
+                    failure: "http://localhost:3000/payment?status=Cancelado"
              // url a la que va a redireccionar si falla el pago
-            }
+            },
+            binary_mode:true,
+            auto_return: 'approved'
         };
         
         let response = await mercadopago.preferences.create(preference)
         res.status(200).json(response.body)
         return done(null,response)
         ;
+        // mercadopago.preferences.create(preference)
+        // .then(function(preference){
+        //     // Este valor reemplazará el string "$$init_point$$" en tu HTML
+        //     global.init_point = preference.body.init_point;
+        //   }).catch(function(error){
+        //     console.log(error);
+        //   });
     
     // Crea un objeto de preferencia
 } 

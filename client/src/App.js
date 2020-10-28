@@ -23,6 +23,7 @@ function App() {
   const dispatch = useDispatch() 
   const user = useSelector(store => store.userState.userLogin)
   const products = useSelector( store => store.productState.products)
+  const checkID = useSelector(store => store.carritoState.checkPending)
   let onlyStock = products.filter(p => p.stock > 0)
   //const status = useSelector( store => store.productState.statusFilter)
   // const [products, setProducts] = useState(); // ELIMINAR
@@ -146,7 +147,7 @@ function App() {
 
       <Route
         exact path='/payment'
-        component={Payment}
+        render={({location})=> <Payment status={location.search.split('=')[1].split('&')[0]} checkID={checkID}/>}
       />
     </Router>
     

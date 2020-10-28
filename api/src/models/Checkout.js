@@ -25,6 +25,10 @@ module.exports = (sequelize) => {
         telefono:{
             type: DataTypes.STRING,
             allowNull: true
+        },
+        status:{
+            type: DataTypes.STRING,
+            defaultValue: 'Pendiente'
         }
     })
 }
