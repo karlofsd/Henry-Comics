@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getLogin } from '../../redux/users';
 import {localToUser} from '../../redux/carrito'
 import {useHistory} from 'react-router-dom'
+import GoogleButton from 'react-google-button'
+import { FacebookLoginButton } from "react-social-login-buttons";
+import './login.css'
 
 const Login =() =>{
 
@@ -24,18 +27,16 @@ const Login =() =>{
       history.push('/')
     }catch(err){
       console.log(err)
-    }
-    
-  }
-
-    
+    }   
+  }   
     return(
-
+      <div className="col-sm-6 order-sm-2 offset-sm-1 mt-5">
+        <h3>Iniciar sesión</h3>
         <Form
         action="/login" 
         method="post" 
         onSubmit={handleSubmit(onSubmit)} 
-        className="col-sm-6 order-sm-2 offset-sm-1 mt-5">
+        >
           <FormGroup>
             <Label>Nombre de usuario</Label>
             <input 
@@ -53,7 +54,7 @@ const Login =() =>{
               })}
             />
             <span className="text-danger text-small d-block mb-2">
-              {errors?.email?.message}
+              {errors?.username?.message}
             </span>
           </FormGroup>
           <FormGroup>
@@ -75,8 +76,16 @@ const Login =() =>{
             </span>
           </FormGroup>
           
-          <button type="submit" className="btn btn-primary">Iniciar sesión</button>
+          <button type="submit" className="btn btn-primary">Iniciar sesión</button> 
         </Form>
+        <hr />    
+          <a href='http://localhost:3001/auth/google' className='link'>
+            <GoogleButton type='light'/>
+          </a>
+        <a href='http://localhost:3001/auth/facebook' className='link'>
+            <FacebookLoginButton className='facebook'/>
+          </a>
+      </div>
     )
 }
 

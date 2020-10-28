@@ -4,6 +4,10 @@
     line-height: 21pt;
 }
 
+.filtros-prod .card-body{
+    padding: 0.5rem
+}
+
 .filter-header{
     display: flex;
     justify-content: space-between;

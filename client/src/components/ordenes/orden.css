@@ -48,3 +48,7 @@
     width: 100%;
     border-radius: 0 0 10px 10px
 }
+
+.check-orden .modal-title{
+    width: 100%;
+}

@@ -11,7 +11,6 @@ const session = require('express-session')
 //const bcrypt = require('bcript')
 //------------------------------------------------------//
 
-
 require('./db.js');
 
 const server = express();
@@ -46,6 +45,8 @@ server.use(
 
 server.use(passport.initialize());
 server.use(passport.session());
+require("./middleware/passport-facebook")
+require("./middleware/passport-google");
 require("./middleware/passport-config");
 //-----------------------------------------------------//
 server.use((req,res,next)=>{

@@ -9,6 +9,7 @@ import CartProduct from './CartProduct';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCarrito,getLocalCarrito, cleanCart } from '../../../redux/carrito';
 import empty from './empty_cart.png'
+import Checkout from '../../checkout/Checkout.js'
 
 export default function Carrito({user}){
     let history = useHistory()
@@ -115,14 +116,7 @@ export default function Carrito({user}){
     }
     const handleBuy = () => {
         if(user.id){
-             axios.put(`http://localhost:3001/orders/${info}?status=creada`)
-                .then((da)=>{
-                    dispatch(cleanCart())
-                    window.alert('se compro')
-                })
-
-            //await dispatch(getCarrito(user.id))
-            //history.push('/admin'
+            toggle()
         }else{
             alert('Debe logearse, para seguir con su compra.')
             history.push('/signup')
@@ -142,6 +136,9 @@ export default function Carrito({user}){
              dispatch(getLocalCarrito())
         }
     }
+
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
 
     return(
         <div className='cart'>
@@ -191,6 +188,7 @@ export default function Carrito({user}){
                     </CardBody>
                 </Card>
             </UncontrolledCollapse>
+            <Checkout modal={modal} toggle={toggle} id={info} user={user}/>
         </div>
     );
 };
