@@ -16,12 +16,14 @@ import {getProducts} from './redux/productos'        //actions
 import Login from "./components/userForm/login";
 import { verifyLogin } from "./redux/users";
 import denegado from './403.png'
+import Payment from "./components/checkout/paymentCard";
 
 function App() {
   // ---funciones Redux---
   const dispatch = useDispatch() 
   const user = useSelector(store => store.userState.userLogin)
   const products = useSelector( store => store.productState.products)
+  const checkID = useSelector(store => store.carritoState.checkPending)
   let onlyStock = products.filter(p => p.stock > 0)
   //const status = useSelector( store => store.productState.statusFilter)
   // const [products, setProducts] = useState(); // ELIMINAR
@@ -141,6 +143,11 @@ function App() {
             <img src={denegado} atl='403'/>
           </div>
         }
+      />
+
+      <Route
+        exact path='/payment'
+        render={({location})=> <Payment status={location.search.split('=')[1].split('&')[0]} checkID={checkID}/>}
       />
     </Router>
     

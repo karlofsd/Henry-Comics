@@ -114,7 +114,9 @@ export default function Carrito({user}){
             return <Badge color="danger">{total}</Badge>
         }
     }
-    const handleBuy = () => {
+
+    const [link,setLink] = useState("")
+    const handleBuy = async() => {
         if(user.id){
             toggle()
         }else{
@@ -188,7 +190,7 @@ export default function Carrito({user}){
                     </CardBody>
                 </Card>
             </UncontrolledCollapse>
-            <Checkout modal={modal} toggle={toggle} id={info} user={user}/>
+            <Checkout modal={modal} toggle={toggle} id={info} user={user} link={link} items={carrito}/>
         </div>
     );
 };

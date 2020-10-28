@@ -117,6 +117,7 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
                     
                         <ModalBody style={{fontWeight:'normal'}}>
                             <h3 style={{textAlign:'center',width:'100%'}}>Datos de envío</h3>
+                            <h4>Estado de pago: {order.checkouts[0].status}</h4>
                             <div /* className='cate-form' */>
                                 <label><b>Provincia:</b> {order.checkouts[0] && order.checkouts[0].provincia}</label>
                             </div>
