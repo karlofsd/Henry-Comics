@@ -22,6 +22,7 @@ const Payment = ({status}) => {
             cancelado()
         }else if(status === 'Pagado'){
             paymentUpdate()
+            //aqui mi compra y mando me correo 
         }
         toggle()
     },[])

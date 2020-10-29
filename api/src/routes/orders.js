@@ -4,6 +4,33 @@ const {Sequelize:{Op}} = require('sequelize')
 const {isAdmin, isAuthenticated} =require('../middleware/helper');
 const linkPago = require('../middleware/mercadopago');
 
+//-----------------------NodeMailer
+const nodemailer = require('nodemailer');
+const path = require('path');
+const hbs = require('nodemailer-express-handlebars');
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user:'henrycomicsarg@gmail.com',
+    pass: 'ecommerceg8'
+  }
+})
+
+const handlebarOptions = {
+  viewEngine: {
+    extName: ".handlebars",
+    partialsDir: path.resolve(__dirname, "views"),
+    defaultLayout: false,
+  },
+  viewPath: path.resolve(__dirname, "views"),
+  extName: ".handlebars",
+};
+
+transporter.use(
+  "compile",
+  hbs(handlebarOptions)
+);
 
 server.get('/:id',(req,res) => {
     let {id} = req.params
@@ -101,6 +128,24 @@ server.post('/:id/checkout',(req,res) => {
       order.addCheckouts(check.id)
       .then( response =>{
         console.log('respuesta',response)
+        // aca se manda el mail
+        let mailOptions = {
+          from: 'henrycomicsarg@gmail.com',
+            to: req.body.email,
+            subject: 'Henry Comics',
+            text: 'Bienvenido',
+            template: 'checkout',
+            //context:{
+              //nombre: req.body.username
+            //}
+          };
+          transporter.sendMail(mailOptions, (err, data)=>{
+            if(err){
+              console.log('error', err);
+            }else{
+              console.log('Enviado');
+            }
+          });
         res.status(201).json({message:'Compra Exitosa!',response})
       })
     })

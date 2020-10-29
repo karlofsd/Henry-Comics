@@ -15,34 +15,24 @@ const linkPago = async(req,res,done) =>{
             quantity: p.lineaDeOrden.quantity
         }))
 
-        let name = () => {
-          if(req.body.payer.firstname){return req.body.payer.firstname}
-          else return ""
-        }
+        let name = req.body.payer.firstname ? req.body.payer.firstname : ""
 
-        let surname = () => {
-          if(req.body.payer.surname){return req.body.payer.surname}
-          else return ""
-        }
 
-        let phone = () => {
-          if(req.body.payer.telefono){ return Number(req.body.payer.telefono)}
-          else return ""
-        }
+        let surname = req.body.payer.lastname ? req.body.payer.lastname : ""
 
-        let direccion = () => {
-          if(req.body.payer.direccion){ return req.body.payer.direccion}
-          else return ""
-        }
+        let phone = req.body.payer.telefono ? Number(req.body.payer.telefono) : 0
+
+        let direccion = req.body.payer.direccion ? req.body.payer.direccion : ""
+
 
         var payer = {
-            name: name(),
-            surname: surname(),
+            name: name,
+            surname: surname,
             email: req.body.payer.email,
             date_created: req.body.payer.createdAt,
             phone: {
               area_code: "",
-              number: phone()
+              number: phone
             },
              
             identification: {
@@ -51,7 +41,7 @@ const linkPago = async(req,res,done) =>{
             },
             
             address: {
-              street_name: direccion(),
+              street_name: direccion,
               street_number: 0,
               zip_code: ""
             }
