@@ -109,8 +109,8 @@ server.post("/add", function (req, res) {
                 text: 'Bienvenido',
                 template: 'welcom',
                 context:{
-                  nombre: req.body.username
-                }
+                  nombre: req.body.username 
+                } 
               };
               transporter.sendMail(mailOptions, (err, data)=>{
                 if(err){

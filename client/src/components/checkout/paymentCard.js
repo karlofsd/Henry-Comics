@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const Payment = ({status}) => {
-    
     const [modal,setModal] = useState(false)
     const paymentUpdate = async() => {
         let check = JSON.parse(localStorage.getItem('checkout'))

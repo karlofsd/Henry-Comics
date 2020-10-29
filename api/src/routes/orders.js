@@ -3,7 +3,11 @@ const {Orden, LineaDeOrden, Product, User, Checkout} = require('../db.js');
 const {Sequelize:{Op}} = require('sequelize')
 const {isAdmin, isAuthenticated} =require('../middleware/helper');
 const linkPago = require('../middleware/mercadopago');
-
+//const {productos} = require('../../../client/src/redux/carrito')
+//const {variable} = require('./user')
+const {View} = require('grandjs')
+View.settings.set("views", "../views");
+const Tabla = View.importJsx('../../views/transactional.jsx')
 //-----------------------NodeMailer
 const nodemailer = require('nodemailer');
 const path = require('path');
@@ -15,6 +19,7 @@ let transporter = nodemailer.createTransport({
     user:'henrycomicsarg@gmail.com',
     pass: 'ecommerceg8'
   }
+  
 })
 
 const handlebarOptions = {
@@ -122,22 +127,24 @@ server.post('/:id/checkout',(req,res) => {
   Checkout.create(body)
   .then(check => {
     console.log('checkout',check)
-    Orden.findByPk(id)
-    .then(order => { 
+    Orden.findByPk(id,{include:Product})
+    .then(order => {
       console.log('orden',order)
       order.addCheckouts(check.id)
-      .then( response =>{
+      .then( async(response) =>{
         console.log('respuesta',response)
         // aca se manda el mail
+        //let {data} = await axios.get(`http://localhost:3001/user/:`)
+        let variable = {
+          products:order.products
+        }
+        let template = View.renderToHtml(Tabla,{variable})
         let mailOptions = {
           from: 'henrycomicsarg@gmail.com',
             to: req.body.email,
             subject: 'Henry Comics',
             text: 'Bienvenido',
-            template: 'checkout',
-            //context:{
-              //nombre: req.body.username
-            //}
+            html: template
           };
           transporter.sendMail(mailOptions, (err, data)=>{
             if(err){
