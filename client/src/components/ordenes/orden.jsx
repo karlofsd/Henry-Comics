@@ -57,7 +57,9 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
     }
 
     const [modal, setModal] = useState(false);
+    const [comp, setComp] = useState(false)
     const toggle = () => setModal(!modal);
+    const toggleComp = () => setComp(!comp)
 
     return(
         <div className="shadow orden">
@@ -117,7 +119,6 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
                     
                         <ModalBody style={{fontWeight:'normal'}}>
                             <h3 style={{textAlign:'center',width:'100%'}}>Datos de envío</h3>
-                            <h4>Estado de pago: {order.checkouts[0].status}</h4>
                             <div /* className='cate-form' */>
                                 <label><b>Provincia:</b> {order.checkouts[0] && order.checkouts[0].provincia}</label>
                             </div>
@@ -136,8 +137,23 @@ const Orden = ({order, setStatusG, statusG, getOrder,user}) => {
                             <div /* className='input-form' */>
                                 <label><b>Teléfono:</b> {order.checkouts[0] && order.checkouts[0].telefono}</label>
                             </div>
+                            <hr/>
+                            <div style={{display:'flex',flexDirection:'column'}}>
+                                <h4>Estado de pago: {order.checkouts[0].status}</h4>
+                                <label>Metodo de Pago: {
+                                    ((order.checkouts[0].status === 'Pendiente') || order.checkouts[0].comprobante) ? 'Efectivo' :
+                                    ((order.checkouts[0].status === 'Pagado') && !order.checkouts[0].comprobante) ? 'Tarjeta' : ""
+                                    }
+                                </label>
+                                {order.checkouts[0].comprobante && <button className='btn btn-dark' onClick={toggleComp}>Ver comprobante</button>}  
+                            </div>
                         </ModalBody>
                 </ModalHeader>
+            </Modal>
+            <Modal isOpen={comp} toggle={toggleComp}>
+                <ModalBody className='box-title check-orden'>
+                    <img style={{width:"100%"}} src={order.checkouts[0].comprobante} alt='comprobante'/>
+                </ModalBody>
             </Modal>
         </div>
     )
