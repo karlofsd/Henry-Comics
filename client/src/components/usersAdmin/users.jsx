@@ -1,13 +1,17 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
+import {useSelector} from 'react-redux';
+
 
 const Users = () => {
 
   const [users, setUsers] = useState([]);
+  const userLogged = useSelector(store => store.userState.userLogin)
 
   useEffect(() => {
     getUsers();
+    
   }, [])
 
   const getUsers = async () => {
@@ -21,7 +25,8 @@ const Users = () => {
       }      
       return 0;
     })
-    setUsers(data);
+    const users = data.filter(user => user.id !== userLogged.id)
+    setUsers(users);
   }
 
   const promoteUser = async (id,status) => {
@@ -35,7 +40,6 @@ const Users = () => {
     await axios.delete(`http://localhost:3001/user/${id}`, { withCredentials: true })
     getUsers();
   }
-
 
   return (
     <div className='tablaProd'>
