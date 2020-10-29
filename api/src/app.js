@@ -10,7 +10,6 @@ const session = require('express-session')
 //const LocalStrategy = require('passport-local').Strategy;
 //const bcrypt = require('bcript')
 //------------------------------------------------------//
-
 require('./db.js');
 
 const server = express();
