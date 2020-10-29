@@ -127,25 +127,23 @@ server.post('/:id/checkout',(req,res) => {
   Checkout.create(body)
   .then(check => {
     console.log('checkout',check)
-    Orden.findByPk(id)
-    .then(order => { 
+    Orden.findByPk(id,{include:Product})
+    .then(order => {
       console.log('orden',order)
       order.addCheckouts(check.id)
       .then( async(response) =>{
         console.log('respuesta',response)
         // aca se manda el mail
         //let {data} = await axios.get(`http://localhost:3001/user/:`)
-        let productitos = order.products
-        let template = View.renderToHtml(Tabla,{productitos})
+        let variable = {
+          products:order.products
+        }
+        let template = View.renderToHtml(Tabla,{variable})
         let mailOptions = {
           from: 'henrycomicsarg@gmail.com',
             to: req.body.email,
             subject: 'Henry Comics',
             text: 'Bienvenido',
-            // template: 'checkout',
-            // context:{
-            //   tabla: Tabla
-            // }
             html: template
           };
           transporter.sendMail(mailOptions, (err, data)=>{

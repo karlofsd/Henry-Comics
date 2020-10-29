@@ -308,7 +308,7 @@ server.put('/:idUser/cart',(req, res)=>{
     })
 
 });
-let variable;
+
 //Trae todos los producto del carrito
 server.get('/:idUser/cart',(req,res)=>{
     const {idUser} = req.params;
@@ -318,8 +318,6 @@ server.get('/:idUser/cart',(req,res)=>{
         include: Product
     })
     .then(ress=>{
-      if(ress.dataValues.products[0]){variable = ress.dataValues.products}
-      console.log(variable)
         res.json(ress)
     })
     .catch(err=>{
@@ -432,4 +430,4 @@ server.delete('/:idUser/cart/',(req, res)=>{
 });
 
 
-  module.exports = server,{variable};
+  module.exports = server;
