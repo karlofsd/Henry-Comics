@@ -173,7 +173,6 @@ function App() {
                     />
                 )}
             />
-            <Route exact path="/searchWish" render={() => <SearchAPI />} />
         </Router>
     );
 }
