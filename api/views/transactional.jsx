@@ -1,24 +1,28 @@
 const {View} = require('grandjs')
 
 const style = {
+
     container:{
-        display:"flex",
-        flexDirection:"column",
-        alignItems:"center",
-        justifyContent:"space-around",
-        width:"100vw"
+        width: "500px",
+        margin: "0 auto",
+        backgroundColor:"#ffffff",
+        borderRadius: "8px"
     },
-    paragraph:{
-        fontSize:"large"
-    },
-    table:{
-        width:"80%",
-        border: "1px solid",
-        borderRadius:"5px"
+    barra:{
+        width: "500px",
+        margin: "0 auto",
+        padding:" 15px 40px",
+        backgroundColor: "#d12828",
+        borderRadius: "8px",
     },
     td:{
-        textAlign:"center"
+        letterSpacing: "1px",
+        textAlign: "center"
+    },
+    tbody:{
+        textAlign: "center"
     }
+
 }
 
 const Tabla = ({variable}) => {
@@ -34,29 +38,36 @@ const Tabla = ({variable}) => {
     }
 
     return (
-        <div style={style.container}>
-            <h1>{saludo}</h1>
-            <p style={style.paragraph}>{descripcion}</p>
-            {variable.status !== 'Pagado' && <a type='button' className='btn btn-danger' href={`http://localhost:3000/payment?status=pago&orden=${variable.orden}&check=${variable.check}`}>{`http://localhost:3000/payment?status=pago&orden=${variable.orden}&check=${variable.check}`}</a>}
-            <table style={style.table}>
-                <thead>
-                    <tr>
-                        <th style={{width:"60%"}}>Producto</th>
-                        <th style={{width:"15%"}}>Precio</th>
-                        <th style={{width:"10%"}}>Cantidad</th>
-                        <th style={{width:"20%"}}>Precio Total</th>
-                    </tr> 
-                </thead>
-                <tbody>
-                    {variable.products.map(p => 
-                    <tr>
-                        <td>{p.name}</td>
-                        <td style={style.td}>{p.price.toString()}</td>
-                        <td style={style.td}>{p.lineaDeOrden.quantity.toString()}</td>
-                        <td style={style.td}>{p.lineaDeOrden.price.toString()}</td>
-                    </tr>)}
-                </tbody>
-            </table>
+        <div>
+            <div style={style.barra}></div>
+            <div style={style.container}>
+                <h1>{saludo}</h1>
+                <p>{descripcion}</p>
+                {variable.status !== 'Pagado' && <a type='button' className='btn btn-danger' href={`http://localhost:3000/payment?status=pago&orden=${variable.orden}&check=${variable.check}`}>{`http://localhost:3000/payment?status=pago&orden=${variable.orden}&check=${variable.check}`}</a>}
+                <table>
+                    <thead>
+                        <tr>
+                            <th style={style.td}></th>
+                            <th style={style.td}>Productos</th>
+                            <th style={style.td}>Precio</th>
+                            <th style={style.td}>Cantidad</th>
+                            <th style={style.td}>Total</th>
+                        </tr> 
+                    </thead>
+                    <tbody style={style.tbody}>
+                        {variable.products.map(p => 
+                        <tr>
+                            <td style={style.td}><img src={p.image} style={{width:"100px"}}/></td>
+                            <td style={style.td}>{p.name}</td>
+                            <td style={style.td}>{p.price.toString()}</td>
+                            <td style={style.td}>{p.lineaDeOrden.quantity.toString()}</td>
+                            <td style={style.td}>{(p.lineaDeOrden.price * p.lineaDeOrden.quantity).toString()}</td>
+                        </tr>)}
+
+                    </tbody>
+                    </table>
+            </div>
+            <div style={style.barra}></div>
         </div>
     )
 }
