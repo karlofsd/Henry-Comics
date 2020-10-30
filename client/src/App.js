@@ -147,7 +147,12 @@ function App() {
 
       <Route
         exact path='/payment'
-        render={({location})=> <Payment status={location.search.split('=')[1].split('&')[0]} checkID={checkID}/>}
+        render={({location})=> 
+          <Payment 
+            status={location.search.split('=')[1].split('&')[0]} 
+            checkID={location.search.split('=')[3]}
+            ordenID={location.search.split('=')[2].split('&')[0]}
+          />}
       />
     </Router>
     

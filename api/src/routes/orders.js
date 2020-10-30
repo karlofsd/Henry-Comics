@@ -1,3 +1,4 @@
+const axios = require('axios')
 const server = require('express').Router();
 const {Orden, LineaDeOrden, Product, User, Checkout} = require('../db.js');
 const {Sequelize:{Op}} = require('sequelize')
@@ -119,7 +120,7 @@ server.get('/user/:userId', isAuthenticated, (req, res) => {
 });
 
 // CHECKOUT
-
+let productiños;
 server.post('/:id/checkout',(req,res) => {
   let body = req.body
   let {id} = req.params
@@ -129,31 +130,12 @@ server.post('/:id/checkout',(req,res) => {
     console.log('checkout',check)
     Orden.findByPk(id,{include:Product})
     .then(order => {
+      productiños = order.id
       console.log('orden',order)
       order.addCheckouts(check.id)
-      .then( async(response) =>{
+      .then( response =>{
         console.log('respuesta',response)
-        // aca se manda el mail
-        //let {data} = await axios.get(`http://localhost:3001/user/:`)
-        let variable = {
-          products:order.products
-        }
-        let template = View.renderToHtml(Tabla,{variable})
-        let mailOptions = {
-          from: 'henrycomicsarg@gmail.com',
-            to: req.body.email,
-            subject: 'Henry Comics',
-            text: 'Bienvenido',
-            html: template
-          };
-          transporter.sendMail(mailOptions, (err, data)=>{
-            if(err){
-              console.log('error', err);
-            }else{
-              console.log('Enviado');
-            }
-          });
-        res.status(201).json({message:'Compra Exitosa!',response})
+        res.status(201).json({message:'Orden creada, pendiente de pago!',response})
       })
     })
   })
@@ -187,9 +169,49 @@ server.post('/api/v1/mercadopago',linkPago,(req,res) => {
 server.put('/payment/:id',(req,res) => {
   let {status} = req.query
   let {id} = req.params
-  Checkout.update({status:status},{where:{id}})
-  .then(check => res.status(200).json({message:'operación exitosa',check}))
+  let {comprobante} = req.body
+  Checkout.update({status:status, comprobante},{where:{id}})
+  .then((check) => {
+    res.status(200).json({message:'operación exitosa',check})
+  })
   .catch(err => res.status(404).json(err))
+})
+
+// send mail checkout
+
+server.post('/mail',async(req,res) => {
+  try{
+    let {status} = req.query
+    console.log(status)
+    console.log('check....',productiños)
+    const {data} = await axios.get(`http://localhost:3001/orders/${productiños}`)
+    // aca se manda el mail
+    console.log(data)
+    let variable = {
+      products: data[0].products,
+      status: status,
+      orden: data[0].id,
+      check: data[0].checkouts[0].id
+    }
+    console.log(variable)
+    let template = View.renderToHtml(Tabla,{variable})
+    let mailOptions = {
+        from: 'henrycomicsarg@gmail.com',
+        to: data[0].checkouts[0].email,
+        subject: 'Henry Comics',
+        text: 'Bienvenido',
+        html: template
+      };
+      transporter.sendMail(mailOptions, (err, data)=>{
+        if(err){
+          console.log('error', err);
+        }else{
+          console.log('Enviado');
+        }
+      });
+  }catch(err){
+    console.log(err)
+  }
 })
 
 module.exports = server;

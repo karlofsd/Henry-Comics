@@ -29,6 +29,10 @@ module.exports = (sequelize) => {
         status:{
             type: DataTypes.STRING,
             defaultValue: 'Pendiente'
+        },
+        comprobante:{
+            type: DataTypes.TEXT,
+            allowNull: true
         }
     })
 }

@@ -22,10 +22,22 @@ const style = {
 }
 
 const Tabla = ({variable}) => {
+    let saludo;
+    let descripcion;
+    
+    if(variable.status === 'Pagado'){
+        saludo = '¡Gracias por tu compra!'
+        descripcion = 'En instantes tu orden estará siendo procesada.'
+    } else{
+        saludo = '¡Gracias por tu elección!'
+        descripcion = 'Tu pago se encuentra pendiente; por favor envíanos el comprobante a este enlace:'
+    }
+
     return (
         <div style={style.container}>
-            <h1>¡Gracias por tu compra!</h1>
-            <p style={style.paragraph}>En instantes tu orden estará siendo procesada.</p>
+            <h1>{saludo}</h1>
+            <p style={style.paragraph}>{descripcion}</p>
+            {variable.status !== 'Pagado' && <a type='button' className='btn btn-danger' href={`http://localhost:3000/payment?status=pago&orden=${variable.orden}&check=${variable.check}`}>{`http://localhost:3000/payment?status=pago&orden=${variable.orden}&check=${variable.check}`}</a>}
             <table style={style.table}>
                 <thead>
                     <tr>

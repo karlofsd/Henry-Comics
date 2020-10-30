@@ -69,12 +69,12 @@ const Checkout = ({modal, toggle, id, items, user}) => {
         }else if(!input.localidad){
             getLocalidades()
         }
-        getLink()
-    },[input])
+        // getLink()
+    },[input.provincia,input.departamento,input.localidad])
 
     useEffect(() => {
         getLink()
-    },[])
+    },[input])
 
     const handleInputChange = (e) => {
         if ('provincia' === e.target.name) {
