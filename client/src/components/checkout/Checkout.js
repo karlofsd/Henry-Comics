@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Fragment} from 'react'
 import axios from 'axios'
 import {useSelector, useDispatch} from 'react-redux'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -38,6 +38,7 @@ const Checkout = ({modal, toggle, id, items, user}) => {
     }
 
     const getProvincias = async () =>{
+        console.log('---------Provincias--------')
         const {data} = await axios.get(`https://apis.datos.gob.ar/georef/api/provincias`)
         setLocation({
             provincias: data.provincias,
@@ -45,16 +46,18 @@ const Checkout = ({modal, toggle, id, items, user}) => {
             localidades:[]
         })
     }
-    const getDepartamentos = async () => {
-        const {data} = await axios.get(`https://apis.datos.gob.ar/georef/api/departamentos?provincia=${input.provincia}`)
+    const getDepartamentos = async (provincia) => {
+        console.log('--------Departamento---------',provincia)
+        const {data} = await axios.get(`https://apis.datos.gob.ar/georef/api/departamentos?provincia=${provincia}`)
         setLocation ({
             ...location,
             departamentos: data.departamentos,
             localidades:[]
         })
     }
-    const getLocalidades= async() =>{
-        const {data} = await axios.get(`https://apis.datos.gob.ar/georef/api/localidades?provincia=${input.provincia}&departamento=${input.departamento}`)
+    const getLocalidades= async(departamento) =>{
+        console.log('-------Localidad--------',departamento)
+        const {data} = await axios.get(`https://apis.datos.gob.ar/georef/api/localidades?provincia=${input.provincia}&departamento=${departamento}`)
         setLocation ({
             ...location,
             localidades: data.localidades
@@ -62,19 +65,22 @@ const Checkout = ({modal, toggle, id, items, user}) => {
     }
 
     useEffect(() => {
-        if(!input.provincia){
+        if(/* !input.provincia && */ modal && !location.provincias[0]){
+            console.log('render 1')
             getProvincias()
-        }else if(!input.departamento){
-            getDepartamentos()
-        }else if(!input.localidad){
-            getLocalidades()
+        }else if(input.provincia && !input.departamento){
+            console.log('render 2')
+            //getDepartamentos()
+        }else if(input.departamento && !input.localidad){
+            console.log('render 3')
+            //getLocalidades()
         }
         // getLink()
-    },[input.provincia,input.departamento,input.localidad])
+    },[input.provincia,input.departamento,input.localidad,modal])
 
     useEffect(() => {
-        getLink()
-    },[input])
+        console.log('render link')
+    },[link])
 
     const handleInputChange = (e) => {
         if ('provincia' === e.target.name) {
@@ -84,12 +90,14 @@ const Checkout = ({modal, toggle, id, items, user}) => {
                 departamento: "",
                 localidad: ""
             })
+            getDepartamentos(e.target.value)
         } else if ('departamento' === e.target.name){
             setInput({
                 ...input,
                 departamento: e.target.value,
                 localidad: ""
             })
+            getLocalidades(e.target.value)
         } else if ('localidad' === e.target.name){
             setInput({
                 ...input,
@@ -111,6 +119,7 @@ const Checkout = ({modal, toggle, id, items, user}) => {
             .then( check => {
                 localStorage.setItem('checkout',JSON.stringify([id,check.data.response.id]))
                 dispatch(cleanCart())
+                toggleRed()
                 toggle()
             })
         }catch(err){
@@ -142,14 +151,23 @@ const Checkout = ({modal, toggle, id, items, user}) => {
         e.preventDefault()
     }
 
+    const [redirect, setRedirect] = useState(false)
+    const toggleRed = () => setRedirect(!redirect)
+
+    const continuar = () => {
+        getLink()
+        toggleRed()
+    }
+
     return(
+        <Fragment>
         <Modal isOpen={modal} toggle={toggle}>
             <ModalHeader toggle={toggle} className='box-title check-form'>
                 <form className="form-group form-prod" onSubmit={handleSubmit}>
                     <ModalBody>
                         <div><p>Completá los datos de envío correspondientes.</p></div>
                         <div className='cate-form'>
-                            <label>Provincia:</label>
+                            <label>Provincia *:</label>
                             <select name='provincia' onChange={handleInputChange}>
                                 <option>---Seleccione Provincia---</option>
                                 {location.provincias[0] && location.provincias.map(p =>
@@ -158,7 +176,7 @@ const Checkout = ({modal, toggle, id, items, user}) => {
                             </select>
                         </div>
                         <div className='cate-form'>
-                            <label>Departamento:</label>
+                            <label>Departamento *:</label>
                             <select name='departamento' onChange={handleInputChange}>
                                 <option>---Seleccione Departamento---</option>
                                 {location.departamentos[0] && location.departamentos.map(p =>
@@ -167,7 +185,7 @@ const Checkout = ({modal, toggle, id, items, user}) => {
                             </select>
                         </div>
                         <div className='cate-form'>
-                            <label>Localidad:</label>
+                            <label>Localidad *:</label>
                             <select name='localidad' onChange={handleInputChange}>
                                 <option>---Seleccione Localidad---</option>
                                 {location.localidades[0] && location.localidades.map(p =>
@@ -176,11 +194,11 @@ const Checkout = ({modal, toggle, id, items, user}) => {
                             </select>
                         </div>
                         <div className='input-form'>
-                            <label>Dirección:</label>
+                            <label>Dirección *:</label>
                             <input type='text' name='direccion' onChange={handleInputChange} value={input.direccion}/>
                         </div>
                         <div className='input-form'>
-                            <label>Email:</label>
+                            <label>Email *:</label>
                             <input type='text' name='email' onChange={handleInputChange} value={input.email}
                             />  
                         </div>
@@ -190,7 +208,7 @@ const Checkout = ({modal, toggle, id, items, user}) => {
                         </div>
                     </ModalBody>
                     <ModalFooter>
-                        <a type='button' href={link} target='_blank' className="btn btn-secondary" onClick={confirmBuy}>Confirmar compra</a>
+                        <button type='buton' className="btn btn-secondary" onClick={continuar} disabled={!input.email ? true : false}>Continuar</button>
                         {/* <a className="btn btn-secondary" href={link} target='_blank'>MP</a> */}
                     </ModalFooter>
                     {/* <div>
@@ -200,6 +218,16 @@ const Checkout = ({modal, toggle, id, items, user}) => {
                 </form>
             </ModalHeader>
         </Modal>
+        <Modal isOpen={redirect} toggle={toggleRed} style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
+            <ModalHeader className='box-title check-orden' style={{textAlign:'center'}}>
+                Serás redirigido a la plataforma de pago
+            </ModalHeader>
+            <ModalBody style={{display:'flex',justifyContent:'space-around'}}>
+                <button type='button' className="btn btn-danger" onClick={toggleRed}>Cancelar</button>
+                <a type='button' href={link} target='_blank' className="btn btn-dark" onClick={confirmBuy}>Aceptar</a>
+            </ModalBody>
+        </Modal>
+        </Fragment>
     )
 
 }
