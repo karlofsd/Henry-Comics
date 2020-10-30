@@ -17,6 +17,8 @@ import Login from "./components/userForm/login";
 import { verifyLogin } from "./redux/users";
 import denegado from './403.png'
 import Payment from "./components/checkout/paymentCard";
+import SearchAPI from "./components/catalogoAPI/searchAPI";
+
 
 function App() {
   // ---funciones Redux---
@@ -148,6 +150,11 @@ function App() {
       <Route
         exact path='/payment'
         render={({location})=> <Payment status={location.search.split('=')[1].split('&')[0]} checkID={checkID}/>}
+      />
+
+<Route
+        exact path='/searchWish'
+        render={()=> <SearchAPI />}
       />
     </Router>
     
