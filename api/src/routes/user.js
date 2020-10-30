@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const passport = require('passport');
 const {isAdmin, isAuthenticated} =require('../middleware/helper');
 const {
-  API_KEY, DOMAIN
+  EMAILPASS
 } = process.env;
 
 //---------------------Nodemailer-----------------
@@ -16,7 +16,7 @@ let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user:'henrycomicsarg@gmail.com',
-    pass: 'ecommerceg8'
+    pass: EMAILPASS
   }
 })
 
@@ -368,16 +368,34 @@ server.delete('/order/:ordenId/product/:productId',(req,res) => {
   .catch(err => res.status(404).json(err))
 })
 
-//70 Resetear un Password y bcrypt el password
+//70 Resetear un Password y bcrypt el password pluss Enviar mail
 server.post('/:id/passwordReset',  isAuthenticated, (req, res) =>{
   const { id } = req.params;
   const { password } = req.body;
   User.findByPk(id)
   .then(user =>{
-    console.log(user);
     user.update({
       password: bcrypt.hashSync(password, 10)
     })
+    //-----------Enviando Email----------
+    console.log('User ',user.email)
+    let mailOptions = {
+      from: 'henrycomicsarg@gmail.com',
+      to: user.email,
+      subject: 'Henry Comics',
+      template: 'resetPass',
+      context:{
+        name: user.username
+      }
+    };
+    transporter.sendMail(mailOptions, (err, data)=>{
+      if(err){
+        console.log('error', err);
+      }else{
+        console.log('Enviado');
+      }
+    });
+    //----------Fin Enviar email---------
     res.status(200)
     .json({message: 'Password Receteada'})
   })
