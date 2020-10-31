@@ -76,7 +76,7 @@ const Login =() =>{
             <span className="text-danger text-small d-block mb-2">
               {errors?.password?.message}
             </span>
-            <Link to='#' style={{fontSize:'small',marginLeft:'10px'}}>recuperar usuario o contraseña</Link>
+            <Link to='/resetPass' style={{fontSize:'small',marginLeft:'10px'}}>recuperar usuario o contraseña</Link>
           </FormGroup>
           
           <button type="submit" className="btn btn-danger">Iniciar sesión</button> 
