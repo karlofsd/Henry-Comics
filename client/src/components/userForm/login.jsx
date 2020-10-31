@@ -4,7 +4,7 @@ import {FormGroup, Form, Button, Label, Input} from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLogin } from '../../redux/users';
 import {localToUser} from '../../redux/carrito'
-import {useHistory} from 'react-router-dom'
+import {useHistory, Link} from 'react-router-dom'
 import GoogleButton from 'react-google-button'
 import { FacebookLoginButton } from "react-social-login-buttons";
 import './login.css'
@@ -40,6 +40,7 @@ const Login =() =>{
           <FormGroup>
             <Label>Nombre de usuario</Label>
             <input 
+              id='login-input'
               placeholder="nombre de usuario"
               name="username"
               className="form-control col-4"
@@ -59,7 +60,8 @@ const Login =() =>{
           </FormGroup>
           <FormGroup>
             <Label>Contraseña</Label>
-            <input 
+            <input
+              id='login-input'
               placeholder="Contraseña"
               name="password"
               type='password'
@@ -74,9 +76,10 @@ const Login =() =>{
             <span className="text-danger text-small d-block mb-2">
               {errors?.password?.message}
             </span>
+            <Link to='#' style={{fontSize:'small',marginLeft:'10px'}}>recuperar usuario o contraseña</Link>
           </FormGroup>
           
-          <button type="submit" className="btn btn-primary">Iniciar sesión</button> 
+          <button type="submit" className="btn btn-danger">Iniciar sesión</button> 
         </Form>
         <hr />    
           <a href='http://localhost:3001/auth/google' className='link'>

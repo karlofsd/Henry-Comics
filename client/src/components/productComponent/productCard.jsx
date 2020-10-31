@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import './productCard.css'
 import Product from './product'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faEye} from '@fortawesome/free-solid-svg-icons';
 import {  useDispatch, useSelector } from 'react-redux';
 import { getCarrito, getLocalCarrito } from '../../redux/carrito';
 
@@ -55,7 +55,9 @@ export default function ProductCard({product, capitalize}) {
                         <div className="details">
                         <p className='priceproductcard' >${product.price}</p>
                         </div>
-                        <button onClick={toggle} className="btn btn-light pill-rounded" >Ver más</button>
+                        <button onClick={toggle} className="btn btn-danger pill-rounded" >
+                            <FontAwesomeIcon icon={faEye}/>
+                        </button>
                         <div>
                             <button onClick={()=> addCart(product)} className="btn btn-light pill-rounded" >
                                 <FontAwesomeIcon icon={faCartPlus}/>
