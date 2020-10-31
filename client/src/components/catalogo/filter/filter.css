@@ -11,19 +11,22 @@
 .filter-header{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
 }
 
 .lista :hover{
-    border-bottom: 1px solid #d12828;
+    border-bottom: 1px solid #dc3545;
 }
 
 .cursor{
     cursor: pointer;
     color: #343a40;
+    margin: 0;
 }
 
 .cursor:hover{
-    color :#d12828;
+    color :#dc3545;
 }
 
 .filter-fixed {
@@ -37,3 +40,9 @@
     max-height: 500px;
     overflow-y: auto;
 }
+    .body h5{
+        color: white;
+    }
+    .body .cursor:hover{
+        color :black;
+    }

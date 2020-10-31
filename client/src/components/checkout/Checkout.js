@@ -68,6 +68,10 @@ const Checkout = ({modal, toggle, id, items, user}) => {
         if(/* !input.provincia && */ modal && !location.provincias[0]){
             console.log('render 1')
             getProvincias()
+            setInput({
+                ...input,
+                email: user.email
+            })
         }else if(input.provincia && !input.departamento){
             console.log('render 2')
             //getDepartamentos()
@@ -168,7 +172,7 @@ const Checkout = ({modal, toggle, id, items, user}) => {
                         <div><p>Completá los datos de envío correspondientes.</p></div>
                         <div className='cate-form'>
                             <label>Provincia *:</label>
-                            <select name='provincia' onChange={handleInputChange}>
+                            <select className='form-control' name='provincia' onChange={handleInputChange}>
                                 <option>---Seleccione Provincia---</option>
                                 {location.provincias[0] && location.provincias.map(p =>
                                     <option value={p.nombre}>{p.nombre}</option>
@@ -177,7 +181,7 @@ const Checkout = ({modal, toggle, id, items, user}) => {
                         </div>
                         <div className='cate-form'>
                             <label>Departamento *:</label>
-                            <select name='departamento' onChange={handleInputChange}>
+                            <select className='form-control' name='departamento' onChange={handleInputChange}>
                                 <option>---Seleccione Departamento---</option>
                                 {location.departamentos[0] && location.departamentos.map(p =>
                                     <option value={p.nombre}>{p.nombre}</option>
@@ -186,7 +190,7 @@ const Checkout = ({modal, toggle, id, items, user}) => {
                         </div>
                         <div className='cate-form'>
                             <label>Localidad *:</label>
-                            <select name='localidad' onChange={handleInputChange}>
+                            <select className='form-control' name='localidad' onChange={handleInputChange}>
                                 <option>---Seleccione Localidad---</option>
                                 {location.localidades[0] && location.localidades.map(p =>
                                     <option value={p.nombre}>{p.nombre}</option>
@@ -195,20 +199,20 @@ const Checkout = ({modal, toggle, id, items, user}) => {
                         </div>
                         <div className='input-form'>
                             <label>Dirección *:</label>
-                            <input type='text' name='direccion' onChange={handleInputChange} value={input.direccion}/>
+                            <input className='form-control' type='text' name='direccion' onChange={handleInputChange} value={input.direccion}/>
                         </div>
                         <div className='input-form'>
                             <label>Email *:</label>
-                            <input type='text' name='email' onChange={handleInputChange} value={input.email}
+                            <input className='form-control' type='text' name='email' onChange={handleInputChange} value={input.email}
                             />  
                         </div>
                         <div className='input-form'>
                             <label>Teléfono:</label>
-                            <input type='number' name='telefono' onChange={handleInputChange} value={input.telefono}/>
+                            <input className='form-control' type='number' name='telefono' onChange={handleInputChange} value={input.telefono}/>
                         </div>
                     </ModalBody>
                     <ModalFooter>
-                        <button type='buton' className="btn btn-secondary" onClick={continuar} disabled={!input.email ? true : false}>Continuar</button>
+                        <button type='buton' className="btn btn-secondary" onClick={continuar} disabled={(!input.email || !input.localidad) ? true : false}>Continuar</button>
                         {/* <a className="btn btn-secondary" href={link} target='_blank'>MP</a> */}
                     </ModalFooter>
                     {/* <div>

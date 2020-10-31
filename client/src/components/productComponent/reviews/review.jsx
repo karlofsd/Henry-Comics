@@ -3,7 +3,8 @@ import RenderStarRating from './rating/renderStarRating';
 import './review.css';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faMinusSquare} from '@fortawesome/free-solid-svg-icons'
 
 export default function Review ({comentario, puntaje, user, userId, getReviews, productId, id}) {
 
@@ -16,26 +17,23 @@ export default function Review ({comentario, puntaje, user, userId, getReviews, 
 
   return (
     <div className='review-content'>
-      <p id='user'>{user}</p>
+      <div className='comment-header'>
+        <div className='comment-rate'>
+          <p id='user'>{user}</p>
+          <RenderStarRating size='small' puntaje={puntaje}/>
+        </div>
+        { userLogin.isAdmin ?
+          <button className='btn eliminar' onClick={() => deleteReview(productId, id)}>
+            <FontAwesomeIcon icon={faMinusSquare}/>
+          </button>
+          :
+          (userId === userLogin.id) &&
+          <a className='btn eliminar' onClick={() => deleteReview(productId, id)}>
+            <FontAwesomeIcon icon={faMinusSquare}/>
+          </a> 
+        }      
+      </div> 
       <p id='comentario'><i>"{comentario}"</i></p>
-      <div className='edit'>
-      <RenderStarRating size='small' puntaje={puntaje}/>
-      <div className='buttons'>
-          {/* {
-            userId === userLogin.id &&
-              <button onClick={() => modifyReview(productId, id)}>Editar</button> 
-          } */}
-          { userLogin.isAdmin ?
-            (
-            <button className='btn eliminar' onClick={() => deleteReview(productId, id)}>Eliminar</button>              
-            )
-            :
-            (userId === userLogin.id) &&
-            <a className='btn eliminar' onClick={() => deleteReview(productId, id)}>Eliminar</a> 
-          }      
-        </div> 
-      </div>
-      <hr/>
     </div>  
   )
 }

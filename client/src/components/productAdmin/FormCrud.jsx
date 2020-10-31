@@ -149,35 +149,35 @@ const url = 'http://localhost:3001/products';
                             <div><p>Completá los datos correspondientes al nuevo producto.</p></div>
                             <div className='input-form'>
                                 <label>Nombre:</label>
-                                <input type='text' name='name' onChange={handleInputChange} value={product && product.name}/>
+                                <input className='form-control' className='form-control' type='text' name='name' onChange={handleInputChange} value={product && product.name}/>
                             </div>
                             <div className='input-form'>
                                 <label>Autor:</label>
-                                <input type='text' name='author' onChange={handleInputChange} value={product && product.author}/>
+                                <input className='form-control' type='text' name='author' onChange={handleInputChange} value={product && product.author}/>
                             </div>
                             <div className='input-form'>
                                 <label>Collección:</label>
-                                <input type='text' name='collection' onChange={handleInputChange} value={product && product.collection}/>
+                                <input className='form-control' type='text' name='collection' onChange={handleInputChange} value={product && product.collection}/>
                             </div>
                             <div className='input-form'>
                                 <label>Año:</label>
-                                <input type='number' name='year' onChange={handleInputChange} value={product && product.year}/>
+                                <input className='form-control' type='number' name='year' onChange={handleInputChange} value={product && product.year}/>
                             </div>
                             <div className='input-form'>
                                 <label>Serie:</label>
-                                <input type='text' name='serie' onChange={handleInputChange} value={product && product.serie}/>
+                                <input className='form-control' type='text' name='serie' onChange={handleInputChange} value={product && product.serie}/>
                             </div>
                             <div className='input-form'>
                                 <label>Precio:</label>
-                                <input type='number' name='price' min='0' onChange={handleInputChange} value={product && product.price}/>
+                                <input className='form-control' type='number' name='price' min='0' onChange={handleInputChange} value={product && product.price}/>
                             </div>
                             <div className='input-form'>
                                 <label>Stock:</label>
-                                <input type='number' name='stock' min='0' onChange={handleInputChange} value={product && product.stock}/>
+                                <input className='form-control' type='number' name='stock' min='0' onChange={handleInputChange} value={product && product.stock}/>
                             </div>
                             <div className='desc-form'>
                                 <label>Descripción:</label>
-                                <textarea name='description' onChange={handleInputChange} value={product && product.description}/>
+                                <textarea className='form-control' name='description' onChange={handleInputChange} value={product && product.description}/>
                             </div>
                             <div className='input-form'>
                                 <label>Imagen:</label>

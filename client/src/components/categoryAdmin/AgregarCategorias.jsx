@@ -92,11 +92,11 @@ const AgregarCategorias = ({/* newCat,categories,getCat */}) =>{
                         <p>Completa el formulario con la información necesaria para agregar una nueva categoría de producto.</p>
                         <div className="form-group">
                             <label>Nombre de la nueva categoría:</label><br />
-                            <input className="border" type='text' name='name' onChange={handleInputChange} value={categorie.name} />
+                            <input className='form-control' type='text' name='name' onChange={handleInputChange} value={categorie.name} />
                         </div>
                         <div className="form-group">
                             <label>Descripción:</label><br />
-                            <textarea className="border" name='description' onChange={handleInputChange} value={categorie.description}/>
+                            <textarea className='form-control' name='description' onChange={handleInputChange} value={categorie.description}/>
                         </div>
                         <button class="btn btn-secondary" type='submit' onClick={postCategorie}>Crear nueva categoría</button>
                         {categorie.id && <button class="btn btn-primary" type='submit' onClick={() => handleSave()}>Guardar</button>}

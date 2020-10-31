@@ -28,7 +28,7 @@ export default function Product(props) {
 
     return (
         <Modal isOpen={modal} toggle={toggle} className='gral-content' contentClassName='content-title'>
-            <ModalHeader toggle={toggle} className='box-title'> 
+            <ModalHeader toggle={toggle} id='header-product' className='box-title'> 
                 <h2 className='title'>{p.name}</h2> 
             </ModalHeader>
             <ModalBody>
@@ -40,7 +40,7 @@ export default function Product(props) {
                         <label className="info-label"><b>Autor:</b> {capitalize(p.author)}</label>
                         <label className="info-label"><b>Año:</b> {p.year}</label>
                         <label className="info-label"><b>Serie:</b> {capitalize(p.serie)}</label>
-                        <label className="info-label"><b>Calificación: </b>{rating}/5</label>
+                        <label className="info-label"><b>Calificación: </b>{rating.toFixed(1)}/5</label>
                         <div>
                             <label className="info-label"><b>Descripcion:</b> </label>
                             <p className='description-body'>"{p.description=p.description[0].toUpperCase()+p.description.slice(1)}"</p>

@@ -1,7 +1,10 @@
 /* .modal-dialog{
     max-width: 55% !important;
 } */
-
+#header-product{
+    background-color: #dc3545;
+    color: white;
+}
 .gral-content{
     max-width: 50% !important;
 }
@@ -15,6 +18,7 @@
     width: 40%;
     height: 50vh;
     overflow: hidden;
+    border-radius: 5px;
     display: flex;
     justify-content: center;
 }
@@ -45,7 +49,7 @@
 .description-body{
   padding-left: 10px;
   font-family: Arial, Helvetica, sans-serif;
-  height: 150px;
+  height: 23vh;
     overflow: auto;
     font-style: italic;
 }

@@ -9,8 +9,6 @@ export default function UserForm() {
   const history = useHistory()
   const [usuarioCreado, setUsuarioCreado]  = useState(false);
   const [visible, setVisible] = useState(false);
-
-  
   const handleRegister = async (data) => {
     try {
     await axios.post('http://localhost:3001/user/add', data, { withCredentials: true });
@@ -60,6 +58,7 @@ export default function UserForm() {
       <FormGroup>
         <Label>Nombre de Usuario</Label>
         <input 
+        id='login-input'
          placeholder="Nombre de usuario"
          name="username"
          className="form-control col-4"
@@ -74,6 +73,7 @@ export default function UserForm() {
         </span>
         <Label>Email</Label>
         <input 
+          id='login-input'
           placeholder="ejemplo@email.com"
           name="email"
           className="form-control col-4"
@@ -92,6 +92,7 @@ export default function UserForm() {
       <FormGroup>
         <Label>Contraseña</Label>
         <input 
+          id='login-input'
           placeholder="Contraseña"
           name="password"
           type='password'
@@ -108,7 +109,7 @@ export default function UserForm() {
         </span>
       </FormGroup>
       
-      <button type="submit" className="btn btn-primary">Crear cuenta</button>
+      <button type="submit" className="btn btn-danger">Crear cuenta</button>
       {usuarioCreado ? 
         <UncontrolledAlert className= 'alert col-4' color="success" isOpen={visible} toggle={onDismiss} >
         ¡Operacion exitosa!

@@ -59,20 +59,20 @@ const NavBar = ({/* categories, */}) => {
 
             <Nav className={"align-items-center " + (!user.login && "mr-auto")} navbar>
               <NavItem>
-                <Link to="/" id="redtext" className="px-2">
+                <Link to="/" id='redtext' className="px-2">
                     Home 
                     <span className="sr-only">(current)</span>
                 </Link>
               </NavItem>
 
               <NavItem>
-              <Link to="/catalogo" onClick={()=> dispatch(getProducts())} className="text-light px-2">
+              <Link to="/catalogo" onClick={()=> dispatch(getProducts())} id='redtext' className="px-2">
                   Catálogo
               </Link>
               </NavItem>
 
               <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret className="text-light px-2">
+                    <DropdownToggle nav caret  id='redtext' className="px-2">
                         Categorias
                     </DropdownToggle>
                     <DropdownMenu left>
@@ -85,7 +85,7 @@ const NavBar = ({/* categories, */}) => {
 
               {user.isAdmin && <Fragment>
               <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret className="text-light px-2">
+                    <DropdownToggle nav caret id='redtext' className="px-2">
                         Admin
                     </DropdownToggle>
                     <DropdownMenu left>
@@ -104,20 +104,20 @@ const NavBar = ({/* categories, */}) => {
               
               {!user.id && <Fragment>
               <NavItem>
-                    <Link to="/login" className="text-light px-2">
+                    <Link to="/login" id='redtext' className="px-2">
                     Iniciar Sesión
                     </Link>
               </NavItem>
               
               <NavItem>
-                    <Link to="/signup" className="text-light px-2">
+                    <Link to="/signup" id='redtext' className="px-2">
                     ¡Crea tu cuenta!
                     </Link>
               </NavItem>
               </Fragment>}
               {(user.id && !user.isAdmin) && <Fragment>
               <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret className="text-light px-2">
+                    <DropdownToggle nav caret id='redtext' className="px-2">
                         User
                     </DropdownToggle>
                     <DropdownMenu left>
