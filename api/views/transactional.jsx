@@ -17,10 +17,25 @@ const style = {
     },
     td:{
         letterSpacing: "1px",
-        textAlign: "center"
+        textAlign: "center",
+        padding: "8px"
     },
     tbody:{
-        textAlign: "center"
+        textAlign: "center",
+        
+    },
+    boton:{
+        textDecoration: "none",
+        color: "#ffffff",
+        padding:"10px",
+        backgroundColor:"#343a40",
+        borderRadius:"6px",
+        marginBottom:"10px"
+    },
+    table:{
+        marginTop:"15px",
+        borderCollapse: "collapse",
+        width: "100%"
     }
 
 }
@@ -43,11 +58,10 @@ const Tabla = ({variable}) => {
             <div style={style.container}>
                 <h1>{saludo}</h1>
                 <p>{descripcion}</p>
-                {variable.status !== 'Pagado' && <a type='button' className='btn btn-danger' href={`http://localhost:3000/payment?status=pago&orden=${variable.orden}&check=${variable.check}`}>{`http://localhost:3000/payment?status=pago&orden=${variable.orden}&check=${variable.check}`}</a>}
-                <table>
+                {variable.status !== 'Pagado' && <a type='button' style={style.boton} href={`http://localhost:3000/payment?status=pago&orden=${variable.orden}&check=${variable.check}`}>Enviar comprobante</a>}
+                <table style={style.table}>
                     <thead>
                         <tr>
-                            <th style={style.td}></th>
                             <th style={style.td}>Productos</th>
                             <th style={style.td}>Precio</th>
                             <th style={style.td}>Cantidad</th>
@@ -57,7 +71,6 @@ const Tabla = ({variable}) => {
                     <tbody style={style.tbody}>
                         {variable.products.map(p => 
                         <tr>
-                            <td style={style.td}><img src={p.image} style={{width:"100px"}}/></td>
                             <td style={style.td}>{p.name}</td>
                             <td style={style.td}>{p.price.toString()}</td>
                             <td style={style.td}>{p.lineaDeOrden.quantity.toString()}</td>

@@ -121,6 +121,14 @@ const Checkout = ({modal, toggle, id, items, user}) => {
                 dispatch(cleanCart())
                 toggleRed()
                 toggle()
+                setInput({
+                    provincia: "",
+                    departamento: "",
+                    localidad: "",
+                    direccion: "",
+                    email: "",
+                    telefono: ""
+                })
             })
         }catch(err){
             console.log(err)
@@ -140,14 +148,6 @@ const Checkout = ({modal, toggle, id, items, user}) => {
     // }
 
     const handleSubmit = (e) => {
-        setInput({
-            provincia: "",
-            departamento: "",
-            localidad: "",
-            direccion: "",
-            email: "",
-            telefono: ""
-        })
         e.preventDefault()
     }
 
