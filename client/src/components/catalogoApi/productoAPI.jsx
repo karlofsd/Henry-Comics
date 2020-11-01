@@ -5,7 +5,7 @@ export default function ProductAPI (props) {
   return (
     <div className="wrapper-index">
         <div className='cont-img'>
-          <img src={props.product.image} className="img-index"/>
+          <img src={props.product.image.screen_large_url} className="img-index"/>
         </div>
         <div className="description-index">
             <h3>{props.product.name}</h3>     
@@ -14,4 +14,3 @@ export default function ProductAPI (props) {
     </div>
   );
 };
-

@@ -1,40 +1,68 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import ProductAPI from "./productoAPI";
-import axios from "axios";
+import {useDispatch} from 'react-redux';
+import ProductAPI from './productoAPI';
+import axios from 'axios';
 
-export default function SearchAPI() {}
+export default function SearchAPI() {
+    
+    const [searchText, setSearchText] = useState("");
+    const [buscados, setBuscados] = useState([]);
+    const [tipoBusqueda, setTipoBusqueda] = useState("")
+    
+    const handleChange = (e) => {
+        let text = e.currentTarget.value;
+        setSearchText(text);
+    };
 
-//     const [searchText, setSearchText] = useState("");
-//     const [buscados, setBuscados] = useState([])
+    const handleChangeSelect = (e) => {
+        let selected = e.currentTarget.value;
+        setTipoBusqueda(selected);
+    }
 
-//     const handleChange = (e) => {
-//         const text = e.target.value;
-//         setSearchText(text);
-//     };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        formatSearchParameters(tipoBusqueda, searchText);
+    };
 
-//     const handleSubmit = (e) => {
-//         e.preventDefault()
-//     }
-//     const handleSearch = async(query) => {
-//         const { results } = axios.get( `http://comicvine.gamespot.com/api/search?format=json&api_key=3067a5d595113ed2107c1651ac9856c2471f19fa&query=daredevil&limit=10`);
-//         console.log(results);
-//         //await dispatch(clean());
-//         //await dispatch(findProducts(lowerCaseText)) ---> Peticion a la api
-//     //}url/<resource>/?api_key=your_apikey &filter=<field_list>: (filter statement)
-//         //setSearchText("")
+    const handleSearch = async(comicVineRequest, searchOption) => { 
+        
+        const {data} = await axios.get( `https://cors-anywhere.herokuapp.com/${comicVineRequest}&limit=10`);
+        setBuscados(data.results)   
+    };
+   
+//--------------------------FILTRO------------------------------------------//
+    function formatSearchParameters(searchOption, characterEntry) {
+        //Differentiate between the three search parameters
+        if (tipoBusqueda === "Character") {
+            let comicVineRequest = "https://comicvine.gamespot.com/api/characters/?api_key=6f149cf016e46702bc7dac438b4b48106b6a0892&filter=name:" + characterEntry + "&format=json";
+            handleSearch(comicVineRequest, searchOption);
+        } else if (tipoBusqueda === "Issue") {
+            let comicVineRequest = "https://comicvine.gamespot.com/api/issues/?api_key=6f149cf016e46702bc7dac438b4b48106b6a0892&filter=name:" + characterEntry + "&format=json";
+            handleSearch(comicVineRequest, searchOption);
+        } else if (tipoBusqueda === "Story Arc") {
+            let comicVineRequest = "https://comicvine.gamespot.com/api/story_arcs/?api_key=6f149cf016e46702bc7dac438b4b48106b6a0892&filter=name:" + characterEntry + "&format=json";
+            handleSearch(comicVineRequest, searchOption);
+        }
+    }
+//-------------------------------------------FILTRO-------------------------------------//
 
-//     return (
-//         <div>
-//         <form class="form-inline my-2 my-lg-0" onSubmit={handleSubmit}>
-//             <input class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search" value={searchText} onChange={handleChange}/>
-//             <button class="btn btn-danger my-2 my-sm-0" type="submit"  onClick={() => handleSearch()}>Buscar en API</button>
-//         </form>
-//         <div>
-//         {buscados.map(p =><ProductAPI product={p}/>)}
-//         </div>
 
-//     </div>
-//     );
-// }
+    return (
+        <div> 
+        <form class="form-inline my-2 my-lg-0" onSubmit={handleSubmit}>
+            <select onChange={(e) => handleChangeSelect(e)}>
+                <option value="Character">Personaje</option>
+                <option value="Issue">Número</option>
+                <option value="Story Arc">Story Arc</option>
+            </select>
+            <input class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search" value={searchText} onChange={handleChange}/>
+            <button class="btn btn-danger my-2 my-sm-0" type="submit" >Buscar en API</button>  
+        </form>
+        <div>
+        {buscados.map(p =><ProductAPI product={p}/>)}
+        </div>  
+    </div>
+    ); 
+}
+
