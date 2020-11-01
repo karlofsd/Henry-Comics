@@ -30,7 +30,9 @@ const RecuperarPass = ({id}) =>{
     let condition = (input.newPassword === input.password)
 
     return(
-        <div>
+        <Form>
+        <FormGroup>
+        <div className="m-4">
             <h3>Recuperación de usuario o Contraseña</h3>
             {!id ? 
             <div>
@@ -39,7 +41,7 @@ const RecuperarPass = ({id}) =>{
                 id='login-input'
                 placeholder="Ingrese su email"
                 name="email"
-                className="form-control col-4"
+                className="form-control mb-4"
                 onChange={handleChange}
                 />
             </div>
@@ -50,7 +52,7 @@ const RecuperarPass = ({id}) =>{
                 id='login-input'
                 name="newPassword"
                 type='password'
-                className="form-control col-4"
+                className="form-control col-4 mb-4"
                 onChange={handleChange}
                 />
                 <Label>Confirmar Contraseña</Label>
@@ -58,7 +60,7 @@ const RecuperarPass = ({id}) =>{
                 id='login-input'
                 name="password"
                 type='password'
-                className="form-control col-4"
+                className="form-control col-4 mb-4"
                 onChange={handleChange}
                 />
                 {(input.password && !condition) && <span style={{fontSize:'small',color:'red'}}>Las contraseñas no coinciden</span>}
@@ -69,6 +71,9 @@ const RecuperarPass = ({id}) =>{
                 Cambiar contraseña
             </Button>}
         </div>
+        </FormGroup>
+    
+    </Form>
     )
 }
 

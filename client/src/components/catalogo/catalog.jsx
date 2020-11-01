@@ -9,6 +9,7 @@ import {filterCategory,findProducts,getProducts,clean} from '../../redux/product
 import Pagination from '@material-ui/lab/Pagination'
 import { makeStyles } from '@material-ui/core/styles';
 import { getCarrito } from '../../redux/carrito.js';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -114,6 +115,14 @@ export default function Catalog({products,id,/* status, */search}) {
                     shape="rounded"
                     onChange={handlePageChange}
                 />
+                    <ul class="nav">
+                        <li class="nav-item p-3">
+                            <p>¿No encontrás el producto que querés? Buscalo y agregalo a tu</p>
+                        </li>
+                    <li class="nav-item">
+                      <a class="nav-link" tabindex="-1" ><button type="button" class="btn btn-dark"><Link to='/searchWish' id="redtext">Wishlist</Link></button></a>
+                        </li>
+                    </ul>
             </div>
         </div>
         <div className= 'carrito'>

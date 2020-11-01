@@ -9,7 +9,7 @@ server.post("/add/:userId", (req, res) => {
     let body = req.body;
     let { userId } = req.params;
     console.log(body);
-    Wishlist.findOrCreate({ where: body })
+    Wishlist.findOrCreate({ where: {name: body.name} })
         .then((wish) => {
             console.log("el usuario", userId);
             wish[0]

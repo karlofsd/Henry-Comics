@@ -17,7 +17,7 @@ import Login from "./components/userForm/login";
 import { verifyLogin } from "./redux/users";
 import denegado from "./403.png";
 import Payment from "./components/checkout/paymentCard";
-import SearchAPI from "./components/catalogoAPI/searchAPI";
+import SearchAPI from "./components/catalogoAPI/busquedaAPI";
 
 import RecuperarPass from './components/recuperarPass/recuperarPass'
 
