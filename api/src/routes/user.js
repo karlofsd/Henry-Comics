@@ -4,9 +4,12 @@ const bcrypt = require('bcrypt')
 const passport = require('passport');
 const {isAdmin, isAuthenticated} =require('../middleware/helper');
 const {
-  API_KEY, DOMAIN
+  EMAILPASS
 } = process.env;
-
+//---------------------GrandJs--------------------
+const {View} = require('grandjs')
+View.settings.set("views", "../views");
+const ResetPassUser = View.importJsx('../../views/resetPassUser.jsx')
 //---------------------Nodemailer-----------------
 const nodemailer = require('nodemailer');
 const path = require('path');
@@ -16,7 +19,7 @@ let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user:'henrycomicsarg@gmail.com',
-    pass: 'ecommerceg8'
+    pass: EMAILPASS
   }
 })
 
@@ -109,8 +112,8 @@ server.post("/add", function (req, res) {
                 text: 'Bienvenido',
                 template: 'welcom',
                 context:{
-                  nombre: req.body.username
-                }
+                  nombre: req.body.username 
+                } 
               };
               transporter.sendMail(mailOptions, (err, data)=>{
                 if(err){
@@ -368,16 +371,34 @@ server.delete('/order/:ordenId/product/:productId',(req,res) => {
   .catch(err => res.status(404).json(err))
 })
 
-//70 Resetear un Password y bcrypt el password
+//70 Resetear un Password y bcrypt el password pluss Enviar mail
 server.post('/:id/passwordReset',  isAuthenticated, (req, res) =>{
   const { id } = req.params;
   const { password } = req.body;
   User.findByPk(id)
   .then(user =>{
-    console.log(user);
     user.update({
       password: bcrypt.hashSync(password, 10)
     })
+    //-----------Enviando Email----------
+    console.log('User ',user.email)
+    let mailOptions = {
+      from: 'henrycomicsarg@gmail.com',
+      to: user.email,
+      subject: 'Henry Comics',
+      template: 'resetPass',
+      context:{
+        name: user.username
+      }
+    };
+    transporter.sendMail(mailOptions, (err, data)=>{
+      if(err){
+        console.log('error', err);
+      }else{
+        console.log('Enviado');
+      }
+    });
+    //----------Fin Enviar email---------
     res.status(200)
     .json({message: 'Password Receteada'})
   })
@@ -429,5 +450,45 @@ server.delete('/:idUser/cart/',(req, res)=>{
     });
 });
 
+// Recuperar pass
+server.post('/resetPass',(req,res) => {
+  
+  let {email} = req.body 
+  User.findOne({where:{email}})
+  .then(user => {
+    console.log('Usuario ----->',user);
+    let datos = {
+      username:user.username,
+      id:user.id
+    }
+    console.log('Datos --->',datos)
+    let template = View.renderToHtml(ResetPassUser,{datos})
+    let mailOptions = {
+      from: 'henrycomicsarg@gmail.com',
+        to: email,
+        subject: 'Henry Comics',
+        text: 'Recuperación de usuario o contraseña',
+        html: template
+      };
+    console.log(mailOptions)
+      transporter.sendMail(mailOptions, (err, data)=>{
+        if(err){
+          console.log('error', err);
+        }else{
+          console.log('Enviado');
+        }
+      });
+      res.status(201).json({message:'mensaje enviado'})
+  }).catch(err => res.status(400).json(err))
+})
 
+server.put('/resetPass/:id',(req,res) => {
+  let {id} = req.params
+  let {password} = req.body
+  User.update({
+    password: bcrypt.hashSync(password,10)
+  },{where: {id}})
+  .then(response => res.status(200).json({message:'contraseña actualizada',response}))
+  .catch(err => res.status(404).json(err))
+})
   module.exports = server;

@@ -17,8 +17,12 @@ import Login from "./components/userForm/login";
 import { verifyLogin } from "./redux/users";
 import denegado from './403.png'
 import Payment from "./components/checkout/paymentCard";
+<<<<<<< HEAD
 import SearchAPI from "./components/catalogoAPI/searchAPI";
 
+=======
+import RecuperarPass from './components/recuperarPass/recuperarPass'
+>>>>>>> master
 
 function App() {
   // ---funciones Redux---
@@ -149,7 +153,20 @@ function App() {
 
       <Route
         exact path='/payment'
-        render={({location})=> <Payment status={location.search.split('=')[1].split('&')[0]} checkID={checkID}/>}
+        render={({location})=> 
+          <Payment 
+            status={location.search.split('=')[1].split('&')[0]} 
+            checkID={location.search.split('=')[3]}
+            ordenID={location.search.split('=')[2].split('&')[0]}
+          />}
+      />
+
+      <Route
+        exact path='/resetPass'
+        render={({location})=> 
+          <RecuperarPass
+            id={location.search.split('=')[1]}
+          />}
       />
 
 <Route

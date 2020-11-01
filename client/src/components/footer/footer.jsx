@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../navBar/img/logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram, faReddit, faYoutube } from '@fortawesome/free-brands-svg-icons'
+import {Divider} from '@material-ui/core'
 
 const Footer = () => {
     return (
@@ -20,7 +21,7 @@ const Footer = () => {
                   (0351)44587632</p>
                 </div>
              <div className="col-md-2 footerBorder">
-               <h5>Seguinos en nuestras redes</h5>
+               <h5 className='datos-h5'>Seguinos en nuestras redes</h5>
                   <h6><FontAwesomeIcon icon={faInstagram}/><a href="#"> @henrycomics</a></h6> 
                   <h6><FontAwesomeIcon icon={faYoutube}/><a href="#"> HenryComics</a></h6>
                   <h6><FontAwesomeIcon icon={faReddit}/><a href="#"> /HenryComics</a></h6>  

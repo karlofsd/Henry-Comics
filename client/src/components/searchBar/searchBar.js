@@ -3,6 +3,8 @@ import { useState } from "react";
 import {Link} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {findProducts, clean} from '../../redux/productos'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faSearch} from '@fortawesome/free-solid-svg-icons'
 
 export default function Buscar() {
     const dispatch = useDispatch()
@@ -26,7 +28,9 @@ export default function Buscar() {
     return (
         <form class="form-inline my-2 my-lg-0" onSubmit={handleSubmit}>
             <input class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search" value={searchText} onChange={handleChange}/>
-            <Link to={`/catalogo/search?q=${searchText}`} class="btn btn-danger my-2 my-sm-0" type="submit" /* onClick={() => handleSearch()} */>Buscar</Link>
+            <Link to={`/catalogo/search?q=${searchText}`} class="btn btn-danger my-2 my-sm-0" type="submit" /* onClick={() => handleSearch()} */>
+                <FontAwesomeIcon icon={faSearch}/>
+            </Link>
         </form>
     );
 }

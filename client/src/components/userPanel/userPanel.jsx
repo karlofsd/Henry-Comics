@@ -178,13 +178,13 @@ const User = () => {
                             <label>
                                 Nombre:
                             </label>
-                            <input type='text' name='firstname' value={info.firstname} onChange={handleChange}/>
+                            <input className='form-control' type='text' name='firstname' value={info.firstname} onChange={handleChange}/>
                         </div>
                         <div>
                             <label>
                                 Apellido:
                             </label>
-                            <input type='text' name='lastname' value={info.lastname} onChange={handleChange}/>
+                            <input className='form-control' type='text' name='lastname' value={info.lastname} onChange={handleChange}/>
                         </div>
                     </Fragment>}
                 </div>
@@ -194,7 +194,7 @@ const User = () => {
                             <img className='foto' src={avatar} alt='perfil'/> :
                             <img className='foto' src={info.image} alt='perfil'/>
                         }
-                        {activeForm && <input className='file' type="file" onChange={uploadImage}/>}
+                        {activeForm && <input className='form-control' className='file' type="file" onChange={uploadImage}/>}
                     </div>
                     <form className='form-user' onSubmit={handleSubmit}>
                         <div>
@@ -202,21 +202,21 @@ const User = () => {
                                 Username:
                             </label>
                             {!activeForm ? <p>{info.username}</p> : 
-                            <input type='text' name='username' value={info.username} onChange={handleChange} disabled/>}
+                            <input className='form-control' type='text' name='username' value={info.username} onChange={handleChange} disabled/>}
                         </div>
                         <div>
                             <label>
                                 Email:
                             </label>
                             {!activeForm ? <p>{info.email}</p> :
-                            <input type='text' name='email' value={info.email} onChange={handleChange}/>}
+                            <input className='form-control' type='text' name='email' value={info.email} onChange={handleChange}/>}
                         </div>
                         <div>
                             <label>
                                 Teléfono:
                             </label>
                             {!activeForm ? <p>{info.telefono}</p> :
-                            <input type='text' name='telefono' value={info.telefono} onChange={handleChange}/>}
+                            <input className='form-control' type='text' name='telefono' value={info.telefono} onChange={handleChange}/>}
                         </div>
                         <div className='button-profile'>
                             {!activeForm ? <button className='btn btn-danger' type='submit' onClick={handleClick}>editar</button> :

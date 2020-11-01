@@ -54,10 +54,10 @@ const Filter = ({products,id,page,status,pageStatus}) => {
         <div className="filter-fixed filtros-prod">
             <div className='filter-header'>
                 <h5 onClick={toggleF} className="cursor"><FontAwesomeIcon icon={faFilter} /> Filtros</h5>
-                {status && <button type='button' className='btn btn-danger' onClick={() => {dispatch(clean(id)); page(1); pageStatus(false)}}><FontAwesomeIcon icon={faTrash} /></button>}  
+                {status && <a type='button' onClick={() => {dispatch(clean(id)); page(1); pageStatus(false)}}><FontAwesomeIcon icon={faTrash} color='#dc3545'/></a>}  
             </div>
             <Collapse isOpen={filtro}>
-                <Card>
+                <Card style={{backgroundColor:'#dc3545'}}>
                 <CardBody className='body' >
                     <h5  onClick={toggleA} className="cursor">Collección</h5>
                     <Collapse isOpen={collection}>

@@ -84,7 +84,7 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
       className='modal-lg review-box'
       contentClassName='review-box-content'
       >
-      <ModalHeader>
+      <ModalHeader toggle={toggleNested}>
         <div className='reviews'>
           <div>Opiniones sobre el producto</div>            
             <div className='rating-box'>
@@ -109,18 +109,19 @@ export default function ReviewBox ({productId, nestedModal, toggleNested, closeA
             ))
           }                
         </div>
+      <ModalFooter>
         <textarea 
-          className="border input-review" 
+          id='text-comment'
+          className='form-control' 
           name='comentarios' 
           placeholder='Ingrese Comentario' 
           value={review.comentarios}
           onChange={handleInputChange}
-          />
-        <label>Click to Rate</label>
-        <StarRating handleInputChange={handleInputChange} valueInicial={review.puntaje}/>       
-      <ModalFooter>
-        <Button color="primary" onClick={onSubmit}>Enviar</Button>
-        <Button color="secondary" onClick={toggleNested}>Cerrar</Button>
+        />
+        <div className='function'>
+          <StarRating handleInputChange={handleInputChange} valueInicial={review.puntaje}/>       
+          <Button color="danger" onClick={onSubmit}>Enviar</Button>
+        </div>
       </ModalFooter>
       </ModalBody>
     </Modal>
