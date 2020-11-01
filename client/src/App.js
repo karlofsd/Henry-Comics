@@ -17,12 +17,9 @@ import Login from "./components/userForm/login";
 import { verifyLogin } from "./redux/users";
 import denegado from './403.png'
 import Payment from "./components/checkout/paymentCard";
-<<<<<<< HEAD
 import SearchAPI from "./components/catalogoAPI/searchAPI";
 
-=======
 import RecuperarPass from './components/recuperarPass/recuperarPass'
->>>>>>> master
 
 function App() {
   // ---funciones Redux---
