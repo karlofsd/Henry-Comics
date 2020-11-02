@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 const bcrypt = require("bcrypt");
-
+const {categories,products} = require('../../db/Productos/multicreate')
 const sequelize = new Sequelize(
     `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/development`,
     {
@@ -85,27 +85,47 @@ Checkout.belongsTo(Orden);
 Wishlist.belongsToMany(User, { through: "lista" });
 User.belongsToMany(Wishlist, { through: "lista" });
 
-User.findOrCreate({
-    where: {
-        username: "admin",
-        email: "admin@mail.com",
-        password: bcrypt.hashSync("admin", 10),
-        isAdmin: true,
-    },
-    raw: true,
+User.findOne({where:{username:'admin'}})
+.then(admin => {
+    if(admin){
+        console.log('ok')
+    }else{
+        User.create({
+                username: "admin",
+                email: "admin@mail.com",
+                password: bcrypt.hashSync("admin", 10),
+                isAdmin: true
+            })
+            .then((admin) =>
+                console.log(
+                    "\n----Super-user---- \n #username: ",
+                    admin[0].username,
+                    "\n #email: ",
+                    admin[0].email,
+                    "\n #password: ",
+                    admin[0].password,
+                    "\n -----------------\n"
+                )
+            )
+            .catch((err) => console.log(err.message));
+    }
 })
-    .then((admin) =>
-        console.log(
-            "\n----Super-user---- \n #username: ",
-            admin[0].username,
-            "\n #email: ",
-            admin[0].email,
-            "\n #password: ",
-            admin[0].password,
-            "\n -----------------\n"
-        )
-    )
-    .catch((err) => console.log(err.message));
+
+Category.findAll()
+.then(cates =>{
+    if(!cates[0]){
+        Category.bulkCreate(categories,{raw:true})
+        .then(cats => console.log('Categorias agregadas'))
+    }else return console.log('ok')
+})
+
+Product.findAll()
+.then(prod => {
+    if(!prod[0]){
+        Product.bulkCreate(products,{order:['id','ASC']})
+            .then(() => console.log('Productos agregados'))
+    }else return console.log('ok')
+})
 
 module.exports = {
     ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

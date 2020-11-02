@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import {FormGroup, Form, Button, Label, Input, UncontrolledAlert} from 'reactstrap';
+import {FormGroup, Form, Button, Label, Toast, ToastBody, ToastHeader,Input, UncontrolledAlert} from 'reactstrap';
 import {useHistory} from 'react-router-dom'
-import { Button, Label, Toast, ToastBody, ToastHeader } from 'reactstrap';
 import './recuperarPass.css'
 
 const RecuperarPass = ({id}) =>{

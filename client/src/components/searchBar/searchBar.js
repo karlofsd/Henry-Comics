@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {Link} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
@@ -18,12 +18,13 @@ export default function Buscar() {
     let lowerCaseText = searchText.toLowerCase();
 
     const handleSubmit = (e) => {
+        setSearchText("")
         e.preventDefault()
     }
+
     const handleSearch = async() => {
         await dispatch(clean());
         await dispatch(findProducts(lowerCaseText))
-        setSearchText("")
     }
     return (
         <form class="form-inline my-2 my-lg-0" onSubmit={handleSubmit}>
