@@ -1,15 +1,19 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {useDispatch} from 'react-redux';
 import ProductAPI from './productosAPI';
 import axios from 'axios';
-import Pagination from '@material-ui/lab/Pagination'
+import Pagination from './pagination';
+import gif from './marvel_loader.gif';
 
 export default function SearchAPI() {
     
     const [searchText, setSearchText] = useState("");
     const [buscados, setBuscados] = useState([]);
-    const [tipoBusqueda, setTipoBusqueda] = useState("Issue")
+    const [tipoBusqueda, setTipoBusqueda] = useState("Issue");
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [buscadosPorPage] = useState(10);
     
     const handleChange = (e) => {
         let text = e.currentTarget.value;
@@ -25,12 +29,22 @@ export default function SearchAPI() {
         e.preventDefault();
         formatSearchParameters(tipoBusqueda, searchText);
     };
-
+    
     const handleSearch = async(comicVineRequest, searchOption) => { 
-        
-        const {data} = await axios.get( `https://cors-anywhere.herokuapp.com/${comicVineRequest}&limit=$%7Blimit%7D&offset=$%7B(page-1)*limit%7D`);    
-        setBuscados(data.results)   
+        setLoading(true);
+        const {data} = await axios.get( `https://cors-anywhere.herokuapp.com/${comicVineRequest}&limit=100`);    
+        setBuscados(data.results);
+        setLoading(false);
     };
+
+    useEffect (()=> {    
+        handleSearch();
+    }, []);
+
+    const indexOfLastProd = currentPage * buscadosPorPage;
+    const indexOfFirstProd = indexOfLastProd - buscadosPorPage;
+    const currentBuscados = buscados.slice(indexOfFirstProd,indexOfLastProd);
+    const paginate = pageNumber => setCurrentPage(pageNumber)
             //----//
             // const paginator = (e) => {
             //     // console.log('paginando')
@@ -65,18 +79,29 @@ export default function SearchAPI() {
 
     return (
         <div> 
-        <form class="form-inline my-2 my-lg-0 m-4" onSubmit={handleSubmit}>
+        <form className="form-inline my-2 my-lg-0 m-4" onSubmit={handleSubmit}>
             <select onChange={(e) => handleChangeSelect(e)}>
                 <option value="Character" selected='selected'>Personaje</option>
                 <option value="Issue">Número</option>
                 <option value="Story Arc">Story Arc</option>
             </select>
-            <input class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search" value={searchText} onChange={handleChange}/>
-            <button class="btn btn-danger my-2 my-sm-0" type="submit" >Buscar en API</button>  
+            <input className="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search" value={searchText} onChange={handleChange}/>
+            <button className="btn btn-danger my-2 my-sm-0" type="submit" >Buscar en API</button>  
         </form>
-        <div>
-        {buscados.map(p =><ProductAPI product={p}/>)}
-        </div>  
+            {loading ? 
+            <div>
+                <img src={gif}></img>    
+            </div>
+            :
+            <div>
+            {currentBuscados.map(p =><ProductAPI product={p}/>)}
+            <Pagination 
+            buscadosPorPage={buscadosPorPage}
+            totalBuscados={buscados.length}
+            paginate={paginate}
+            />
+            </div>
+            }
     </div>
     ); 
 }

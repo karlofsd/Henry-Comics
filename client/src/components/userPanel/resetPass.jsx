@@ -44,14 +44,14 @@ const ResetPass = (props) => {
     }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form className="m-4" onSubmit={handleSubmit}>
     <h4>Resetar Password: </h4>
     <h5>
         <p>{firstname}</p>
         <p>{email}</p>
     </h5>
       <Row form>
-        <Col md={6}>
+        <Col md={2}>
             <FormGroup>
                 <Label for="examplePassword">Contraseña Actual</Label>
                 <Input type="password" name="actual" placeholder="Contraseña actual ..."
@@ -60,7 +60,7 @@ const ResetPass = (props) => {
                 />
             </FormGroup>
         </Col>
-        <Col md={6}>
+        <Col md={2}>
             <FormGroup>
                 <Label for="examplePassword">Contraseña Nueva</Label>
                 <Input type="password" name="new" placeholder="Nueva contraseña ..."
