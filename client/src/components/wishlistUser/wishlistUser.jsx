@@ -20,10 +20,15 @@ const WishlistUser = () => {
       })
   }
 
+  const delWish = async(id,userId) => {
+	await axios.delete(`http://localhost:3001/wishlist/${id}/user/${userId}`)
+	getWishlist(user.id)
+  }
+
   useEffect(() => {
     getWishlist(user.id)
   }, [])
-
+  console.log(wishlist)
 	return (
 		<div>			
 			<div className="tablaProd">
@@ -32,6 +37,8 @@ const WishlistUser = () => {
 						<tr className="table table-hover">
 							<th>Id</th>
 							<th>Nombre</th>
+							<th>Volúmen</th>
+							<th>N°</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -41,7 +48,10 @@ const WishlistUser = () => {
 								<tr>
 									<td>{ele.id}</td>
 									<td>{capitalize(ele.name)}</td>
+									<td>{ele.volume_name}</td>
+									<td>{ele.volume_number}</td>
 									<td className="table w-auto table-hover">
+									<button className='btn btn-danger pill-rounded' onClick={()=>delWish(ele.id,ele.lista.userId)}>Quitar</button>
 									</td>
 								</tr>
 							))}

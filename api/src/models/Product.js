@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
   sequelize.define('product', {
     name: {
       type: DataTypes.STRING,
+      unique:true,
       allowNull: false,
     },
     author: {

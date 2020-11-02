@@ -7,9 +7,13 @@ module.exports = (sequelize) => {
             unique: true,
             allowNull: false,
         },
-        description: {
+        volume_name: {
             type: DataTypes.STRING,
             allowNull: true,
+        },
+        volume_number:{
+            type: DataTypes.INTEGER,
+            allowNull: true
         },
         image: {
             type: DataTypes.TEXT,
