@@ -1,78 +1,88 @@
 import React from 'react';
-import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Col, Row, Button, Form, FormGroup, Label, Input, Toast, ToastHeader, ToastBody } from 'reactstrap';
 import { useState } from 'react';
 import Axios from 'axios';
+import './resetPass.css';
 
 const ResetPass = (props) => {
-    const { id , firstname, email} = props.user
+    const { id, firstname, email } = props.user
 
     const [password, setPassword] = useState({
-        actual:'',
-        new:''
+        actual: '',
+        new: ''
     });
 
-    const handlerChange = (e) =>{
+    const handlerChange = (e) => {
         setPassword({
             ...password,
             [e.target.name]: e.target.value
         })
-        
+
     }
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault();
     }
 
-    const handlerNewPass = async ()=>{
-        let body= {
+    const handlerNewPass = async () => {
+        let body = {
             password: password.actual
         }
-        if(!password.new || !password.actual){
+        if (!password.new || !password.actual) {
             return alert('Deve Completar Todos sus campos')
         }
 
         const { data } = await Axios.post(`http://localhost:3001/user/${id}/password`,
             body,
             { withCredentials: true })
-        if(data){
-            await Axios.post(`http://localhost:3001/user/${id}/passwordReset`,{
+        if (data) {
+            await Axios.post(`http://localhost:3001/user/${id}/passwordReset`, {
                 password: password.new
             }, { withCredentials: true })
-        }else{
+            alert('Contraseña cambiada correctamente ')
+        } else {
             alert('Invalid pass')
         }
     }
 
-  return (
-    <Form onSubmit={handleSubmit}>
-    <h4>Resetar Password: </h4>
-    <h5>
-        <p>{firstname}</p>
-        <p>{email}</p>
-    </h5>
-      <Row form>
-        <Col md={6}>
-            <FormGroup>
-                <Label for="examplePassword">Contraseña Actual</Label>
-                <Input type="password" name="actual" placeholder="Contraseña actual ..."
-                    value={password.actual}
-                    onChange={handlerChange}
-                />
-            </FormGroup>
-        </Col>
-        <Col md={6}>
-            <FormGroup>
-                <Label for="examplePassword">Contraseña Nueva</Label>
-                <Input type="password" name="new" placeholder="Nueva contraseña ..."
-                value={password.new}
-                onChange={handlerChange}
-                />
-            </FormGroup>
-        </Col>
-      </Row>
-      <Button type="submit" onClick={()=> handlerNewPass()}>Confirmar</Button>
-    </Form>
-  );
+    return (
+        <div class='contreset'>
+            <Toast>
+                <Form onSubmit={handleSubmit}>
+                    <ToastHeader>Resetar Password: </ToastHeader>
+                    <ToastBody>
+                        <h5>
+                            <p>{firstname}</p>
+                        </h5>
+                        <p>{email}</p>
+
+                    </ToastBody>
+
+                    <Row form>
+                        <Col md={5}>
+                            <FormGroup>
+                                <Label className='ml-3' for="examplePassword">Contraseña Actual</Label>
+                                <Input className='ml-3 mr-3' type="password" name="actual" placeholder="Contraseña actual ..."
+                                    value={password.actual}
+                                    onChange={handlerChange}
+                                />
+                            </FormGroup>
+                        </Col>
+                        <Col md={5}>
+                            <FormGroup>
+                                <Label className='ml-3' for="examplePassword">Contraseña Nueva</Label>
+                                <Input className='ml-3 mr-3'type="password" name="new" placeholder="Nueva contraseña ..."
+                                    value={password.new}
+                                    onChange={handlerChange}
+                                />
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Button className='m-3' type="submit" onClick={() => handlerNewPass()}>Confirmar</Button>
+                </Form>
+            </Toast>
+        </div>
+    );
 }
 
 export default ResetPass;
