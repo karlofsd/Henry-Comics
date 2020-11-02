@@ -21,10 +21,12 @@ const RecuperarPass = ({ id }) => {
     const recuperarPass = async () => {
         console.log(input)
         await axios.post(`http://localhost:3001/user/resetPass`, input)
+        alert('Correo Enviado')
     }
 
     const newPass = async () => {
         await axios.put(`http://localhost:3001/user/resetPass/${id}`, input)
+            alert('Contraseña actualizada ')
     }
     console.log('input', input)
 
@@ -44,7 +46,7 @@ const RecuperarPass = ({ id }) => {
                             id='login-input'
                             placeholder="Ingrese su email"
                             name="email"
-                            className="form-control col-4"
+                            className="form-control col-4 m-3"
                             onChange={handleChange}
                         />
                     </div>

@@ -39,6 +39,7 @@ const ResetPass = (props) => {
             await Axios.post(`http://localhost:3001/user/${id}/passwordReset`, {
                 password: password.new
             }, { withCredentials: true })
+            alert('Contraseña cambiada correctamente ')
         } else {
             alert('Invalid pass')
         }
