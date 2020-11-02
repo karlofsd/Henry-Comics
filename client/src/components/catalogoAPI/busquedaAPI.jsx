@@ -27,13 +27,12 @@ export default function SearchAPI() {
         e.preventDefault();
         setLoading(true)
         await handleSearch(1)
+        setPage(1)
         setLoading(false)
     };
 
     const handleSearch = async(pagina) => {
-        console.log('pagina',pagina)
-        console.log('pagina 2',pagina)
-        const {data} = await axios.get(`https://cors-anywhere.herokuapp.com/https://comicvine.gamespot.com/api/issues/?format=json&api_key=3067a5d595113ed2107c1651ac9856c2471f19fa&filter=name:${searchText}&limit=${limit}&offset=${pagina-1*limit}&field_list=name,issue_number,image,volume&sort=cover_date:desc`)
+        const {data} = await axios.get(`https://cors-anywhere.herokuapp.com/https://comicvine.gamespot.com/api/issues/?format=json&api_key=3067a5d595113ed2107c1651ac9856c2471f19fa&filter=name:${searchText}&limit=${limit}&offset=${(pagina-1)*limit}&field_list=name,issue_number,image,volume&sort=cover_date:desc`)
         console.log(data)
         setBuscados(data.results)
         setCounter(Math.ceil(data.number_of_total_results/limit))
@@ -45,8 +44,6 @@ export default function SearchAPI() {
         await handleSearch(value)
         setLoading(false)
     }
-
-    console.log(page)
 
     return (
         <div className='catalogo' style={{flexDirection:'column', alignItems:'center'}}> 

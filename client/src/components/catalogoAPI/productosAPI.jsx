@@ -13,6 +13,8 @@ export default function ProductAPI ({product}) {
     if(user.id){
       let body = {
         name: product.name,
+        volume_name: product.volume.name,
+        volume_number: product.issue_number,
         image: product.image.small_url
       }
       await axios.post(`http://localhost:3001/wishlist/add/${user.id}`, body, {withCredentials: true})

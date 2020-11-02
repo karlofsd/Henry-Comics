@@ -41,6 +41,8 @@ const Wishlist = () => {
 						<tr className="table table-hover">
 							<th>Id</th>
 							<th>Nombre</th>
+							<th>Volúmen</th>
+							<th>N°</th>
 							<th>Cantidad</th>
 							<th></th>
 						</tr>
@@ -51,6 +53,8 @@ const Wishlist = () => {
 								<tr>
 									<td>{ele.id}</td>
 									<td>{capitalize(ele.name)}</td>
+									<td>{ele.volume_name}</td>
+									<td>{ele.volume_number}</td>
 									<td>{ele.users.length}</td>
 									<td className="table w-auto table-hover">
 									</td>
