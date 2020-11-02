@@ -96,10 +96,11 @@ export const getLogin = (body) => async(dispatch) => {
             type: GET_LOGIN, 
             payload: data.user
     },
-        window.alert(`Bienvenido ${data.user.email}`)
+        alert(`Bienvenido ${data.user.username}`)
     )
     }catch(error){
         console.log(error)
+        alert('Revisar usuario o contraseña.')
     }
     ;
 };

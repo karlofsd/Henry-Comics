@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { useForm } from 'react-hook-form';
 import {FormGroup, Form, Button, Label, Input} from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +15,13 @@ const Login =() =>{
   const history = useHistory()
   const {register, errors, handleSubmit} = useForm();
   const carrito =  useSelector(store => store.carritoState.carritoProducts);
-  
+  const user = useSelector((store) => store.userState.userLogin.login);
+
+  useEffect(()=>{
+    if(user){
+      history.push('/')
+    }
+  },[user])
 
   const onSubmit = async (arg, e) =>{
     
@@ -24,7 +30,6 @@ const Login =() =>{
       await dispatch(localToUser(carrito))
       localStorage.removeItem('carrito');
       e.target.reset();
-      history.push('/')
     }catch(err){
       console.log(err)
     }   
