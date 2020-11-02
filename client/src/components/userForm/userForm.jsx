@@ -14,6 +14,8 @@ export default function UserForm() {
     await axios.post('http://localhost:3001/user/add', data, { withCredentials: true });
     setUsuarioCreado(true);
     setVisible(true)
+    alert('Usuario creado correctamente.')
+    history.push('/login')
     } catch (error) {
     console.log(error)
     setUsuarioCreado(false);
@@ -37,7 +39,6 @@ export default function UserForm() {
     console.log(data)
     handleRegister(data);
     e.target.reset();
-    history.push('/login')
   }
 
   const onDismiss = () => setVisible(false);
