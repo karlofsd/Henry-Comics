@@ -1,17 +1,19 @@
 import React from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faStar} from '@fortawesome/free-solid-svg-icons'
+import './wish.css'
 
-export default function ProductAPI (props) {
+export default function ProductAPI ({product}) {
 
   const user = useSelector(store => store.userState.userLogin);
 
   const addWishlist = async() => {
     if(user.id){
       let body = {
-        name: props.product.name, 
-        description: props.product.description,
-        image: props.product.image.screen_large_url
+        name: product.name,
+        image: product.image.small_url
       }
       await axios.post(`http://localhost:3001/wishlist/add/${user.id}`, body, {withCredentials: true})
         .then((res) => {
@@ -27,14 +29,20 @@ export default function ProductAPI (props) {
   }
 
   return (
-    <div className="wrapper-index">
-        <div className='cont-img'>
-          <img src={props.product.image.screen_large_url} className="img-index"/>
-        </div>
-        <div className="description-index">
-            <h3>{props.product.name}</h3>     
-            <p>{props.product.description}</p>
-            <button onClick={addWishlist}>Agregar</button>
+    <div className='shadow wrapper'>
+        <div className="container">
+            <div className="top">
+                <button onClick={()=>addWishlist()} className="btn pill-rounded star-button" style={{position:'absolute',right:'0', background:'rgba(0,0,0,0.8)'}}>
+                    <FontAwesomeIcon icon={faStar} color='white' id='starr'/>                            
+                </button>
+                <img src={product.image.small_url} className='img' alt="wish" />
+            </div>
+            <div className="bottom wish-bottom">
+                <h4 style={{textAlign:'center'}}>{product.name}</h4>
+                <div className="left">
+                    <span>Vol. {product.volume.name} #{product.issue_number}</span>
+                </div>
+            </div>
         </div>
     </div>
   );
