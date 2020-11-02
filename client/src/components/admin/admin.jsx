@@ -3,6 +3,7 @@ import AgregarCategorias from '../categoryAdmin/AgregarCategorias';
 import ProductsCrud from '../productAdmin/ProductsCrud';
 import Users from '../usersAdmin/users'
 import OrderTable from '../ordenes/ordenesAdmin'
+import Wishlist from '../wishlistAdmin/wishlist'
 //import { BrowserRouter  as Router, Route, Link} from 'react-router-dom';
 import './admin.css';
 
@@ -107,6 +108,15 @@ const Admin = ({/*newCat,get,categories,getCat*/}) => {
             Usuarios
           </NavLink>
         </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === '5' })}
+            onClick={() => { toggle('5'); }}
+            type='button'
+          >
+            Wishlist
+          </NavLink>
+        </NavItem>
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
@@ -120,6 +130,9 @@ const Admin = ({/*newCat,get,categories,getCat*/}) => {
         </TabPane>
         <TabPane tabId="4">
           <Users/>
+        </TabPane>
+        <TabPane tabId="5">
+          <Wishlist />
         </TabPane>
       </TabContent>
     </div>

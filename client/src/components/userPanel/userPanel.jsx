@@ -9,6 +9,7 @@ import { ListGroup, ListGroupItem, Badge} from 'reactstrap';
 import avatar from './image/avatar.webp'
 import {useDispatch} from 'react-redux'
 import {verifyLogin} from '../../redux/users'
+import WishlistUser from '../wishlistUser/wishlistUser'
 
 import ResetPass from './resetPass'
 
@@ -166,6 +167,15 @@ const User = () => {
               Cuenta
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: activeTab === '4' })}
+              onClick={() => { toggle('4'); }}
+              type='button'
+            >
+              Wishlist
+            </NavLink>
+          </NavItem>
         </Nav>
         <TabContent activeTab={activeTab}>
           <TabPane tabId="1"> 
@@ -268,6 +278,9 @@ const User = () => {
               { info && 
               <ResetPass user={info}/>
               }
+          </TabPane>
+          <TabPane tabId="4">              
+              <WishlistUser />              
           </TabPane>
         </TabContent>
       </div> 
