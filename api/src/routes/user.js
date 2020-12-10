@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { User, Orden, LineaDeOrden, Product } = require('../db');
+const { User, Orden, LineaDeOrden, Product, Reviews } = require('../db');
 const bcrypt = require('bcrypt')
 const passport = require('passport');
 const {isAdmin, isAuthenticated} =require('../middleware/helper');
@@ -162,6 +162,9 @@ server.post("/add", function (req, res) {
 
   server.delete("/:id", isAuthenticated, (req, res, next) => {
     const id = req.params.id;
+    Reviews.destroy({where: {userId:id}})
+    .then(() =>{
+    Orden.destroy({where:{userId:id}})
     User.destroy({
       where: { id: id },
     }).then((removed) => {
@@ -170,7 +173,9 @@ server.post("/add", function (req, res) {
       } else {
       res.status(404).json({ message: "Not found" });
       }
-    });
+    })}
+    )
+    .catch(next)
     });
   
     

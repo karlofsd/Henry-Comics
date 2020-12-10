@@ -2,7 +2,8 @@ import React from 'react';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
-
+import WishlistUser from '../wishlistUser/wishlistUser.jsx'
+import { Modal } from 'reactstrap';
 
 const Users = () => {
 
@@ -41,6 +42,10 @@ const Users = () => {
     getUsers();
   }
 
+  const [modal,setModal] = useState(false)
+  const [user,SetUser] = useState({})
+  const toggle = () => setModal(!modal)
+
   return (
     <div className='tablaProd'>
       <table className='table table-hover'>
@@ -63,13 +68,16 @@ const Users = () => {
             <td>{user.isAdmin ? "Administrador" : "Usuario"}</td>
             <td className='table w-auto table-hover'>
               <button className="btn btn-secondary btn-sm m-2 p-1" onClick={() => promoteUser(user.id,status)}>{status ? 'Promover' : 'Revocar'}</button>
-              <button className="btn btn-secondary btn-sm m-2 p-1" >Ordenes</button>
+              <button className="btn btn-secondary btn-sm m-2 p-1" onClick={()=>{SetUser(user);toggle()}}>Wishlist</button>
               <button className="btn btn-dark btn-sm m-2 p-1" onClick={() => deleteUser(user.id)}>Eliminar</button>
             </td>
             </tr>
           })}
         </tbody>
       </table>
+      <Modal isOpen={modal} toggle={toggle}>
+          <WishlistUser selUser={user}/>
+      </Modal>
     </div>
   )
 }

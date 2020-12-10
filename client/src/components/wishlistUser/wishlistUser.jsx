@@ -4,7 +4,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./wishlistUser.css";
 
-const WishlistUser = () => {
+const WishlistUser = ({selUser}) => {
 
   const [wishlist, setWishlist] = useState([]);
   const user = useSelector(store => store.userState.userLogin)
@@ -26,12 +26,13 @@ const WishlistUser = () => {
   }
 
   useEffect(() => {
-    getWishlist(user.id)
+	let currentUser = selUser ? selUser.id : user.id
+	getWishlist(currentUser)
   }, [])
-  console.log(wishlist)
+
 	return (
 		<div>			
-			<div className="tablaProd">
+			<div className="tablaProd" style={selUser && {width:'100%'}}>
 				<table className="table table-hover ">
 					<thead>
 						<tr className="table table-hover">
